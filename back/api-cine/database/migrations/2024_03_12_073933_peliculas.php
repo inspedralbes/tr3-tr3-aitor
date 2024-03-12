@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('cartel');
             $table->string('trailer');
             $table->dateTime('fechaEstreno');
-            $table->unsignedBigInteger('sesion_id');
+            $table->unsignedBigInteger('sesion_id')->nullable();
+
             $table->foreign('sesion_id')->references('id')->on('sesions')->onDelete('cascade');
         });
     }

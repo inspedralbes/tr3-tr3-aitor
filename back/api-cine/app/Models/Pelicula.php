@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Pelicula extends Model
 {
-    public function peliculas()
-    {
-        return $this->hasMany(Pelicula::class, 'sesion_id');
-    }
+    protected $table = 'peliculas';
 
-    public function entradas()
+    protected $fillable = ['titulo', 'duracion', 'genero', 'sinopsis', 'cartel', 'trailer', 'fechaEstreno', 'sesion_id'];
+
+
+    // Relación con la tabla 'sesions'
+    public function sesion()
     {
-        return $this->hasMany(Entrada::class, 'sesion_id');
+        return $this->belongsTo(Sesion::class, 'sesion_id');
     }
+    public $timestamps = false;
 }
+
