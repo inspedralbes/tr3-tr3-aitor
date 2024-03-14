@@ -36,7 +36,7 @@
           <nuxt-link to="/contactanos">
             <img src="../public/contact.jpg" alt="Contacta con Nosotros" class="square-img" />
             <div class="text-overlay">
-              <h2>CONTACTA CON NOSOTROS</h2>
+              <h2>CONTACTACTANOS</h2>
             </div>
           </nuxt-link>
         </div>
