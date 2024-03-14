@@ -1,140 +1,130 @@
 <template>
-  <footer class="site-footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-xs-12">
-              <h6 class="footer-title">About</h6>
-              <p class="footer-text">El Cine de Can Casteller es un espacio dedicado a la proyección de películas que abarcan una amplia variedad de géneros y estilos. Nuestro objetivo es proporcionar una experiencia cinematográfica única para todos nuestros espectadores. Desde clásicos del cine hasta las últimas novedades, en el Cine de Can Casteller encontrarás una selección cuidadosamente curada de películas que te harán reír, llorar, reflexionar y emocionarte.</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-info">
+                <h2>Can Casteller</h2>
+                <p>Somos un cine localizado en la ciudad de Sant Boi de Llobregat, dedicado a brindar una experiencia cinematográfica excepcional a nuestros visitantes.</p>
             </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-xs-12">
-              <h6 class="footer-title">Quick Links</h6>
-              <ul class="footer-links">
-                <li><a href="http://scanfcode.com/about/">Home</a></li>
-                <li><a href="http://scanfcode.com/contact/">Peliculas</a></li>
-                <li><a href="http://scanfcode.com/contribute-at-scanfcode/">Novedades</a></li>
-                <li><a href="http://scanfcode.com/privacy-policy/">Trailers</a></li>
-                <li><a href="http://scanfcode.com/sitemap/">Contactanos</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr class="footer-hr">
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-8 col-sm-6 col-xs-12">
-          <p class="copyright-text">Copyright &copy; 2024 Todos los derecho reservador para
-            <a href="#" class="copyright-link">Can Casteller</a>.
-          </p>
-        </div>
+            <div class="footer-links">
+                <h3>Enlaces</h3>
+                <ul>
+                    <li>
+                        <NuxtLink to="/">Inicio</NuxtLink>
+                    </li>
+                    <li>
+                        <NuxtLink to="/peliculas">Peliculas</NuxtLink>
+                    </li>
+                    <li>
+                        <NuxtLink to="/sesiones">Sesiones</NuxtLink>
+                    </li>
+                    <li>
+                        <NuxtLink to="/novedades">Novedades</NuxtLink>
+                    </li>
+                    <li>
+                        <NuxtLink to="/trailers">Trailers</NuxtLink>
+                    </li>
+                    <li>
+                        <NuxtLink to="/contactanos">Contáctanos</NuxtLink>
+                    </li>
 
-        <div class="col-md-4 col-sm-6 col-xs-12">
-          <ul class="social-icons">
-            <li><a class="social-icon" href="#"><img src="../public/facebook.png" alt="Facebook"></a></li>
-            <!-- Agrega aquí los otros íconos sociales -->
-          </ul>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h3>Contacto</h3>
+                <p>Dirección: Carrer de Jaume I, 28, 08830 Sant Boi de Llobregat, Barcelona</p>
+                <br> <!-- Agregando un salto de línea para separar -->
+                <p>Teléfono: 936 61 61 12</p>
+                <br> <!-- Agregando un salto de línea para separar -->
+                <p>Email: info@cancasteller.com</p>
+            </div>
         </div>
-      </div>
-    </div>
-  </footer>
+        <div class="footer-social">
+            <h3>Síguenos</h3>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><img src="../public/facebook.png"></a>
+                <a href="#" class="social-icon"><img src="../public/instagram.png"></a>
+                <a href="#" class="social-icon"><img src="../public/twitter.png"></a>
+                <a href="#" class="social-icon"><img src="../public/youtube.png"></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 En Can Casteller. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 </template>
 
+<script>
+export default {
+    // Opciones del componente, si es necesario
+}
+</script>
+
 <style scoped>
-/* Estilos para el footer */
-.site-footer {
-  background-color: black;
-  padding: 45px 0 20px;
-  color: white;
+.footer {
+    background-color: black;
+    color: #fff;
+    padding: 50px 0;
 }
 
-.footer-title {
-  font-size: 16px;
-  text-transform: uppercase;
-  margin-top: 5px;
-  letter-spacing: 2px;
+.container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-.footer-text {
-  font-size: 15px;
-  line-height: 24px;
+.footer-info,
+.footer-links,
+.footer-contact {
+    flex: 1;
+    margin-bottom: 20px;
 }
 
-.footer-links {
-  padding-left: 0;
-  list-style: none;
+.footer-info h2,
+.footer-links h3,
+.footer-contact h3 {
+    color: #fff;
+    margin-bottom: 15px;
 }
 
-.footer-links li {
-  display: block;
+.footer-links ul {
+    list-style: none;
+    padding: 0;
 }
 
-.footer-links a {
-  color: white;
+.footer-links ul li {
+    margin-bottom: 10px;
 }
 
-.footer-links a:hover {
-  color: #3366cc;
-  text-decoration: none;
+.footer-links ul li a {
+    color: #fff;
+    text-decoration: none;
 }
 
-.footer-hr {
-  border-top-color: #bbb;
-  opacity: 0.5;
-  margin: 20px 0;
+.footer-contact p {
+    margin-bottom: 20px; /* Ajuste para agregar más espacio entre los elementos */
 }
 
-.copyright-text {
-  font-size: 15px;
-  line-height: 24px;
-}
-
-.copyright-link {
-  color: #29aafe;
+.footer-social {
+    text-align: center;
 }
 
 .social-icons {
-  text-align: center;
+    margin-top: 20px;
 }
 
 .social-icon {
-  display: inline-block;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background-color: #33353d;
-  margin-right: 8px;
+    display: inline-block;
+    color: #fff;
+    font-size: 24px;
+    margin: 0 10px;
 }
 
-.social-icon img {
-  width: 100%;
-  height: 100%;
-}
-
-@media (max-width: 767px) {
-  .site-footer [class^="col-"] {
-    margin-bottom: 30px;
-  }
-
-  .site-footer hr {
-    margin: 20px auto;
-  }
-
-  .site-footer .copyright-text,
-  .site-footer .social-icons {
+.footer-bottom {
     text-align: center;
-  }
+    margin-top: 20px;
+}
 
-  .social-icons li.title {
-    display: block;
-    margin-right: 0;
-    font-weight: 600;
-  }
+.footer-bottom p {
+    font-size: 14px;
 }
 </style>
