@@ -12,7 +12,7 @@
         <span style="--i: 8;"><img src="../public/resaca.jpg" alt="Próximo Estreno"></span>
       </div>
     </div>
-
+    
     <div class="main-page">
       <div class="section" id="recipes">
         <nuxt-link to="/peliculas">
@@ -28,7 +28,7 @@
           <nuxt-link to="/novedades">
             <img src="../public/novedades.jpg" alt="novedades" class="square-img" />
             <div class="text-overlay">
-              <h2>Novedades</h2>
+              <h2>NOVEDADES</h2>
             </div>
           </nuxt-link>
         </div>
@@ -41,27 +41,9 @@
           </nuxt-link>
         </div>
       </div>
-
-      <section class="section">
-        <h2>Horarios de Función:</h2>
-        <p>Lunes a Viernes: [Horarios]</p>
-        <p>Sábados y Domingos: [Horarios]</p>
-      </section>
-      <section class="section">
-        <h2>Explora nuestras Instalaciones:</h2>
-        <p>Salas de Cine Modernas</p>
-        <p>Sonido Dolby Atmos</p>
-        <p>Amplia Selección de Snacks y Bebidas</p>
-      </section>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "RotatingImages"
-};
-</script>
 
 <style scoped>
 * {
@@ -110,9 +92,14 @@ export default {
 }
 
 .main-page {
+  margin-left: 20vw;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-between; /* Cambiado de center a space-between */
+  align-items: center; /* Centra verticalmente */
 }
+
 
 .section {
   width: calc(50% - 10px);
@@ -126,9 +113,9 @@ export default {
 }
 
 .section img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 90%;
+  height: 90%;
+  
 }
 
 .text-overlay {
@@ -152,11 +139,11 @@ export default {
 }
 
 .rectangular-img {
+  
   width: 100%;
   height: 100%;
   max-width: 600px;
   max-height: 400px;
-  object-fit: cover;
 }
 
 .square-img {
