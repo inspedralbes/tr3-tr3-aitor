@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PeliculaController;
 use App\Http\Controllers\EntradaController;
 use App\Http\Controllers\SesionController;
+use App\Http\Controllers\Auth\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,9 @@ Route::post('/crearSesion', [SesionController::class, 'crearSesion']);
 Route::get('/listarSesiones', [SesionController::class, 'listarSesiones']);
 Route::put('/modificarSesion/{id}', [SesionController::class, 'modificarSesion']);
 Route::delete('/eliminarSesion/{id}', [SesionController::class, 'eliminarSesion']);
+
+
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
+Route::post('/logout', [UserController::class, 'logout']);
+Route::get('/user', [UserController::class, 'user']);
