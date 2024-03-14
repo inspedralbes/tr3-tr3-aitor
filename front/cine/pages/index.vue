@@ -53,8 +53,8 @@
   
   .box {
     position: relative;
-    width: 400px; /* Ajusta el ancho de la caja del carrusel */
-    height: 200px; /* Ajusta la altura de la caja del carrusel */
+    width: 600px; /* Ajusta el ancho de la caja del carrusel */
+    height: 300px; /* Ajusta la altura de la caja del carrusel */
     transform-style: preserve-3d;
     animation: animado 20s linear infinite;
   }
@@ -77,7 +77,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain; /* Cambiado de cover a contain */
   }
   
   .main-page {
