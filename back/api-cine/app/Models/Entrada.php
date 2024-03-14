@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Entrada extends Model
 {
+    protected $table = 'entradas';
+    protected $fillable = ['cantidad', 'precio', 'sesion_id'];
     public function sesion()
     {
         return $this->belongsTo(Sesion::class, 'sesion_id');
     }
+    public $timestamps = false;
 }
