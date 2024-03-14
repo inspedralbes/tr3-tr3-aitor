@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PeliculaController;
 use App\Http\Controllers\EntradaController;
+use App\Http\Controllers\SesionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,7 @@ Route::post('/crearEntrada', [EntradaController::class, 'crearEntrada']);
 Route::get('/listarEntradas', [EntradaController::class, 'listarEntradas']);
 Route::put('/modificarEntrada/{id}', [EntradaController::class, 'modificarEntrada']);
 Route::delete('/eliminarEntrada/{id}', [EntradaController::class, 'eliminarEntrada']);
+Route::post('/crearSesion', [SesionController::class, 'crearSesion']);
+Route::get('/listarSesiones', [SesionController::class, 'listarSesiones']);
+Route::put('/modificarSesion/{id}', [SesionController::class, 'modificarSesion']);
+Route::delete('/eliminarSesion/{id}', [SesionController::class, 'eliminarSesion']);
