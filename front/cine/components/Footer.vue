@@ -9,42 +9,41 @@
                 <h3>Enlaces</h3>
                 <ul>
                     <li>
-                        <NuxtLink to="/">Inicio</NuxtLink>
+                        <NuxtLink to="/" class="footer-link">Inicio</NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/peliculas">Peliculas</NuxtLink>
+                        <NuxtLink to="/peliculas" class="footer-link">Peliculas</NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/sesiones">Sesiones</NuxtLink>
+                        <NuxtLink to="/sesiones" class="footer-link">Sesiones</NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/novedades">Novedades</NuxtLink>
+                        <NuxtLink to="/novedades" class="footer-link">Novedades</NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/trailers">Trailers</NuxtLink>
+                        <NuxtLink to="/trailers" class="footer-link">Trailers</NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/contactanos">Contáctanos</NuxtLink>
+                        <NuxtLink to="/contactanos" class="footer-link">Contáctanos</NuxtLink>
                     </li>
-
                 </ul>
             </div>
             <div class="footer-contact">
                 <h3>Contacto</h3>
                 <p>Dirección: Carrer de Jaume I, 28, 08830 Sant Boi de Llobregat, Barcelona</p>
-                <br> <!-- Agregando un salto de línea para separar -->
+                <br>
                 <p>Teléfono: 936 61 61 12</p>
-                <br> <!-- Agregando un salto de línea para separar -->
+                <br>
                 <p>Email: info@cancasteller.com</p>
             </div>
         </div>
         <div class="footer-social">
             <h3>Síguenos</h3>
             <div class="social-icons">
-                <a href="#" class="social-icon"><img src="../public/facebook.png"></a>
-                <a href="#" class="social-icon"><img src="../public/instagram.png"></a>
-                <a href="#" class="social-icon"><img src="../public/twitter.png"></a>
-                <a href="#" class="social-icon"><img src="../public/youtube.png"></a>
+                <a href="https://www.facebook.com/CinemesCanCastellet/?locale=es_ES" class="social-icon"><img src="../public/facebook.png" alt="Facebook"></a>
+                <a href="https://www.instagram.com/cinemescancastellet/?hl=es" class="social-icon"><img src="../public/instagram.png" alt="Instagram"></a>
+                <a href="https://twitter.com/notifications" class="social-icon"><img src="../public/twitter.png" alt="Twitter"></a>
+                <a href="https://www.youtube.com/channel/UCSfEoDHK0K6UlHOdRkqGt8Q" class="social-icon"><img src="../public/youtube.png" alt="YouTube"></a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -75,8 +74,13 @@ export default {
 .footer-info,
 .footer-links,
 .footer-contact {
+    margin-right: 50px;
     flex: 1;
     margin-bottom: 20px;
+}
+
+.footer-info {
+    margin-left: 25px;
 }
 
 .footer-info h2,
@@ -100,8 +104,12 @@ export default {
     text-decoration: none;
 }
 
+.footer-links ul li a:hover {
+    text-decoration: underline;
+}
+
 .footer-contact p {
-    margin-bottom: 20px; /* Ajuste para agregar más espacio entre los elementos */
+    margin-right: 20px;
 }
 
 .footer-social {
@@ -114,9 +122,12 @@ export default {
 
 .social-icon {
     display: inline-block;
-    color: #fff;
-    font-size: 24px;
     margin: 0 10px;
+}
+
+.social-icon img {
+    width: 30px;
+    height: 30px;
 }
 
 .footer-bottom {
