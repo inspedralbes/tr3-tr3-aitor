@@ -1,132 +1,84 @@
 <template>
-    <header class="header">
-        <div class="container">
-            <div class="top">
-                <div class="logo">
-                    <NuxtLink to="/">
-                        <img src="../public/hola.jpg" alt="Logo" class="logo-img">
-                    </NuxtLink>
-                </div>
-                <div class="search">
-                    <input type="text" placeholder="Buscar...">
-                    <button>Buscar</button>
-                </div>
-            </div>
-            <nav class="navbar">
-                <ul>
-                    <li>
-                        <NuxtLink to="/" class="nav-link">
-                            <img src="../public/casa.png" alt="Home" class="navbar-img">
-                        </NuxtLink>
-                    </li>
-
-                    <li>
-                        <NuxtLink to="/peliculas" class="nav-link">Peliculas</NuxtLink>
-                    </li>
-                    <li>
-                        <NuxtLink to="/sesiones" class="nav-link">Sesiones</NuxtLink>
-                    </li>
-                    <li>
-                        <NuxtLink to="/novedades" class="nav-link">Novedades</NuxtLink>
-                    </li>
-                    <li>
-                        <NuxtLink to="/trailers" class="nav-link">Trailers</NuxtLink>
-                    </li>
-                    <li class="login">
-                        <NuxtLink to="/login" class="login-link">Login</NuxtLink>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div>
+        <header>
+            <img src="../public/logo.jpg" alt="El Rincón del hombre mosca logo" class="header-img">
+            <p class="paragraph-header">El cine que todo el mundo quiere estar, está aquí</p>
+        </header>
+        <nav class="nav">
+            <ul>
+                <li id="home">
+                    <nuxt-link to="/"><img src="../public/casa.png" alt="Home"></nuxt-link>
+                </li>
+                <li>
+                    <nuxt-link to="/peliculas">Peliculas</nuxt-link>
+                </li>
+                <li>
+                    <nuxt-link to="/sesiones">Sesiones</nuxt-link>
+                </li>
+                <li>
+                    <nuxt-link to="/novedades">Novedades</nuxt-link>
+                </li>
+                <li>
+                    <nuxt-link to="/trailers">Trailers</nuxt-link>
+                </li>
+                <li>
+                    <nuxt-link to="/contactanos">Contactanos</nuxt-link>
+                </li>
+                <li style="float:right">
+                    <nuxt-link to="/login">Login</nuxt-link>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </template>
 
 <style scoped>
-.header {
+header {
+    text-align: center;
     background-color: black;
-    color: #fff;
-    padding: 10px 0;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.top {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.logo img.logo-img {
-    width: 80px;
-    /* Cambia el tamaño de la imagen del logo a 80px */
-    height: auto;
-}
-
-.navbar-img {
-  width: 50px; /* Cambia el tamaño de la imagen del navbar a 50px */
-  height: auto;
-}
-
-.search {
-    display: flex;
-    align-items: center;
-}
-
-.search input {
-    padding: 5px;
-    margin-right: 10px;
-}
-
-.search button {
-    padding: 5px 10px;
-    background-color: red; /* Cambia el color de fondo a rojo */
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-
-.navbar ul {
-    list-style-type: none;
-    padding: 0;
+    padding: 10px;
     margin: 0;
 }
 
-.navbar ul li {
-    display: inline;
-    margin-left: 20px;
+.header-img {
+    height: 30vh; /* Cambia la altura de la imagen del encabezado según sea necesario */
 }
 
-.navbar ul li:last-child {
-    margin-left: auto; /* Alinea el último elemento a la derecha */
+.paragraph-header {
+    padding-bottom: 1em;
+    color: white;
 }
 
-.navbar ul li a {
-    color: #fff;
+.nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: black;
+}
+
+.nav li {
+    float: left;
+}
+
+.nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
     text-decoration: none;
 }
 
-.navbar ul li a:hover {
-    text-decoration: underline;
+.nav li a:hover {
+    background-color: red;
 }
 
-.login {
-    margin-left: auto;
+.nav li:first-child {
+    border-right: 1px solid #bbb;
 }
 
-/* Estilo para el hover del enlace de navegación */
-.nav-link:hover {
-    color: red;
-}
-
-/* Estilo para el hover del enlace de inicio de sesión */
-.login-link:hover {
-    color: red;
+.nav li a img {
+    width: 20px;
+    height: auto;
 }
 </style>
