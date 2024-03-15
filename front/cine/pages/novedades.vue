@@ -100,7 +100,7 @@
                 poster: 'insidious.jpg'
             },
             {
-                id: 5,
+                id: 12,
                 title: 'Verdad o Reto',
                 sinopsis: 'Una inofensiva partida de Verdad o reto entre un grupo de amigos acaba convirtiéndose en un juego letal cuando alguien -o algo- empieza a castigar a los que mienten o no aceptan el reto.',
                 estreno: '13-04-2024',

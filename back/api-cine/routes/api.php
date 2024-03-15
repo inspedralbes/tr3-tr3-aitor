@@ -6,6 +6,7 @@ use App\Http\Controllers\PeliculaController;
 use App\Http\Controllers\EntradaController;
 use App\Http\Controllers\SesionController;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\NovedadesControlador;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,10 @@ Route::post('/crearSesion', [SesionController::class, 'crearSesion']);
 Route::get('/listarSesiones', [SesionController::class, 'listarSesiones']);
 Route::put('/modificarSesion/{id}', [SesionController::class, 'modificarSesion']);
 Route::delete('/eliminarSesion/{id}', [SesionController::class, 'eliminarSesion']);
+Route::post('/crearNovedades', [NovedadesControlador::class, 'crearNovedades']);
+Route::get('/listarNovedades', [NovedadesControlador::class, 'listarNovedades']);
+Route::put('/modificarNovedades/{id}', [NovedadesControlador::class, 'modificarNovedades']);
+Route::delete('/eliminarNovedades/{id}', [NovedadesControlador::class, 'eliminarNovedades']);
 
 
 Route::post('/register', [UserController::class, 'register']);
