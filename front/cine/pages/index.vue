@@ -119,10 +119,9 @@
 }
 
 .text-overlay {
-  background-color: black;
   position: absolute;
   bottom: 20px;
-  left: 20px;
+  left: 10px;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   opacity: 1;
