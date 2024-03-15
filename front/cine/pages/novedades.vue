@@ -1,16 +1,16 @@
 <template>
   <div>
-    <h2>Novedades de Películas</h2>
+    <h2 class="page-title">Novedades de Películas</h2>
     <div v-if="loading" class="loading">Cargando...</div>
     <div v-else class="movies-container">
-      <article v-for="movie in sortedMovies" :key="movie.id" class="movie-card">
+      <article v-for="novedad in sortedNovedades" :key="novedad.id" class="movie-card">
         <div class="movie-poster-wrapper">
-          <img :src="`${movie.poster}`" :alt="movie.title" class="movie-poster">
+          <img :src="`${novedad.poster}`" :alt="novedad.title" class="movie-poster">
         </div>
         <div class="movie-info">
-          <h3 class="movie-title">{{ movie.title }}</h3>
-          <p class="movie-synopsis">{{ movie.sinopsis }}</p>
-          <p class="movie-release">Fecha de lanzamiento: {{ movie.estreno }}</p>
+          <h3 class="movie-title">{{ novedad.title }}</h3>
+          <p class="movie-synopsis">{{ novedad.sinopsis }}</p>
+          <p class="movie-release">Fecha de lanzamiento: {{ formatDate(novedad.estreno) }}</p>
         </div>
       </article>
     </div>
@@ -21,7 +21,7 @@
 export default {
   data() {
     return {
-      movies: [],
+      novedades: [],
       loading: false
     };
   },
@@ -36,20 +36,21 @@ export default {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        // Asigna los datos a this.movies en lugar de this.peliculas
-        this.movies = data.movies; // Asegúrate de adaptar esta línea según la estructura de tu respuesta de API
+        this.novedades = data.data;
       } catch (error) {
-        console.error("Could not fetch peliculas: ", error);
+        console.error("Could not fetch novedades: ", error);
       }
+    },
+    formatDate(dateString) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString(undefined, options);
     }
   },
   computed: {
-    sortedMovies() {
-      return this.movies.slice().sort((a, b) => {
-        // Convertir las fechas a objetos Date para poder compararlas
+    sortedNovedades() {
+      return this.novedades.slice().sort((a, b) => {
         const dateA = new Date(a.estreno);
         const dateB = new Date(b.estreno);
-        // Ordenar por fecha de lanzamiento descendente (más reciente primero)
         return dateB - dateA;
       });
     }
@@ -58,13 +59,11 @@ export default {
 </script>
 
 <style scoped>
-:root {
-  --color-primary: #0056b3;
-  --color-secondary: #6c757d;
-  --color-border: #e2e2e2;
-  --background-card: #ffffff;
-  --font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  --border-radius-base: 8px;
+.page-title {
+  font-size: 2rem; /* Tamaño de fuente más grande */
+  color: var(--color-primary); /* Color principal */
+  text-align: center; /* Centrar texto */
+  margin-bottom: 20px; /* Margen inferior */
 }
 
 .movies-container {
@@ -72,7 +71,6 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   margin-bottom: 20px;
-  /* Margen inferior agregado */
 }
 
 @media (min-width: 768px) {
@@ -94,6 +92,7 @@ export default {
 }
 
 .movie-card {
+  margin: 15px;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--color-border);
