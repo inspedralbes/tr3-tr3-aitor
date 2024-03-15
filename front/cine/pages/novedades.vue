@@ -47,23 +47,28 @@ export default {
     }
   },
   computed: {
-    sortedNovedades() {
-      return this.novedades.slice().sort((a, b) => {
-        const dateA = new Date(a.estreno);
-        const dateB = new Date(b.estreno);
-        return dateB - dateA;
-      });
-    }
+  sortedNovedades() {
+    return this.novedades.slice().sort((a, b) => {
+      const dateA = new Date(a.estreno);
+      const dateB = new Date(b.estreno);
+      return dateA - dateB; // Cambiar a dateA - dateB
+    });
   }
+  }
+
 };
 </script>
 
 <style scoped>
 .page-title {
-  font-size: 2rem; /* Tamaño de fuente más grande */
-  color: var(--color-primary); /* Color principal */
-  text-align: center; /* Centrar texto */
-  margin-bottom: 20px; /* Margen inferior */
+  font-size: 2rem;
+  /* Tamaño de fuente más grande */
+  color: var(--color-primary);
+  /* Color principal */
+  text-align: center;
+  /* Centrar texto */
+  margin-bottom: 20px;
+  /* Margen inferior */
 }
 
 .movies-container {
