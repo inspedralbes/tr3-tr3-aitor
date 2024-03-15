@@ -33,6 +33,10 @@
 </template>
 
 <style scoped>
+body{
+    margin: 0;
+
+}
 header {
     text-align: center;
     background-color: black;

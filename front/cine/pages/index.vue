@@ -119,6 +119,7 @@
 }
 
 .text-overlay {
+  background-color: black;
   position: absolute;
   bottom: 20px;
   left: 20px;
