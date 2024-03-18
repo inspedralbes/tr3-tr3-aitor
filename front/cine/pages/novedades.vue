@@ -1,17 +1,16 @@
 <template>
- <div class="centro">
+  <div class="centro">
     <h2 class="page-title">Novedades de Películas</h2>
   </div>
-  <div class="peliculas-container">
-    
+  <div class="novedadess-container">
 
-    <div class="peliculas-grid">
-      <div v-for="novedad in novedades" :key="novedad.id" class="pelicula-card">
-        <img :src="novedad.poster" :alt="`Cartel de ${novedad.title}`" class="pelicula-cartel">
-        <div class="pelicula-info">
-          <h2 class="pelicula-titulo">{{ novedad.title }}</h2>
-          <p class="pelicula-genero">{{ novedad.sinopsis }}</p>
-          <p class="pelicula-duracion">Fecha de lanzamiento: {{ formatDate(novedad.estreno) }}</p>
+
+    <div class="novedadess-grid">
+      <div v-for="novedad in novedades" :key="novedad.id" class="novedades-card">
+        <img :src="novedad.poster" :alt="`Cartel de ${novedad.title}`" class="novedades-cartel">
+        <div class="novedades-info">
+          <h2 class="novedades-titulo">{{ novedad.title }}</h2>
+          <p class="novedades-duracion">Fecha de lanzamiento: {{ formatDate(novedad.estreno) }}</p>
         </div>
       </div>
     </div>
@@ -48,13 +47,13 @@ export default {
     }
   },
   computed: {
-  sortedNovedades() {
-    return this.novedades.slice().sort((a, b) => {
-      const dateA = new Date(a.estreno);
-      const dateB = new Date(b.estreno);
-      return dateA - dateB; // Cambiar a dateA - dateB
-    });
-  }
+    sortedNovedades() {
+      return this.novedades.slice().sort((a, b) => {
+        const dateA = new Date(a.estreno);
+        const dateB = new Date(b.estreno);
+        return dateA - dateB; // Cambiar a dateA - dateB
+      });
+    }
   }
 
 };
@@ -67,18 +66,21 @@ export default {
   margin-bottom: 50px;
 }
 
-.peliculas-container {
-  max-width: 1200px; /* Hacer el contenedor más grande */
+.novedadess-container {
+  max-width: 1200px;
+  /* Hacer el contenedor más grande */
 }
 
-.peliculas-grid {
+.novedadess-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Mostrar 4 películas por fila */
+  grid-template-columns: repeat(4, 1fr);
+  /* Mostrar 4 películas por fila */
   gap: 30px;
 }
 
-.pelicula-card {
-  width: 300px; /* Ajustar el ancho de las tarjetas de película */
+.novedades-card {
+  width: 300px;
+  /* Ajustar el ancho de las tarjetas de película */
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -87,29 +89,29 @@ export default {
   margin-bottom: 20px;
 }
 
-.pelicula-card:hover {
+.novedades-card:hover {
   transform: translateY(-5px);
 }
 
-.pelicula-cartel {
+.novedades-cartel {
   width: 100%;
   height: auto;
   border-radius: 20px 20px 0 0;
 }
 
-.pelicula-info {
+.novedades-info {
   padding: 20px;
 }
 
-.pelicula-titulo {
+.novedades-titulo {
   font-size: 1.6rem;
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
 }
 
-.pelicula-genero,
-.pelicula-duracion {
+.novedades-genero,
+.novedades-duracion {
   font-size: 1.2rem;
   color: #666;
   margin-bottom: 5px;
