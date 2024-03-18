@@ -54,7 +54,7 @@ export default {
         const data = await response.json();
         this.peliculas = data.data.map(pelicula => ({
           ...pelicula,
-          trailer: `https://www.youtube.com/embed/gp4Z6bZ5tVU`
+          trailer: `https://www.youtube.com/embed/${pelicula.id_youtube}`
         }));
       } catch (error) {
         console.error("Could not fetch peliculas: ", error);
@@ -69,7 +69,7 @@ export default {
         const data = await response.json();
         this.novedades = data.data.map(novedad => ({
           ...novedad,
-          trailer: `${novedad.trailer}`
+          trailer: `https://www.youtube.com/embed/${novedad.id_youtube}`
         }));
       } catch (error) {
         console.error("Could not fetch novedades: ", error);
@@ -103,7 +103,7 @@ export default {
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color: black;
   padding: 20px;
   border-radius: 10px;
 }
@@ -117,7 +117,7 @@ export default {
 
 .cerrar:hover,
 .cerrar:focus {
-  color: black;
+  color: white;
   text-decoration: none;
   cursor: pointer;
 }
