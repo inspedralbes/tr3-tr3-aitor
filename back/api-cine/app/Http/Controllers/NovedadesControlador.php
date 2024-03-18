@@ -17,6 +17,7 @@ class NovedadesControlador extends Controller
             'estreno' => 'required|date_format:Y-m-d',
             'poster' => 'required|string|max:255',
             'trailer' => 'required|string|max:255',
+            'id_youtube' => 'required|string|max:255',
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -29,6 +30,7 @@ class NovedadesControlador extends Controller
         $novedades->estreno = $request->estreno;
         $novedades->poster = $request->poster;
         $novedades->trailer = $request->trailer;
+        $novedades->id_youtube = $request->id_youtube;
         $novedades->save();
         return response()->json([
             'message' => 'Novedades creada con éxito',

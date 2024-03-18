@@ -8,7 +8,7 @@ class Pelicula extends Model
 {
     protected $table = 'peliculas';
 
-    protected $fillable = ['titulo', 'duracion', 'genero', 'sinopsis', 'cartel', 'trailer', 'fechaEstreno', 'sesion_id'];
+    protected $fillable = ['titulo', 'duracion', 'genero', 'sinopsis', 'cartel', 'trailer', 'fechaEstreno', 'sesion_id, id_youtube'];
 
 
     // Relación con la tabla 'sesions'

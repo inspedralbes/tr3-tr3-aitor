@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('estreno');
             $table->string('poster');
             $table->string('trailer');
+            $table->string('id_youtube');
         });
     }
 

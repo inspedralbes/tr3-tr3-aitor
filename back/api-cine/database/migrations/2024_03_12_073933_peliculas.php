@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('sinopsis');
             $table->string('cartel');
             $table->string('trailer');
+            $table->string('id_youtube');
             $table->dateTime('fechaEstreno');
             $table->unsignedBigInteger('sesion_id')->nullable();
 
