@@ -23,6 +23,7 @@
         <img :src="peliculaSeleccionada.cartel" :alt="`Cartel de ${peliculaSeleccionada.titulo}`" class="cartel-pelicula">
         <div class="info-pelicula">
           <h2 class="titulo-pelicula">{{ peliculaSeleccionada.titulo }}</h2>
+          <p class="genero-pelicula">{{ peliculaSeleccionada.genero }}</p>
           <p class="sinopsis-pelicula">{{ peliculaSeleccionada.sinopsis }}</p>
           <p class="duracion-pelicula">Duración: {{ convertirDuracion(peliculaSeleccionada.duracion) }}</p>
           <p class="fecha-pelicula">Fecha de lanzamiento: {{ formatDate(peliculaSeleccionada.fechaEstreno) }}</p>
@@ -97,6 +98,7 @@ export default {
     background-color: #fefefe;
     padding: 20px;
     border-radius: 10px;
+    width: 1000px; /* Ancho fijo del modal */
 }
 
 .cerrar {
@@ -143,7 +145,7 @@ export default {
     font-size: 1.2rem;
     margin-bottom: 10px;
 }
-
+.genero-pelicula,
 .duracion-pelicula,
 .fecha-pelicula {
     font-size: 1rem;
