@@ -1,13 +1,18 @@
 <template>
-    <div>
-      <h1>Sesiones de Cine</h1>
-      <div v-for="sesion in sesiones" :key="sesion.id" class="sesion-card" @click="mostrarModal(sesion)">
-        <div class="sesion-info">
-          <h2 class="sesion-fecha">{{ sesion.fecha }}</h2>
-          <p class="sesion-dia-espectador">Día del espectador: {{ sesion.diaEspectador ? 'Sí' : 'No' }}</p>
-          <h3>Película:</h3>
-          <p>{{ sesion.pelicula.titulo }}</p>
-          <!-- Mostrar más detalles de la película si es necesario -->
+    <div class="centro">
+      <h2 class="page-title">Sesiones de Cine</h2>
+    </div>
+    <div class="peliculas-container">
+      <div class="peliculas-grid">
+        <div v-for="sesion in sesiones" :key="sesion.id" class="pelicula-card" @click="mostrarModal(sesion)">
+          <img :src="sesion.pelicula.cartel" :alt="`Cartel de ${sesion.pelicula.titulo}`" class="pelicula-cartel">
+          <div class="pelicula-info">
+            <h2 class="pelicula-titulo">{{ sesion.pelicula.titulo }}</h2>
+            <p class="pelicula-genero">{{ sesion.pelicula.genero }}</p>
+            <p class="pelicula-duracion">Duración: {{ convertirDuracion(sesion.pelicula.duracion) }}</p>
+            <p class="sesion-horario">Horario: {{ sesion.fecha }}</p>
+            <button class="button button-comprar" @click="comprarEntradas(sesion)">Comprar entradas</button>
+          </div>
         </div>
       </div>
     </div>
@@ -17,9 +22,7 @@
   export default {
     data() {
       return {
-        sesiones: [],
-        modalAbierto: false,
-        sesionSeleccionada: null
+        sesiones: []
       };
     },
     async mounted() {
@@ -38,48 +41,105 @@
           console.error("Could not fetch sesiones: ", error);
         }
       },
-      mostrarModal(sesion) {
-        this.sesionSeleccionada = sesion;
-        this.modalAbierto = true;
+      convertirDuracion(minutos) {
+        const horas = Math.floor(minutos / 60);
+        const minutosRestantes = minutos % 60;
+        return `${horas}h ${minutosRestantes}min`;
       },
-      cerrarModal() {
-        this.modalAbierto = false;
-        this.sesionSeleccionada = null;
+      comprarEntradas(sesion) {
+        // Lógica para comprar entradas
+        console.log("Comprar entradas para la sesión:", sesion);
       }
     }
   };
   </script>
   
   <style scoped>
-  /* Estilos para las tarjetas de sesiones */
-  .sesion-card {
-    width: 300px;
-    /* Ajustar el ancho de las tarjetas de sesión */
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-  }
-  
-  .sesion-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .sesion-info {
+  /* Estilos para la información de la película */
+  .pelicula-info {
     padding: 20px;
+    background-color: white; /* Color de fondo */
+    border-radius: 0 0 20px 20px; /* Ajuste del borde inferior */
   }
   
-  .sesion-fecha {
-    font-size: 1.6rem;
+  .pelicula-titulo {
+    font-size: 1.4rem; /* Tamaño del título más pequeño */
     font-weight: bold;
     color: #333;
     margin-bottom: 10px;
   }
   
-  .sesion-dia-espectador {
-    font-size: 1.2rem;
+  .pelicula-genero,
+  .pelicula-duracion,
+  .sesion-horario {
+    font-size: 1rem; /* Tamaño de la fuente más pequeño */
     color: #666;
     margin-bottom: 5px;
+  }
+  
+  .button-comprar {
+    background-color: #FF4500; /* Color rojo */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: block; /* Cambiar a bloque para ocupar todo el ancho disponible */
+    margin: 10px auto; /* Centrar horizontalmente y aplicar margen */
+    font-size: 14px; /* Tamaño del botón más pequeño */
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 8px 16px; /* Ajuste del relleno del botón */
+    transition: background-color 0.3s;
+    margin-top: 25px;
+  }
+  
+  .button-comprar:hover {
+    background-color: #FF6347; /* Cambio de color al pasar el ratón */
+  }
+  
+  .button-comprar:focus {
+    outline: none;
+  }
+  
+  /* Estilos para las tarjetas de películas */
+  .page-title {
+    font-size: 2rem;
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .peliculas-container {
+    max-width: 1200px;
+    /* Hacer el contenedor más grande */
+  }
+  
+  .peliculas-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* Mostrar 4 películas por fila */
+    gap: 30px;
+  }
+  
+  .pelicula-card {
+    width: 300px;
+    /* Ajustar el ancho de las tarjetas de película */
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    margin-left: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .pelicula-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .pelicula-cartel {
+    width: 100%;
+    height: auto;
+    border-radius: 20px 20px 0 0;
   }
   </style>
   
