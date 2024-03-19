@@ -16,7 +16,7 @@
     <div class="main-page">
       <div class="section" id="recipes">
         <nuxt-link to="/peliculas">
-          <img src="../public/peliculas.jpg" alt="Nuestros Productos" class="rectangular-img" />
+          <img src="../public/peliculas2.jpg" alt="Nuestros Productos" class="rectangular-img" />
           <div class="text-overlay">
             <h2>NUESTRAS PELICULAS</h2>
             <p>Peliculas de alta categoría</p>
@@ -126,6 +126,7 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   opacity: 1;
   transition: opacity 0.3s ease;
+  background-color: black;
 }
 
 .section:hover .text-overlay {
