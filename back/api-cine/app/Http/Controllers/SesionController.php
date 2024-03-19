@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Sesion;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 
 class SesionController extends Controller
 {
@@ -29,12 +28,13 @@ class SesionController extends Controller
         ],201);
     }
     
-    public function listarSesiones(){
-        $sesiones=Sesion::all();
+    public function listarSesiones() {
+        $sesiones = Sesion::with('pelicula')->get();
         return response()->json([
-            'data'=>$sesiones
+            'data' => $sesiones
         ]);
     }
+    
     public function modificarSesion(Request $request, $id){
         $validator=Validator::make($request->all(),[
             'fecha'=>'sometimes|date_format:Y-m-d',
@@ -63,6 +63,7 @@ class SesionController extends Controller
             'data'=>$sesion
         ]);
     }
+    
     public function eliminarSesion($id){
         $sesion=Sesion::find($id);
         if(!$sesion){

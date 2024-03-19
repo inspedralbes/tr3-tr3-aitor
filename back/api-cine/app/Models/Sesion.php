@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Pelicula;
 
 class Sesion extends Model
 {
-    protected $table = 'sesions';
-    protected $fillable = ['fecha', 'diaEspectador'];
-    public function sesion()
+    protected $table = 'sesions'; // Nombre de la tabla en la base de datos
+
+    protected $fillable = ['fecha', 'diaEspectador']; // Campos que se pueden asignar de forma masiva
+
+    public function pelicula()
     {
-        return $this->belongsTo(Sesion::class, 'sesion_id');
+        return $this->hasOne(Pelicula::class, 'sesion_id'); // Relación con el modelo Pelicula
     }
     public $timestamps = false;
 }
