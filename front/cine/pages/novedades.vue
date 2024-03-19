@@ -18,10 +18,14 @@
   <div v-if="modalAbierto" class="modal">
     <div class="modal-contenido novedades-modal">
       <span class="cerrar" @click="cerrarModal">&times;</span>
-      <h2 class="titulo-novedad">{{ novedadSeleccionada.title }}</h2>
-      <img :src="novedadSeleccionada.poster" :alt="`Cartel de ${novedadSeleccionada.title}`" class="cartel-novedad">
-      <p class="duracion-novedad">Fecha de lanzamiento: {{ formatDate(novedadSeleccionada.estreno) }}</p>
-      <p class="sinopsis-novedad">{{ novedadSeleccionada.sinopsis }}</p>
+      <div class="modal-content">
+        <img :src="novedadSeleccionada.poster" :alt="`Cartel de ${novedadSeleccionada.title}`" class="cartel-novedad">
+        <div class="novedades-info">
+          <h2 class="titulo-novedad">{{ novedadSeleccionada.title }}</h2>
+          <p class="sinopsis-novedad">{{ novedadSeleccionada.sinopsis }}</p>
+          <p class="duracion-novedad">Fecha de lanzamiento: {{ formatDate(novedadSeleccionada.estreno) }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -95,6 +99,7 @@ export default {
     background-color: #fefefe;
     padding: 20px;
     border-radius: 10px;
+    width: 80%; /* Modificar el ancho del modal según tus necesidades */
 }
 
 .cerrar {
@@ -111,31 +116,38 @@ export default {
     cursor: pointer;
 }
 
-/* Estilos para la información de la novedad */
-.novedades-modal {
-    text-align: center;
-}
 
-.titulo-novedad {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
+.modal-content {
+  display: flex;
 }
 
 .cartel-novedad {
     width: 200px;
     height: auto;
-    margin: 0 auto 20px; /* Centrar la imagen */
-    display: block; /* Asegurar que la imagen esté centrada */
+    border-radius: 10px;
+    margin-right: 20px; /* Espacio entre la imagen y la información */
+}
+
+.novedades-info {
+    flex-grow: 1; /* Permite que el contenido ocupe todo el espacio disponible */
+}
+
+.titulo-novedad {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #333; /* Cambiar el color del título si es necesario */
 }
 
 .sinopsis-novedad {
     font-size: 1.2rem;
     margin-bottom: 10px;
+    color: #666; /* Cambiar el color del texto de la sinopsis si es necesario */
+    line-height: 1.5; /* Espaciado entre líneas */
 }
 
 .duracion-novedad {
     font-size: 1rem;
-    color: #666;
+    color: #666; /* Cambiar el color del texto de la duración si es necesario */
     margin-bottom: 5px;
 }
 
