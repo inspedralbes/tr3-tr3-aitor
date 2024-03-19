@@ -2,7 +2,7 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-info">
-                <h2>Can Casteller</h2>
+                <h2>Can Castellet</h2>
                 <p>Somos un cine localizado en la ciudad de Sant Boi de Llobregat, dedicado a brindar una experiencia cinematográfica excepcional a nuestros visitantes.</p>
             </div>
             <div class="footer-links">
@@ -32,9 +32,9 @@
                 <h3>Contacto</h3>
                 <p>Dirección: Carrer de Jaume I, 28, 08830 Sant Boi de Llobregat, Barcelona</p>
                 <br>
-                <p>Teléfono: 936 61 61 12</p>
+                <p>Teléfono: (+34) 93 284 07 19</p>
                 <br>
-                <p>Email: info@cancasteller.com</p>
+                <p>Email: info@cancastellet.com</p>
             </div>
         </div>
         <div class="footer-social">
@@ -47,17 +47,10 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2024 En Can Casteller. Todos los derechos reservados.</p>
+            <p>&copy; 2024 En Can Castellet. Todos los derechos reservados.</p>
         </div>
     </footer>
 </template>
-
-<script>
-export default {
-    // Opciones del componente, si es necesario
-}
-</script>
-
 <style scoped>
 .footer {
     background-color: black;
