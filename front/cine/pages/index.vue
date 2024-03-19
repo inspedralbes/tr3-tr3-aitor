@@ -93,7 +93,7 @@
 
 .main-page {
   margin-left: 20vw;
-  margin-top: 5vh;
+  margin-top: 25vh;
   margin-bottom: 5vh;
   display: flex;
   justify-content: space-between; /* Cambiado de center a space-between */
