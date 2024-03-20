@@ -4,29 +4,27 @@
       <img :src="pelicula.imagen" alt="Imagen de la Película" class="pelicula-imagen" />
       <h2 class="pelicula-titulo">{{ pelicula.titulo }}</h2>
     </div>
-    <div class="plan-asientos">
-      <div
-        v-for="(fila, indiceFila) in planAsientos"
-        :key="indiceFila"
-        class="fila"
-      >
-        <div
-          v-for="(asiento, indiceAsiento) in fila"
-          :key="indiceAsiento"
-          class="asiento"
-          @click="alternarSeleccion(indiceFila, indiceAsiento)"
-          :class="{ seleccionado: asiento.seleccionado }"
-        >
-          <img :src="asiento.imagen" :alt="asiento.etiqueta" class="asiento-imagen" />
+    <div class="contenido-ticket">
+      <div class="plan-asientos">
+        <div v-for="(fila, indiceFila) in planAsientos":key="indiceFila"class="fila">
+          <div
+            v-for="(asiento, indiceAsiento) in fila"
+            :key="indiceAsiento"
+            class="asiento"
+            @click="alternarSeleccion(indiceFila, indiceAsiento)"
+            :class="{ seleccionado: asiento.seleccionado }"
+          >
+            <img :src="asiento.imagen" :alt="asiento.etiqueta" class="asiento-imagen" />
+          </div>
         </div>
       </div>
     </div>
     <div class="info-asiento" v-if="asientosSeleccionados.length > 0">
-      <h3 class="info-titulo">Información de Asientos Seleccionados</h3>
-      <p>Total de Asientos Seleccionados: <span class="info-dato">{{ totalAsientosSeleccionados }}</span></p>
-      <p>Precio Total: <span class="info-dato">{{ precioTotal.toFixed(2) }}€</span></p>
-      <button @click="comprar" class="boton-comprar">Comprar</button>
-    </div>
+        <h3 class="info-titulo">Información de Asientos Seleccionados</h3>
+        <p>Total de Asientos Seleccionados: <span class="info-dato">{{ totalAsientosSeleccionados }}</span></p>
+        <p>Precio Total: <span class="info-dato">{{ precioTotal.toFixed(2) }}€</span></p>
+        <button @click="comprar" class="boton-comprar">Comprar</button>
+      </div>
   </div>
 </template>
 
@@ -90,26 +88,33 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .pelicula-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: space-between;
+  padding: 20px;
 }
 
 .pelicula-info {
-  margin-bottom: 20px;
+  width: 30%;
 }
 
 .pelicula-imagen {
-  max-width: 300px;
+  max-width: 100%;
   height: auto;
 }
 
 .pelicula-titulo {
   font-size: 24px;
   margin-top: 10px;
+}
+
+.contenido-ticket {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .plan-asientos {
