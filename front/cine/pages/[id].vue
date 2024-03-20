@@ -1,102 +1,120 @@
 <template>
-    <div class="peliculas-container">
-      <div class="peliculas-grid">
-        <div v-for="sesion in sesionesOrdenadas" :key="sesion.id" class="pelicula-card">
-          <img :src="sesion.pelicula.cartel" :alt="`Cartel de ${sesion.pelicula.titulo}`" class="pelicula-cartel">
-          <div class="pelicula-info">
-            <h2 class="pelicula-titulo">{{ sesion.pelicula.titulo }}</h2>
+  <div>
+    <div class="pantalla-pelicula">
+      <img :src="pelicula.imagen" alt="Imagen de la Película" />
+      <h2>{{ pelicula.titulo }}</h2>
+      <div class="plan-asientos">
+        <div
+          v-for="(fila, indiceFila) in planAsientos"
+          :key="indiceFila"
+          class="fila"
+        >
+          <div
+            v-for="(asiento, indiceAsiento) in fila"
+            :key="indiceAsiento"
+            class="asiento"
+            @click="alternarSeleccion(indiceFila, indiceAsiento)"
+            :class="{ seleccionado: asiento.seleccionado }"
+          >
+            <img :src="asiento.imagen" :alt="asiento.etiqueta" />
           </div>
         </div>
       </div>
     </div>
-    
-    <!-- Detalles de la compra -->
-    <div v-if="detalleCompra.mostrando" class="detalle-compra">
-      <div class="pelicula-seleccionada">
-        <img :src="detalleCompra.pelicula.cartel" :alt="`Cartel de ${detalleCompra.pelicula.titulo}`" class="pelicula-cartel">
-        <h3>{{ detalleCompra.pelicula.titulo }}</h3>
-      </div>
-      <div class="asientos">
-        <!-- Aquí puedes mostrar el mapa de asientos -->
-        <div class="mapa-asientos">
-          <!-- Lógica para mostrar la cuadrícula de asientos -->
-        </div>
-      </div>
-      <div class="info-entradas">
-        <p>Entradas seleccionadas: {{ detalleCompra.cantidadEntradas }}</p>
-        <p>Precio total: {{ detalleCompra.cantidadEntradas * 5 }}€</p>
-        <button class="button button-comprar" @click="confirmarCompra">Confirmar compra</button>
-      </div>
+    <div class="info-asiento" v-if="asientosSeleccionados.length > 0">
+      <h3>Información de Asientos Seleccionados</h3>
+      <p>Total de Asientos Seleccionados: {{ totalAsientosSeleccionados }}</p>
+      <p>Precio Total: {{ precioTotal }}€</p>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        sesiones: [],
-        detalleCompra: {
-          mostrando: false,
-          pelicula: null,
-          cantidadEntradas: 0
-        }
-      };
-    },
-    async mounted() {
-      await this.fetchSesiones();
-    },
-    computed: {
-      sesionesOrdenadas() {
-        // Ordenar las sesiones por fecha y hora
-        return this.sesiones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-      }
-    },
-    methods: {
-      async fetchSesiones() {
-        try {
-          const response = await fetch('http://127.0.0.1:8000/api/listarSesiones');
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const data = await response.json();
-          this.sesiones = data.data;
-        } catch (error) {
-          console.error("Could not fetch sesiones: ", error);
-        }
-      },
-      mostrarDetallesCompra(sesion) {
-        this.detalleCompra.mostrando = true;
-        this.detalleCompra.pelicula = sesion.pelicula;
-      },
-      confirmarCompra() {
-        // Lógica para confirmar la compra
-      }
-    }
-  };
-  </script>
-  
-  <style scoped>
-  /* Estilos para la información de la película */
+  </div>
+</template>
 
-  /* Estilos para los detalles de la compra */
-  .detalle-compra {
-    background-color: #f8f8f8;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 20px;
-  }
-  .pelicula-seleccionada {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  .pelicula-seleccionada img {
-    max-width: 200px;
-  }
-  .mapa-asientos {
-    /* Estilos para el mapa de asientos */
-  }
-  .info-entradas {
-    margin-top: 20px;
-  }
-  </style>
-  
+<script>
+export default {
+  data() {
+    return {
+      pelicula: {
+        titulo: 'Ant-Man i la Avispa: Quantumania',
+        imagen: './ant.jpg',
+      },
+      planAsientos: this.generarPlanAsientos(10, 10),
+      asientosSeleccionados: [],
+    };
+  },
+  computed: {
+    totalAsientosSeleccionados() {
+      return this.asientosSeleccionados.length;
+    },
+    precioTotal() {
+      return this.asientosSeleccionados.reduce((total, asiento) => total + asiento.precio, 0);
+    },
+  },
+  methods: {
+    generarPlanAsientos(filas, asientosPorFila) {
+      const planAsientos = [];
+      for (let i = 1; i <= filas; i++) {
+        const fila = [];
+        for (let j = 1; j <= asientosPorFila; j++) {
+          fila.push({
+            etiqueta: `F${i}A${j}`,
+            precio: 5.50, // Precio por defecto
+            cantidad: 1, // Cantidad por defecto
+            seleccionado: false,
+            imagen: './butaca.png', // URL de la imagen del asiento seleccionado
+          });
+        }
+        planAsientos.push(fila);
+      }
+      return planAsientos;
+    },
+    alternarSeleccion(indiceFila, indiceAsiento) {
+      const asiento = this.planAsientos[indiceFila][indiceAsiento];
+      asiento.seleccionado = !asiento.seleccionado;
+
+      if (asiento.seleccionado) {
+        this.asientosSeleccionados.push(asiento);
+        asiento.imagen = './butaca_roja.png'; // Cambiar la imagen del asiento seleccionado
+      } else {
+        const indice = this.asientosSeleccionados.findIndex(asientoSeleccionado => asientoSeleccionado.etiqueta === asiento.etiqueta);
+        if (indice !== -1) {
+          this.asientosSeleccionados.splice(indice, 1);
+          asiento.imagen = './butaca.png'; // Cambiar la imagen del asiento a su estado original
+        }
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+.pantalla-pelicula {
+  margin-bottom: 20px;
+}
+
+.plan-asientos {
+  display: flex;
+  flex-direction: column;
+}
+
+.fila {
+  display: flex;
+}
+
+.asiento {
+  border: 1px solid black;
+  width: 50px; /* Ancho del asiento */
+  height: 50px; /* Alto del asiento */
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+
+
+.asiento img {
+  max-width: 100%; /* Ajustar tamaño de la imagen */
+  max-height: 100%; /* Ajustar tamaño de la imagen */
+}
+</style>
