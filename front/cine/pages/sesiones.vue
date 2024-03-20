@@ -4,13 +4,13 @@
     </div>
     <div class="peliculas-container">
       <div class="peliculas-grid">
-        <div v-for="sesion in sesiones" :key="sesion.id" class="pelicula-card" @click="mostrarModal(sesion)">
+        <div v-for="sesion in sesionesOrdenadas" :key="sesion.id" class="pelicula-card" @click="mostrarModal(sesion)">
           <img :src="sesion.pelicula.cartel" :alt="`Cartel de ${sesion.pelicula.titulo}`" class="pelicula-cartel">
           <div class="pelicula-info">
             <h2 class="pelicula-titulo">{{ sesion.pelicula.titulo }}</h2>
             <p class="pelicula-genero">{{ sesion.pelicula.genero }}</p>
             <p class="pelicula-duracion">Duración: {{ convertirDuracion(sesion.pelicula.duracion) }}</p>
-            <p class="sesion-horario">Horario: {{ sesion.fecha }}</p>
+            <p class="sesion-horario">Horario: {{ formatearFecha(sesion.fecha) }}</p>
             <button class="button button-comprar" @click="comprarEntradas(sesion)">Comprar entradas</button>
           </div>
         </div>
@@ -27,6 +27,12 @@
     },
     async mounted() {
       await this.fetchSesiones();
+    },
+    computed: {
+      sesionesOrdenadas() {
+        // Ordenar las sesiones por fecha y hora
+        return this.sesiones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+      }
     },
     methods: {
       async fetchSesiones() {
@@ -45,6 +51,10 @@
         const horas = Math.floor(minutos / 60);
         const minutosRestantes = minutos % 60;
         return `${horas}h ${minutosRestantes}min`;
+      },
+      formatearFecha(fecha) {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+        return new Date(fecha).toLocaleDateString('es-ES', options);
       },
       comprarEntradas(sesion) {
         // Lógica para comprar entradas
