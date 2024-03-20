@@ -24,7 +24,8 @@
     <div class="info-asiento" v-if="asientosSeleccionados.length > 0">
       <h3>Información de Asientos Seleccionados</h3>
       <p>Total de Asientos Seleccionados: {{ totalAsientosSeleccionados }}</p>
-      <p>Precio Total: {{ precioTotal }}€</p>
+      <p>Precio Total: {{ precioTotal.toFixed(2) }}€</p>
+      <button @click="comprar" class="boton-comprar">Comprar</button>
     </div>
   </div>
 </template>
@@ -82,6 +83,10 @@ export default {
         }
       }
     },
+    comprar() {
+      // Lógica para comprar los asientos seleccionados
+      alert('Compra realizada correctamente');
+    },
   },
 };
 </script>
@@ -111,10 +116,26 @@ export default {
   cursor: pointer;
 }
 
-
-
 .asiento img {
   max-width: 100%; /* Ajustar tamaño de la imagen */
   max-height: 100%; /* Ajustar tamaño de la imagen */
+}
+
+.info-asiento {
+  margin-top: 20px;
+}
+
+.boton-comprar {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.boton-comprar:hover {
+  background-color: #0056b3;
 }
 </style>
