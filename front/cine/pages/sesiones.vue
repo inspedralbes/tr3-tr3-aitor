@@ -1,68 +1,68 @@
 <template>
-    <div class="centro">
-      <h2 class="page-title">Sesiones de Cine</h2>
-    </div>
-    <div class="peliculas-container">
-      <div class="peliculas-grid">
-        <div v-for="sesion in sesionesOrdenadas" :key="sesion.id" class="pelicula-card" @click="mostrarModal(sesion)">
-          <img :src="sesion.pelicula.cartel" :alt="`Cartel de ${sesion.pelicula.titulo}`" class="pelicula-cartel">
-          <div class="pelicula-info">
-            <h2 class="pelicula-titulo">{{ sesion.pelicula.titulo }}</h2>
-            <p class="pelicula-genero">{{ sesion.pelicula.genero }}</p>
-            <p class="pelicula-duracion">Duración: {{ convertirDuracion(sesion.pelicula.duracion) }}</p>
-            <p class="sesion-horario">Horario: {{ formatearFecha(sesion.fecha) }}</p>
-            <button class="button button-comprar" @click="comprarEntradas(sesion)">Comprar entradas</button>
-          </div>
+  <div class="centro">
+    <h2 class="page-title">Sesiones de Cine</h2>
+  </div>
+  <div class="peliculas-container">
+    <div class="peliculas-grid">
+      <div v-for="sesion in sesionesOrdenadas" :key="sesion.id" class="pelicula-card">
+        <img :src="sesion.pelicula.cartel" :alt="`Cartel de ${sesion.pelicula.titulo}`" class="pelicula-cartel">
+        <div class="pelicula-info">
+          <h2 class="pelicula-titulo">{{ sesion.pelicula.titulo }}</h2>
+          <p class="pelicula-genero">{{ sesion.pelicula.genero }}</p>
+          <p class="pelicula-duracion">Duración: {{ convertirDuracion(sesion.pelicula.duracion) }}</p>
+          <p class="sesion-horario">Horario: {{ formatearFecha(sesion.fecha) }}</p>
+          <button class="button button-comprar" @click="redireccionarCompraEntradas(sesion)">Comprar entradas</button>
         </div>
       </div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        sesiones: []
-      };
-    },
-    async mounted() {
-      await this.fetchSesiones();
-    },
-    computed: {
-      sesionesOrdenadas() {
-        // Ordenar las sesiones por fecha y hora
-        return this.sesiones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-      }
-    },
-    methods: {
-      async fetchSesiones() {
-        try {
-          const response = await fetch('http://127.0.0.1:8000/api/listarSesiones');
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const data = await response.json();
-          this.sesiones = data.data;
-        } catch (error) {
-          console.error("Could not fetch sesiones: ", error);
-        }
-      },
-      convertirDuracion(minutos) {
-        const horas = Math.floor(minutos / 60);
-        const minutosRestantes = minutos % 60;
-        return `${horas}h ${minutosRestantes}min`;
-      },
-      formatearFecha(fecha) {
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
-        return new Date(fecha).toLocaleDateString('es-ES', options);
-      },
-      comprarEntradas(sesion) {
-        // Lógica para comprar entradas
-        console.log("Comprar entradas para la sesión:", sesion);
-      }
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      sesiones: []
+    };
+  },
+  async mounted() {
+    await this.fetchSesiones();
+  },
+  computed: {
+    sesionesOrdenadas() {
+      // Ordenar las sesiones por fecha y hora
+      return this.sesiones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     }
-  };
-  </script>
+  },
+  methods: {
+    async fetchSesiones() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/listarSesiones');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        this.sesiones = data.data;
+      } catch (error) {
+        console.error("Could not fetch sesiones: ", error);
+      }
+    },
+    convertirDuracion(minutos) {
+      const horas = Math.floor(minutos / 60);
+      const minutosRestantes = minutos % 60;
+      return `${horas}h ${minutosRestantes}min`;
+    },
+    formatearFecha(fecha) {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+      return new Date(fecha).toLocaleDateString('es-ES', options);
+    },
+    redireccionarCompraEntradas(sesion) {
+      // Redireccionar a la página de compra de entradas
+      this.$router.push(`${sesion.id}`);
+    }
+  }
+};
+</script>
   
   <style scoped>
   /* Estilos para la información de la película */
