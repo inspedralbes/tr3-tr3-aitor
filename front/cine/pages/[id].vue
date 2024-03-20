@@ -6,14 +6,8 @@
     </div>
     <div class="contenido-ticket">
       <div class="plan-asientos">
-        <div v-for="(fila, indiceFila) in planAsientos":key="indiceFila"class="fila">
-          <div
-            v-for="(asiento, indiceAsiento) in fila"
-            :key="indiceAsiento"
-            class="asiento"
-            @click="alternarSeleccion(indiceFila, indiceAsiento)"
-            :class="{ seleccionado: asiento.seleccionado }"
-          >
+        <div v-for="(fila, indiceFila) in planAsientos" :key="indiceFila" class="fila">
+          <div v-for="(asiento, indiceAsiento) in fila" :key="indiceAsiento" class="asiento" @click="alternarSeleccion(indiceFila, indiceAsiento)" :class="{ seleccionado: asiento.seleccionado }">
             <img :src="asiento.imagen" :alt="asiento.etiqueta" class="asiento-imagen" />
           </div>
         </div>
@@ -21,6 +15,9 @@
     </div>
     <div class="info-asiento" v-if="asientosSeleccionados.length > 0">
         <h3 class="info-titulo">Información de Asientos Seleccionados</h3>
+        <div v-for="(asiento, index) in asientosSeleccionados" :key="index">
+          <p>Asiento {{ asiento.etiqueta }} - Fila {{ obtenerFila(asiento.etiqueta) }}, Columna {{ obtenerColumna(asiento.etiqueta) }}</p>
+        </div>
         <p>Total de Asientos Seleccionados: <span class="info-dato">{{ totalAsientosSeleccionados }}</span></p>
         <p>Precio Total: <span class="info-dato">{{ precioTotal.toFixed(2) }}€</span></p>
         <button @click="comprar" class="boton-comprar">Comprar</button>
@@ -36,8 +33,9 @@ export default {
         titulo: 'Ant-Man i la Avispa: Quantumania',
         imagen: './ant.jpg',
       },
-      planAsientos: this.generarPlanAsientos(10, 10),
+      planAsientos: this.generarPlanAsientos(10, 12), // Cambio a 10 filas y 12 columnas
       asientosSeleccionados: [],
+      maxAsientosSeleccionados: 10 // Máximo de butacas seleccionadas
     };
   },
   computed: {
@@ -68,26 +66,37 @@ export default {
     },
     alternarSeleccion(indiceFila, indiceAsiento) {
       const asiento = this.planAsientos[indiceFila][indiceAsiento];
-      asiento.seleccionado = !asiento.seleccionado;
+      if (this.totalAsientosSeleccionados < this.maxAsientosSeleccionados || asiento.seleccionado) {
+        asiento.seleccionado = !asiento.seleccionado;
 
-      if (asiento.seleccionado) {
-        this.asientosSeleccionados.push(asiento);
-        asiento.imagen = './butaca_roja.png'; // Cambiar la imagen del asiento seleccionado
-      } else {
-        const indice = this.asientosSeleccionados.findIndex(asientoSeleccionado => asientoSeleccionado.etiqueta === asiento.etiqueta);
-        if (indice !== -1) {
-          this.asientosSeleccionados.splice(indice, 1);
-          asiento.imagen = './butaca.png'; // Cambiar la imagen del asiento a su estado original
+        if (asiento.seleccionado) {
+          this.asientosSeleccionados.push(asiento);
+          asiento.imagen = './butaca_roja.png'; // Cambiar la imagen del asiento seleccionado
+        } else {
+          const indice = this.asientosSeleccionados.findIndex(asientoSeleccionado => asientoSeleccionado.etiqueta === asiento.etiqueta);
+          if (indice !== -1) {
+            this.asientosSeleccionados.splice(indice, 1);
+            asiento.imagen = './butaca.png'; // Cambiar la imagen del asiento a su estado original
+          }
         }
+      } else {
+        alert('Solo puedes seleccionar un máximo de 10 asientos.');
       }
     },
     comprar() {
       // Lógica para comprar los asientos seleccionados
       alert('Compra realizada correctamente');
     },
-  },
+    obtenerFila(etiqueta) {
+      return etiqueta.split('A')[0].replace('F', '');
+    },
+    obtenerColumna(etiqueta) {
+      return etiqueta.split('A')[1];
+    }
+  }
 };
 </script>
+
 <style scoped>
 .pelicula-container {
   display: grid;
@@ -103,6 +112,7 @@ export default {
 .pelicula-imagen {
   max-width: 100%;
   height: auto;
+  border-radius: 10px; /* Bordes redondeados */
 }
 
 .pelicula-titulo {
@@ -136,14 +146,13 @@ export default {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  border-radius: 50%;
 }
 
 .asiento-imagen {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 50%;
+  max-height: 50%;
 }
-
-
 
 .info-asiento {
   margin-top: 20px;
