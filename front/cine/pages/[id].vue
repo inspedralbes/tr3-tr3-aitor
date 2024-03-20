@@ -1,30 +1,30 @@
 <template>
-  <div>
-    <div class="pantalla-pelicula">
-      <img :src="pelicula.imagen" alt="Imagen de la Película" />
-      <h2>{{ pelicula.titulo }}</h2>
-      <div class="plan-asientos">
+  <div class="pelicula-container">
+    <div class="pelicula-info">
+      <img :src="pelicula.imagen" alt="Imagen de la Película" class="pelicula-imagen" />
+      <h2 class="pelicula-titulo">{{ pelicula.titulo }}</h2>
+    </div>
+    <div class="plan-asientos">
+      <div
+        v-for="(fila, indiceFila) in planAsientos"
+        :key="indiceFila"
+        class="fila"
+      >
         <div
-          v-for="(fila, indiceFila) in planAsientos"
-          :key="indiceFila"
-          class="fila"
+          v-for="(asiento, indiceAsiento) in fila"
+          :key="indiceAsiento"
+          class="asiento"
+          @click="alternarSeleccion(indiceFila, indiceAsiento)"
+          :class="{ seleccionado: asiento.seleccionado }"
         >
-          <div
-            v-for="(asiento, indiceAsiento) in fila"
-            :key="indiceAsiento"
-            class="asiento"
-            @click="alternarSeleccion(indiceFila, indiceAsiento)"
-            :class="{ seleccionado: asiento.seleccionado }"
-          >
-            <img :src="asiento.imagen" :alt="asiento.etiqueta" />
-          </div>
+          <img :src="asiento.imagen" :alt="asiento.etiqueta" class="asiento-imagen" />
         </div>
       </div>
     </div>
     <div class="info-asiento" v-if="asientosSeleccionados.length > 0">
-      <h3>Información de Asientos Seleccionados</h3>
-      <p>Total de Asientos Seleccionados: {{ totalAsientosSeleccionados }}</p>
-      <p>Precio Total: {{ precioTotal.toFixed(2) }}€</p>
+      <h3 class="info-titulo">Información de Asientos Seleccionados</h3>
+      <p>Total de Asientos Seleccionados: <span class="info-dato">{{ totalAsientosSeleccionados }}</span></p>
+      <p>Precio Total: <span class="info-dato">{{ precioTotal.toFixed(2) }}€</span></p>
       <button @click="comprar" class="boton-comprar">Comprar</button>
     </div>
   </div>
@@ -92,13 +92,31 @@ export default {
 </script>
 
 <style scoped>
-.pantalla-pelicula {
+.pelicula-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pelicula-info {
   margin-bottom: 20px;
+}
+
+.pelicula-imagen {
+  max-width: 300px;
+  height: auto;
+}
+
+.pelicula-titulo {
+  font-size: 24px;
+  margin-top: 10px;
 }
 
 .plan-asientos {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .fila {
@@ -106,9 +124,8 @@ export default {
 }
 
 .asiento {
-  border: 1px solid black;
-  width: 50px; /* Ancho del asiento */
-  height: 50px; /* Alto del asiento */
+  width: 50px;
+  height: 50px;
   margin: 5px;
   display: flex;
   justify-content: center;
@@ -116,13 +133,25 @@ export default {
   cursor: pointer;
 }
 
-.asiento img {
-  max-width: 100%; /* Ajustar tamaño de la imagen */
-  max-height: 100%; /* Ajustar tamaño de la imagen */
+.asiento-imagen {
+  max-width: 100%;
+  max-height: 100%;
 }
+
+
 
 .info-asiento {
   margin-top: 20px;
+  text-align: center;
+}
+
+.info-titulo {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.info-dato {
+  font-weight: bold;
 }
 
 .boton-comprar {
@@ -133,6 +162,7 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  transition: background-color 0.3s ease;
 }
 
 .boton-comprar:hover {
