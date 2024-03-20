@@ -13,6 +13,8 @@ class EntradaController extends Controller
     public function crearEntrada(Request $request){
         $validator=Validator::make($request->all(),[
             'cantidad'=>'required|integer',
+            'fila'=>'required|integer',
+            'columna'=>'required|integer',
             'precio'=>'required|numeric',
             'sesion_id'=>'required|exists:sesions,id'
         ]);
@@ -23,6 +25,8 @@ class EntradaController extends Controller
         }
         $entrada=new Entrada();
         $entrada->cantidad=$request->cantidad;
+        $entrada->fila=$request->fila;
+        $entrada->columna=$request->columna;
         $entrada->precio=$request->precio;
         $entrada->sesion_id=$request->sesion_id;
         $entrada->save();
@@ -40,6 +44,8 @@ class EntradaController extends Controller
     public function modificarEntrada(Request $request, $id){
         $validator=Validator::make($request->all(),[
             'cantidad'=>'sometimes|integer',
+            'fila'=>'sometimes|integer',
+            'columna'=>'sometimes|integer',
             'precio'=>'sometimes|numeric',
             'sesion_id'=>'sometimes|exists:sesions,id'
         ]);
