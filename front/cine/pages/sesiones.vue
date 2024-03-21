@@ -60,7 +60,7 @@ export default {
     redireccionarCompraEntradas(sesion) {
       const peliculasStore = usePeliculasStore();
       peliculasStore.guardarPeliculaSeleccionada(sesion.pelicula);
-      this.$router.push({ name: 'entradas-id_pelicula', params: { id_pelicula: sesion.id } });
+      this.$router.push(`${sesion.id}`);
     },
   }
 };
