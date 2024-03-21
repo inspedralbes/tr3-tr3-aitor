@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { usePeliculasStore  } from "../stores/store";
 export default {
   data() {
     return {
@@ -57,9 +58,10 @@ export default {
       return new Date(fecha).toLocaleDateString('es-ES', options);
     },
     redireccionarCompraEntradas(sesion) {
-      // Redireccionar a la página de compra de entradas
-      this.$router.push(`${sesion.id}`);
-    }
+      const peliculasStore = usePeliculasStore();
+      peliculasStore.guardarPeliculaSeleccionada(sesion.pelicula);
+      this.$router.push({ name: 'entradas-id_pelicula', params: { id_pelicula: sesion.id } });
+    },
   }
 };
 </script>
