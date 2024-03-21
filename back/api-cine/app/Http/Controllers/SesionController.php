@@ -11,7 +11,8 @@ class SesionController extends Controller
     public function crearSesion(Request $request){
         $validator=Validator::make($request->all(),[
             'fecha'=>'required|date_format:Y-m-d',
-            'diaEspectador'=>'required|boolean'
+            'diaEspectador'=>'required|boolean',
+            'precio'=>'required|numeric'
         ]);
         if($validator->fails()){
             return response()->json([
@@ -21,6 +22,7 @@ class SesionController extends Controller
         $sesion=new Sesion();
         $sesion->fecha=$request->fecha;
         $sesion->diaEspectador=$request->diaEspectador;
+        $sesion->precio=$request->precio;
         $sesion->save();
         return response()->json([
             'message'=>'Sesion creada con éxito',
@@ -38,7 +40,8 @@ class SesionController extends Controller
     public function modificarSesion(Request $request, $id){
         $validator=Validator::make($request->all(),[
             'fecha'=>'sometimes|date_format:Y-m-d',
-            'diaEspectador'=>'sometimes|boolean'
+            'diaEspectador'=>'sometimes|boolean',
+            'precio'=>'sometimes|numeric'
         ]);
         if($validator->fails()){
             return response()->json([
@@ -56,6 +59,9 @@ class SesionController extends Controller
         }
         if($request->has('diaEspectador')){
             $sesion->diaEspectador=$request->diaEspectador;
+        }
+        if($request->has('precio')){
+            $sesion->precio=$request->precio;
         }
         $sesion->save();
         return response()->json([

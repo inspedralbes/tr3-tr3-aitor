@@ -17,7 +17,6 @@ class EntradaController extends Controller
             'cantidad' => 'required|integer',
             'fila' => 'required|integer',
             'columna' => 'required|integer',
-            'precio' => 'required|numeric',
             'sesion_id' => 'required|exists:sesions,id'
         ]);
 
@@ -31,7 +30,6 @@ class EntradaController extends Controller
         $entrada->cantidad = $request->cantidad;
         $entrada->fila = $request->fila;
         $entrada->columna = $request->columna;
-        $entrada->precio = $request->precio;
         $entrada->sesion_id = $request->sesion_id;
         $entrada->save();
 
@@ -58,7 +56,6 @@ class EntradaController extends Controller
             'cantidad'=>'sometimes|integer',
             'fila'=>'sometimes|integer',
             'columna'=>'sometimes|integer',
-            'precio'=>'sometimes|numeric',
             'sesion_id'=>'sometimes|exists:sesions,id'
         ]);
         if($validator->fails()){
@@ -74,9 +71,6 @@ class EntradaController extends Controller
         }
         if($request->has('cantidad')){
             $entrada->cantidad=$request->cantidad;
-        }
-        if($request->has('precio')){
-            $entrada->precio=$request->precio;
         }
         if($request->has('sesion_id')){
             $entrada->sesion_id=$request->sesion_id;

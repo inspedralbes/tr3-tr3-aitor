@@ -9,7 +9,7 @@ class Sesion extends Model
 {
     protected $table = 'sesions'; // Nombre de la tabla en la base de datos
 
-    protected $fillable = ['fecha', 'diaEspectador']; // Campos que se pueden asignar de forma masiva
+    protected $fillable = ['fecha', 'diaEspectador','precio']; // Campos que se pueden asignar de forma masiva
 
     public function pelicula()
     {

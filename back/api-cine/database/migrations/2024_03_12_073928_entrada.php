@@ -17,7 +17,6 @@ return new class extends Migration
         $table->integer('fila');
         $table->integer('columna');
         $table->integer('cantidad');
-        $table->decimal('precio', 8, 2);
         $table->foreign('sesion_id')->references('id')->on('sesions')->onDelete('cascade');
     });
 }

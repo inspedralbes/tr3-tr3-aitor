@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime('fecha');
             $table->boolean('diaEspectador');
+            $table->decimal('precio', 8, 2);
         });
     }
 
