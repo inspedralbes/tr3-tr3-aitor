@@ -1,10 +1,14 @@
 <template>
-  <div class="pelicula-container">
+  <div class="container">
     <div class="pelicula-info">
       <img :src="pelicula.imagen" alt="Imagen de la Película" class="pelicula-imagen" />
-      <h2 class="pelicula-titulo">{{ pelicula.titulo }}</h2>
+      <div class="pelicula-details">
+        <h2>{{ pelicula.titulo }}</h2>
+        <p>Género: {{ pelicula.genero }}</p>
+        <p>Duración: {{ pelicula.duracion }}</p>
+      </div>
     </div>
-    <div class="contenido-ticket">
+    <div class="butacas-ticket">
       <div class="plan-asientos">
         <div v-for="(fila, indiceFila) in planAsientos" :key="indiceFila" class="fila">
           <div v-for="(asiento, indiceAsiento) in fila" :key="indiceAsiento" class="asiento" @click="alternarSeleccion(indiceFila, indiceAsiento)" :class="{ seleccionado: asiento.seleccionado }">
@@ -12,16 +16,25 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="info-asiento" v-if="asientosSeleccionados.length > 0">
+      <div class="info-asiento" v-if="asientosSeleccionados.length > 0">
         <h3 class="info-titulo">Información de Asientos Seleccionados</h3>
         <div v-for="(asiento, index) in asientosSeleccionados" :key="index">
           <p>Asiento {{ asiento.etiqueta }} - Fila {{ obtenerFila(asiento.etiqueta) }}, Columna {{ obtenerColumna(asiento.etiqueta) }}</p>
         </div>
-        <p>Total de Asientos Seleccionados: <span class="info-dato">{{ totalAsientosSeleccionados }}</span></p>
-        <p>Precio Total: <span class="info-dato">{{ precioTotal.toFixed(2) }}€</span></p>
-        <button @click="comprar" class="boton-comprar">Comprar</button>
+        <div class="ticket">
+          <div class="ticket-header">
+            <h3 class="ticket-title">Detalles de la Compra</h3>
+          </div>
+          <div class="ticket-body">
+            <p>Total Asientos:</p>
+            <p>Total a Pagar:</p>
+          </div>
+          <div class="ticket-footer">
+            <button @click="comprar" class="boton-comprar">Comprar</button>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -32,6 +45,8 @@ export default {
       pelicula: {
         titulo: 'Ant-Man i la Avispa: Quantumania',
         imagen: './ant.jpg',
+        genero: 'Acción, Aventura, Ciencia Ficción',
+        duracion: '1h 58min',
       },
       planAsientos: this.generarPlanAsientos(10, 12), // Cambio a 10 filas y 12 columnas
       asientosSeleccionados: [],
@@ -98,11 +113,9 @@ export default {
 </script>
 
 <style scoped>
-.pelicula-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-content: space-between;
-  padding: 20px;
+.container {
+  display: flex;
+  margin-top: 20px
 }
 
 .pelicula-info {
@@ -110,21 +123,19 @@ export default {
 }
 
 .pelicula-imagen {
-  max-width: 100%;
+  margin-top: 2vh;
+  margin-left: 1.5vw;
+  width: 18vw;
   height: auto;
-  border-radius: 10px; /* Bordes redondeados */
 }
 
-.pelicula-titulo {
-  font-size: 24px;
-  margin-top: 10px;
+.pelicula-details {
+  margin-left: 20px;
 }
 
-.contenido-ticket {
-  width: 65%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.butacas-ticket {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .plan-asientos {
@@ -132,6 +143,8 @@ export default {
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 30px;
 }
 
 .fila {
@@ -139,14 +152,10 @@ export default {
 }
 
 .asiento {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   margin: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
-  border-radius: 50%;
 }
 
 .asiento-imagen {
@@ -164,12 +173,39 @@ export default {
   margin-bottom: 10px;
 }
 
-.info-dato {
-  font-weight: bold;
+.ticket {
+  width: 60%;
+  margin-left: 6vw;
+  border: 2px solid red;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #f9f9f9;
 }
 
+.ticket-header {
+  text-align: center;
+}
+
+.ticket-title {
+  color: red;
+  font-size: 24px;
+}
+
+.ticket-body {
+  margin-top: 10px;
+}
+
+.ticket-body p {
+  margin: 5px 0;
+}
+
+.ticket-footer {
+  margin-top: 20px;
+  text-align: center;
+}
 .boton-comprar {
-  background-color: #007bff;
+  background-color: red;
   color: white;
   border: none;
   padding: 10px 20px;
