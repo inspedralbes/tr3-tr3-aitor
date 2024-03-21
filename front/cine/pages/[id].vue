@@ -11,7 +11,8 @@
     <div class="butacas-ticket">
       <div class="plan-asientos">
         <div v-for="(fila, indiceFila) in planAsientos" :key="indiceFila" class="fila">
-          <div v-for="(asiento, indiceAsiento) in fila" :key="indiceAsiento" class="asiento" @click="alternarSeleccion(indiceFila, indiceAsiento)" :class="{ seleccionado: asiento.seleccionado }">
+          <div v-for="(asiento, indiceAsiento) in fila" :key="indiceAsiento" class="asiento"
+            @click="alternarSeleccion(indiceFila, indiceAsiento)" :class="{ seleccionado: asiento.seleccionado }">
             <img :src="asiento.imagen" :alt="asiento.etiqueta" class="asiento-imagen" />
           </div>
         </div>
@@ -19,16 +20,17 @@
       <div class="info-asiento" v-if="asientosSeleccionados.length > 0">
         <h3 class="info-titulo">Información de Asientos Seleccionados</h3>
         <div v-for="(asiento, index) in asientosSeleccionados" :key="index">
-          <p>Asiento {{ asiento.etiqueta }} - Fila {{ obtenerFila(asiento.etiqueta) }}, Columna {{ obtenerColumna(asiento.etiqueta) }}</p>
+          <p>Fila {{ obtenerFila(asiento.etiqueta) }} - Columna {{ obtenerColumna(asiento.etiqueta) }}</p>
         </div>
         <div class="ticket">
           <div class="ticket-header">
             <h3 class="ticket-title">Detalles de la Compra</h3>
           </div>
           <div class="ticket-body">
-            <p>Total Asientos:</p>
-            <p>Total a Pagar:</p>
+            <p>Total Asientos: {{ totalAsientosSeleccionados }}</p>
+            <p>Total a Pagar: {{ precioTotal.toFixed(2) }}€</p>
           </div>
+
           <div class="ticket-footer">
             <button @click="comprar" class="boton-comprar">Comprar</button>
           </div>
@@ -181,6 +183,7 @@ export default {
   padding: 10px;
   margin-top: 20px;
   background-color: #f9f9f9;
+  margin-bottom: 20px;
 }
 
 .ticket-header {
@@ -204,6 +207,7 @@ export default {
   margin-top: 20px;
   text-align: center;
 }
+
 .boton-comprar {
   background-color: red;
   color: white;
