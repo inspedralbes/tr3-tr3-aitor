@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <div class="pelicula-info">
-      <img :src="pelicula.imagen" alt="Imagen de la Película" class="pelicula-imagen" />
+      <img :src="pelicula.cartel" alt="Imagen de la Película" class="pelicula-imagen" />
       <div class="pelicula-details">
         <h2>{{ pelicula.titulo }}</h2>
         <p>Género: {{ pelicula.genero }}</p>
-        <p>Duración: {{ pelicula.duracion }}</p>
+        <p>Duración: {{ duracionEnHoras }}</p> <!-- Mostrar duración en horas -->
       </div>
     </div>
     <div class="butacas-ticket">
@@ -17,23 +17,22 @@
           </div>
         </div>
       </div>
-      <div class="info-asiento" v-if="asientosSeleccionados.length > 0">
-        <h3 class="info-titulo">Información de Asientos Seleccionados</h3>
-        <div v-for="(asiento, index) in asientosSeleccionados" :key="index">
-          <p>Fila {{ obtenerFila(asiento.etiqueta) }} - Columna {{ obtenerColumna(asiento.etiqueta) }}</p>
+      <div class="ticket" v-if="asientosSeleccionados.length > 0">
+        <div class="ticket-header">
+          <h3 class="ticket-title">Detalles de la Compra</h3>
         </div>
-        <div class="ticket">
-          <div class="ticket-header">
-            <h3 class="ticket-title">Detalles de la Compra</h3>
+        <div class="ticket-body">
+          <h4>Asientos Seleccionados:</h4>
+          <div v-for="(asiento, index) in asientosSeleccionados" :key="index">
+            <p>Fila {{ obtenerFila(asiento.etiqueta) }} - Columna {{ obtenerColumna(asiento.etiqueta) }}</p>
           </div>
-          <div class="ticket-body">
+          <div class="ticket-summary">
             <p>Total Asientos: {{ totalAsientosSeleccionados }}</p>
             <p>Total a Pagar: {{ precioTotal.toFixed(2) }}€</p>
           </div>
-
-          <div class="ticket-footer">
-            <button @click="comprar" class="boton-comprar">Comprar</button>
-          </div>
+        </div>
+        <div class="ticket-footer">
+          <button @click="comprar" class="boton-comprar">Comprar</button>
         </div>
       </div>
     </div>
@@ -41,18 +40,14 @@
 </template>
 
 <script>
+import { usePeliculasStore } from "../stores/store";
+
 export default {
   data() {
     return {
-      pelicula: {
-        titulo: 'Ant-Man i la Avispa: Quantumania',
-        imagen: './ant.jpg',
-        genero: 'Acción, Aventura, Ciencia Ficción',
-        duracion: '1h 58min',
-      },
-      planAsientos: this.generarPlanAsientos(10, 12), // Cambio a 10 filas y 12 columnas
+      planAsientos: this.generarPlanAsientos(10, 12),
       asientosSeleccionados: [],
-      maxAsientosSeleccionados: 10 // Máximo de butacas seleccionadas
+      maxAsientosSeleccionados: 10
     };
   },
   computed: {
@@ -62,6 +57,16 @@ export default {
     precioTotal() {
       return this.asientosSeleccionados.reduce((total, asiento) => total + asiento.precio, 0);
     },
+    pelicula() {
+      const peliculasStore = usePeliculasStore();
+      return peliculasStore.peliculaSeleccionada;
+    },
+    duracionEnHoras() {
+      // Convertir la duración de minutos a horas y minutos
+      const horas = Math.floor(this.pelicula.duracion / 60);
+      const minutos = this.pelicula.duracion % 60;
+      return `${horas}h ${minutos}min`;
+    }
   },
   methods: {
     generarPlanAsientos(filas, asientosPorFila) {
@@ -71,10 +76,10 @@ export default {
         for (let j = 1; j <= asientosPorFila; j++) {
           fila.push({
             etiqueta: `F${i}A${j}`,
-            precio: 5.50, // Precio por defecto
-            cantidad: 1, // Cantidad por defecto
+            precio: 5.50,
+            cantidad: 1,
             seleccionado: false,
-            imagen: './butaca.png', // URL de la imagen del asiento seleccionado
+            imagen: './butaca.png',
           });
         }
         planAsientos.push(fila);
@@ -88,12 +93,12 @@ export default {
 
         if (asiento.seleccionado) {
           this.asientosSeleccionados.push(asiento);
-          asiento.imagen = './butaca_roja.png'; // Cambiar la imagen del asiento seleccionado
+          asiento.imagen = './butaca_roja.png';
         } else {
           const indice = this.asientosSeleccionados.findIndex(asientoSeleccionado => asientoSeleccionado.etiqueta === asiento.etiqueta);
           if (indice !== -1) {
             this.asientosSeleccionados.splice(indice, 1);
-            asiento.imagen = './butaca.png'; // Cambiar la imagen del asiento a su estado original
+            asiento.imagen = './butaca.png';
           }
         }
       } else {
@@ -101,7 +106,6 @@ export default {
       }
     },
     comprar() {
-      // Lógica para comprar los asientos seleccionados
       alert('Compra realizada correctamente');
     },
     obtenerFila(etiqueta) {
@@ -176,15 +180,20 @@ export default {
 }
 
 .ticket {
-  width: 60%;
-  margin-left: 6vw;
+  align-items: center;
+  text-align: center;
+  width: 60%; /* Utiliza un porcentaje del ancho del contenedor */
+  max-width: 600px; /* Establece un ancho máximo para evitar que el ticket se expanda demasiado en pantallas grandes */
+  height: auto; /* Altura automática según el contenido */
+  margin: 0 auto; /* Centra horizontalmente el ticket */
+  padding: 20px; /* Aumenta el espacio interno del ticket */
   border: 2px solid red;
   border-radius: 10px;
-  padding: 10px;
-  margin-top: 20px;
   background-color: #f9f9f9;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
+
 
 .ticket-header {
   text-align: center;
@@ -200,7 +209,11 @@ export default {
 }
 
 .ticket-body p {
-  margin: 5px 0;
+  margin: 5px 0
+}
+
+.ticket-summary {
+  margin-top: 20px; /* Agrega espacio entre los detalles y el resumen */
 }
 
 .ticket-footer {
