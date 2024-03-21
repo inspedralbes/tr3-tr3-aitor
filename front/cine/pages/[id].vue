@@ -105,15 +105,42 @@ export default {
         alert('Solo puedes seleccionar un máximo de 10 asientos.');
       }
     },
-    comprar() {
-      alert('Compra realizada correctamente');
-    },
+
     obtenerFila(etiqueta) {
       return etiqueta.split('A')[0].replace('F', '');
     },
     obtenerColumna(etiqueta) {
       return etiqueta.split('A')[1];
-    }
+    },
+    async comprar() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/crearEntrada', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            cantidad: 1,
+            fila: 1,
+            columna: 1,
+            precio: 5,
+            sesion_id: this.pelicula.sesion_id // ID de la sesión
+          })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Error al comprar entrada');
+        }
+
+        const responseData = await response.json();
+        console.log(responseData.message); // Mensaje de éxito
+        // Aquí puedes redirigir al usuario o realizar otras acciones después de la compra
+      } catch (error) {
+        console.error('Error al comprar entrada:', error.message);
+        // Aquí puedes manejar el error de acuerdo a tus necesidades
+      }
+    },
   }
 };
 </script>
@@ -182,11 +209,16 @@ export default {
 .ticket {
   align-items: center;
   text-align: center;
-  width: 60%; /* Utiliza un porcentaje del ancho del contenedor */
-  max-width: 600px; /* Establece un ancho máximo para evitar que el ticket se expanda demasiado en pantallas grandes */
-  height: auto; /* Altura automática según el contenido */
-  margin: 0 auto; /* Centra horizontalmente el ticket */
-  padding: 20px; /* Aumenta el espacio interno del ticket */
+  width: 60%;
+  /* Utiliza un porcentaje del ancho del contenedor */
+  max-width: 600px;
+  /* Establece un ancho máximo para evitar que el ticket se expanda demasiado en pantallas grandes */
+  height: auto;
+  /* Altura automática según el contenido */
+  margin: 0 auto;
+  /* Centra horizontalmente el ticket */
+  padding: 20px;
+  /* Aumenta el espacio interno del ticket */
   border: 2px solid red;
   border-radius: 10px;
   background-color: #f9f9f9;
@@ -213,7 +245,8 @@ export default {
 }
 
 .ticket-summary {
-  margin-top: 20px; /* Agrega espacio entre los detalles y el resumen */
+  margin-top: 20px;
+  /* Agrega espacio entre los detalles y el resumen */
 }
 
 .ticket-footer {

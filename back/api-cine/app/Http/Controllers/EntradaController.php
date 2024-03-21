@@ -10,31 +10,43 @@ use Illuminate\Support\Facades\DB;
 
 class EntradaController extends Controller
 {
-    public function crearEntrada(Request $request){
-        $validator=Validator::make($request->all(),[
-            'cantidad'=>'required|integer',
-            'fila'=>'required|integer',
-            'columna'=>'required|integer',
-            'precio'=>'required|numeric',
-            'sesion_id'=>'required|exists:sesions,id'
+    public function crearEntrada(Request $request)
+{
+    try {
+        $validator = Validator::make($request->all(), [
+            'cantidad' => 'required|integer',
+            'fila' => 'required|integer',
+            'columna' => 'required|integer',
+            'precio' => 'required|numeric',
+            'sesion_id' => 'required|exists:sesions,id'
         ]);
-        if($validator->fails()){
+
+        if ($validator->fails()) {
             return response()->json([
-                'errors'=>$validator->errors()
-            ],422);
+                'errors' => $validator->errors()
+            ], 422);
         }
-        $entrada=new Entrada();
-        $entrada->cantidad=$request->cantidad;
-        $entrada->fila=$request->fila;
-        $entrada->columna=$request->columna;
-        $entrada->precio=$request->precio;
-        $entrada->sesion_id=$request->sesion_id;
+
+        $entrada = new Entrada();
+        $entrada->cantidad = $request->cantidad;
+        $entrada->fila = $request->fila;
+        $entrada->columna = $request->columna;
+        $entrada->precio = $request->precio;
+        $entrada->sesion_id = $request->sesion_id;
         $entrada->save();
+
         return response()->json([
-            'message'=>'Entrada creada con éxito',
-            'data'=>$entrada
-        ],201);
+            'message' => 'Entrada creada con éxito',
+            'data' => $entrada
+        ], 201);
+    } catch (\Exception $e) {
+        \Log::error('Error al comprar entrada: ' . $e->getMessage());
+        return response()->json([
+            'error' => 'Error al comprar entrada: ' . $e->getMessage()
+        ], 500);
     }
+}
+
     public function listarEntradas(){
         $entradas=Entrada::all();
         return response()->json([
