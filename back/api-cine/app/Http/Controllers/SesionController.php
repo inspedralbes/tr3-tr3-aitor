@@ -36,6 +36,17 @@ class SesionController extends Controller
             'data' => $sesiones
         ]);
     }
+    public function obtenerSesion($id){
+        $sesion=Sesion::find($id);
+        if(!$sesion){
+            return response()->json([
+                'message'=>'Sesion no encontrada'
+            ],404);
+        }
+        return response()->json([
+            'data'=>$sesion
+        ]);
+    }
     
     public function modificarSesion(Request $request, $id){
         $validator=Validator::make($request->all(),[
