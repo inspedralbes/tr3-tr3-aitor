@@ -5,7 +5,7 @@
       <div class="pelicula-details">
         <h2>{{ pelicula.titulo }}</h2>
         <p>Género: {{ pelicula.genero }}</p>
-        <p>Duración: {{ duracionEnHoras }}</p> <!-- Mostrar duración en horas -->
+        <p>Duración: {{ duracionEnHoras }}</p>
       </div>
     </div>
     <div class="butacas-ticket">
@@ -45,9 +45,10 @@ import { usePeliculasStore } from "../stores/store";
 export default {
   data() {
     return {
-      planAsientos: this.generarPlanAsientos(10, 12),
+      planAsientos: [],
       asientosSeleccionados: [],
-      maxAsientosSeleccionados: 10
+      maxAsientosSeleccionados: 10,
+      sesiones: null
     };
   },
   computed: {
@@ -55,28 +56,48 @@ export default {
       return this.asientosSeleccionados.length;
     },
     precioTotal() {
-      return this.asientosSeleccionados.reduce((total, asiento) => total + asiento.precio, 0);
+      return this.asientosSeleccionados.reduce((total, asiento) => total + this.sesiones.precio, 0);
     },
+
+
     pelicula() {
       const peliculasStore = usePeliculasStore();
       return peliculasStore.peliculaSeleccionada;
     },
     duracionEnHoras() {
-      // Convertir la duración de minutos a horas y minutos
       const horas = Math.floor(this.pelicula.duracion / 60);
       const minutos = this.pelicula.duracion % 60;
       return `${horas}h ${minutos}min`;
     }
   },
   methods: {
-    generarPlanAsientos(filas, asientosPorFila) {
+    async fetchSesiones() {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/obtenerSesion/${this.pelicula.sesion_id}`, {
+          method: 'GET',
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        this.sesiones = data;
+        console.log('Datos de la sesión:', data.data.precio);
+        this.planAsientos = this.generarPlanAsientos(10, 12, data.data.precio);
+      } catch (error) {
+        console.error("Could not fetch sesiones: ", error);
+      }
+    },
+
+    generarPlanAsientos(filas, asientosPorFila, precio) {
+      console.log('Precio de la sesión:', precio);
       const planAsientos = [];
       for (let i = 1; i <= filas; i++) {
         const fila = [];
         for (let j = 1; j <= asientosPorFila; j++) {
           fila.push({
             etiqueta: `F${i}A${j}`,
-            precio: 5.50,
+            precio: precio,
             cantidad: 1,
             seleccionado: false,
             imagen: './butaca.png',
@@ -105,7 +126,6 @@ export default {
         alert('Solo puedes seleccionar un máximo de 10 asientos.');
       }
     },
-
     obtenerFila(etiqueta) {
       return etiqueta.split('A')[0].replace('F', '');
     },
@@ -140,18 +160,19 @@ export default {
 
           const responseData = await response.json();
           console.log(responseData.message); // Mensaje de éxito
+
         }
-        // Limpiar la selección de asientos después de la compra
         this.asientosSeleccionados = [];
-        
-        // Redirigir a la página de inicio
+
+        // Redirigir a la página de inicio después de la compra
         this.$router.push('/');
       } catch (error) {
         console.error('Error al comprar entrada:', error.message);
-        // Aquí puedes manejar el error de acuerdo a tus necesidades
       }
     },
-
+  },
+  mounted() {
+    this.fetchSesiones(); // Llama a la función para obtener el precio de la sesión al cargar el componente
   }
 };
 </script>

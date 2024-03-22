@@ -11,6 +11,7 @@ export default {
 </script>
 
 <template>
+  <title>Cine Can Casteller</title>
   <div>
     <Header />
     <router-view />
