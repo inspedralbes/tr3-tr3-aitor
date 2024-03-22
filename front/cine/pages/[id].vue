@@ -114,33 +114,41 @@ export default {
     },
     async comprar() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/crearEntrada', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            cantidad: 1,
-            fila: 1,
-            columna: 1,
-            precio: 5,
-            sesion_id: this.pelicula.sesion_id // ID de la sesión
-          })
-        });
+        for (const asiento of this.asientosSeleccionados) {
+          const filaSeleccionada = this.obtenerFila(asiento.etiqueta);
+          const columnaSeleccionada = this.obtenerColumna(asiento.etiqueta);
+          console.log('Fila seleccionada:', filaSeleccionada);
+          console.log('Columna seleccionada:', columnaSeleccionada);
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || 'Error al comprar entrada');
+          const response = await fetch('http://127.0.0.1:8000/api/crearEntrada', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              cantidad: 1,
+              fila: filaSeleccionada,
+              columna: columnaSeleccionada,
+              sesion_id: this.pelicula.sesion_id // ID de la sesión
+            })
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Error al comprar entrada');
+          }
+
+          const responseData = await response.json();
+          console.log(responseData.message); // Mensaje de éxito
         }
-
-        const responseData = await response.json();
-        console.log(responseData.message); // Mensaje de éxito
-        // Aquí puedes redirigir al usuario o realizar otras acciones después de la compra
+        // Limpiar la selección de asientos después de la compra
+        this.asientosSeleccionados = [];
       } catch (error) {
         console.error('Error al comprar entrada:', error.message);
         // Aquí puedes manejar el error de acuerdo a tus necesidades
       }
     },
+
   }
 };
 </script>
