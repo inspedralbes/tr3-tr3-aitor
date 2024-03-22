@@ -143,6 +143,9 @@ export default {
         }
         // Limpiar la selección de asientos después de la compra
         this.asientosSeleccionados = [];
+        
+        // Redirigir a la página de inicio
+        this.$router.push('/');
       } catch (error) {
         console.error('Error al comprar entrada:', error.message);
         // Aquí puedes manejar el error de acuerdo a tus necesidades
