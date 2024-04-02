@@ -83,7 +83,6 @@ export default {
             try {
                 // Verificar si se ha seleccionado una foto de perfil
                 if (!this.foto_perfil) {
-                    console.error('Debe seleccionar una foto de perfil.');
                     return;
                 }
 
