@@ -25,7 +25,7 @@
                 </div>
                 <button type="submit">Registrarse</button>
             </form>
-
+            <p>¿Ya tienes una cuenta? <router-link to="/login">Logueate aquí</router-link>.</p>
             <!-- Modal de selección de imagen -->
             <div class="modal" :class="{ 'abierto': modalAbierto }">
                 <div class="contenido">
@@ -92,7 +92,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70vh;
+    height: 80vh;
     background-color: #000;
 }
 
@@ -209,5 +209,16 @@ button:hover {
     display: flex;
     justify-content: space-around;
     margin-bottom: 10px;
+}
+p {
+  margin-top: 20px;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+}
+a:-webkit-any-link {
+  color: #f00;
+  cursor: pointer;
+  text-decoration: none;
 }
 </style>
