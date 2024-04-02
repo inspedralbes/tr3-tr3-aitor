@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Entrada;
+use App\Models\Sesion; 
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -92,5 +94,30 @@ class EntradaController extends Controller
         return response()->json([
             'message'=>'Entrada eliminada con éxito'
         ]);
+    }
+    public function listarEntradasPorSesion($idSesion)
+    {
+        try {
+            // Verifica si la sesión existe
+            $sesion = Sesion::find($idSesion);
+            if (!$sesion) {
+                return response()->json([
+                    'message' => 'La sesión no existe'
+                ], 404);
+            }
+
+            // Busca las entradas asociadas a la sesión
+            $entradas = Entrada::where('sesion_id', $idSesion)->get();
+
+            return response()->json([
+                'message' => 'Entradas de la sesión obtenidas con éxito',
+                'data' => $entradas
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error al obtener las entradas de la sesión: ' . $e->getMessage());
+            return response()->json([
+                'error' => 'Error al obtener las entradas de la sesión: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }
