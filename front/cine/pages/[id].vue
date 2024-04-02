@@ -60,11 +60,6 @@ export default {
       const total = this.asientosSeleccionados.reduce((total, asiento) => total + (asiento.precio * asiento.cantidad), 0);
       return total.toFixed(2); // Mostrar el precio total con dos decimales
     },
-
-
-
-
-
     pelicula() {
       const peliculasStore = usePeliculasStore();
       return peliculasStore.peliculaSeleccionada;
