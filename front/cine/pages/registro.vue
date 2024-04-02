@@ -4,30 +4,31 @@
             <h2 class="form-title">Registro</h2>
             <form @submit.prevent="submitRegistro">
                 <div class="campo">
-                    <label for="email">Correo electrónico:</label>
-                    <input type="email" id="email" v-model="registro.email" required>
-                </div>
-                <div class="campo">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" id="password" v-model="registro.password" required>
-                </div>
-                <div class="campo">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" v-model="registro.nombre" required>
+                    <label for="nom">Nombre:</label>
+                    <input type="text" id="nom" v-model="nom" required>
                 </div>
                 <div class="campo">
                     <label for="apellido">Apellido:</label>
-                    <input type="text" id="apellido" v-model="registro.apellido" required>
+                    <input type="text" id="apellido" v-model="cognoms" required>
+                </div>
+                <div class="campo">
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" id="email" v-model="email" required>
+                </div>
+                <div class="campo">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" v-model="password" required>
                 </div>
                 <div class="campo">
                     <label for="foto">Foto de perfil:</label>
                     <button @click="mostrarModal">Seleccionar foto</button>
+                    <span v-if="!foto_perfil" style="color: red;">¡Selecciona una foto de perfil!</span>
                 </div>
                 <button type="submit">Registrarse</button>
             </form>
             <p>¿Ya tienes una cuenta? <router-link to="/login">Logueate aquí</router-link>.</p>
             <!-- Modal de selección de imagen -->
-            <div class="modal" :class="{ 'abierto': modalAbierto }">
+            <div class="modal" v-bind:class="{ 'abierto': modalAbierto }">
                 <div class="contenido">
                     <span class="cerrar" @click="cerrarModal">&times;</span>
                     <h2>Seleccionar foto de perfil</h2>
@@ -58,21 +59,16 @@
 export default {
     data() {
         return {
-            registro: {
-                email: '',
-                password: '',
-                nombre: '',
-                apellido: '',
-                fotoPerfil: null // Usaremos null para indicar que aún no se ha seleccionado ninguna foto
-            },
+            nom: '',
+            cognoms: '',
+            email: '',
+            password: '',
+            foto_perfil: null, // Usaremos null para indicar que aún no se ha seleccionado ninguna foto
             modalAbierto: false
         };
     },
     methods: {
-        submitRegistro() {
-            console.log('Datos de registro:', this.registro);
-            // Aquí podrías enviar los datos de registro a tu servidor
-        },
+
         mostrarModal() {
             this.modalAbierto = true;
         },
@@ -80,9 +76,47 @@ export default {
             this.modalAbierto = false;
         },
         seleccionarFoto(numero) {
-            this.registro.fotoPerfil = numero;
+            this.foto_perfil = numero;
             this.cerrarModal(); // Cerrar el modal después de seleccionar una foto
-        }
+        },
+        async submitRegistro() {
+            try {
+                // Verificar si se ha seleccionado una foto de perfil
+                if (!this.foto_perfil) {
+                    console.error('Debe seleccionar una foto de perfil.');
+                    return;
+                }
+
+                // Enviar el formulario
+                const response = await fetch('http://127.0.0.1:8000/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nom: this.nom,
+                        cognoms: this.cognoms,
+                        email: this.email,
+                        password: this.password,
+                        foto_perfil: this.foto_perfil
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Error al registrar el usuario');
+                }
+
+                // Si el registro es exitoso, muestra un mensaje en la consola
+                console.log('Registro exitoso');
+
+                // Redirigir a la página de inicio después del registro exitoso
+                this.$router.push('/');
+
+            } catch (error) {
+                console.error('Error al registrar:', error);
+            }
+        },
     }
 };
 </script>
@@ -210,15 +244,17 @@ button:hover {
     justify-content: space-around;
     margin-bottom: 10px;
 }
+
 p {
-  margin-top: 20px;
-  text-align: center;
-  color: #fff;
-  text-decoration: none;
+    margin-top: 20px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
 }
+
 a:-webkit-any-link {
-  color: #f00;
-  cursor: pointer;
-  text-decoration: none;
+    color: #f00;
+    cursor: pointer;
+    text-decoration: none;
 }
 </style>
