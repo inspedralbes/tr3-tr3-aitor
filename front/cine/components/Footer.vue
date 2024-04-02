@@ -99,6 +99,7 @@
 
 .footer-links ul li a:hover {
     text-decoration: underline;
+    color:red;
 }
 
 .footer-contact p {

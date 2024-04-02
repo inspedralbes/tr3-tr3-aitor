@@ -28,7 +28,8 @@
           </div>
           <div class="ticket-summary">
             <p>Total Asientos: {{ totalAsientosSeleccionados }}</p>
-            <p>Total a Pagar: {{ precioTotal.toFixed(2) }}€</p>
+            <p>Total a Pagar: {{ precioTotal }}€</p>
+
           </div>
         </div>
         <div class="ticket-footer">
@@ -56,8 +57,12 @@ export default {
       return this.asientosSeleccionados.length;
     },
     precioTotal() {
-      return this.asientosSeleccionados.reduce((total, asiento) => total + this.sesiones.precio, 0);
+      const total = this.asientosSeleccionados.reduce((total, asiento) => total + (asiento.precio * asiento.cantidad), 0);
+      return total.toFixed(2); // Mostrar el precio total con dos decimales
     },
+
+
+
 
 
     pelicula() {
@@ -80,9 +85,9 @@ export default {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-
-        this.sesiones = data;
+        this.sesiones = data.data.precio;
         console.log('Datos de la sesión:', data.data.precio);
+
         this.planAsientos = this.generarPlanAsientos(10, 12, data.data.precio);
       } catch (error) {
         console.error("Could not fetch sesiones: ", error);
