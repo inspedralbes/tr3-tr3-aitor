@@ -11,7 +11,7 @@
           <label for="password">Contraseña</label>
           <input type="password" id="password" v-model="password" required>
         </div>
-        <button type="submit">Iniciar sesión</button>
+        <button type="submit" class="boton-comprar">Iniciar sesión</button>
       </form>
       <p>¿No tienes una cuenta? <router-link to="/registro">Regístrate aquí</router-link>.</p>
     </div>
@@ -27,16 +27,37 @@ export default {
     };
   },
   methods: {
-    login() {
-      // Aquí puedes implementar la lógica de inicio de sesión
-      console.log('Iniciando sesión con', this.email, this.password);
-      // Redirigir a la página inicial después de iniciar sesión
-      this.$router.push('/');
-    }
+    async login() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: this.email,
+            password: this.password
+          })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Error al iniciar sesión');
+        }
+
+        // Si el inicio de sesión es exitoso, muestra un mensaje en la consola
+        console.log('Inicio de sesión exitoso');
+
+        // Redirigir a la página de inicio después del inicio de sesión exitoso
+        this.$router.push('/');
+
+      } catch (error) {
+        console.error('Error al iniciar sesión:', error);
+      }
+    },
   }
 };
 </script>
-
 <style scoped>
 .page-container {
   display: flex;
@@ -108,6 +129,7 @@ router-link {
 router-link:hover {
   color: #0056b3;
 }
+
 a:-webkit-any-link {
   color: #f00;
   cursor: pointer;
