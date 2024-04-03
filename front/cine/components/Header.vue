@@ -33,7 +33,7 @@
 
         <!-- Mostrar la foto de perfil y el nombre del usuario si está logeado -->
         <li v-if="user" style="float:right">
-          <img :src="user.user.foto_perfil+ '.png'" alt="Foto de perfil">
+          <img :src="user.user.foto_perfil + '.png'" alt="Foto de perfil">
           <span>{{ user.user.nom }}</span>
         </li>
 
@@ -48,10 +48,7 @@
   </div>
 </template>
 
-
 <script>
-import { useUserStore } from '../stores/store'; // Importa el store de usuario de Pinia
-
 export default {
   data() {
     return {
@@ -60,7 +57,9 @@ export default {
   },
   computed: {
     user() {
-      return useUserStore().user; // Accede al estado del usuario desde el store de Pinia
+      // Obtener la información del usuario almacenada en localStorage
+      const userData = JSON.parse(localStorage.getItem('user'));
+      return userData;
     }
   }
 };

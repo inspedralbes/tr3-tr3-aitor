@@ -30,6 +30,7 @@ export default {
     };
   },
   methods: {
+    // Dentro del método login()
     async login() {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/login', {
@@ -52,14 +53,17 @@ export default {
         const userData = await response.json();
         useUserStore().setUser(userData);
 
+        // Guardar la información del usuario en localStorage
+        localStorage.setItem('user', JSON.stringify(userData));
+
         // Redirigir a la página de inicio después del inicio de sesión exitoso
         this.$router.push('/');
 
       } catch (error) {
         console.error('Error al iniciar sesión:', error);
       }
-    },
-  }
+    }
+  },
 };
 </script>
 

@@ -110,8 +110,8 @@ export default {
                 // Obtener la información del usuario desde la respuesta del servidor
                 const userData = await response.json();
 
-                // Almacenar la información del usuario en el store de usuario
-                useUserStore().setUser(userData);
+                // Almacenar la información del usuario en el localStorage
+                localStorage.setItem('userData', JSON.stringify(userData));
 
                 // Redirigir a la página de inicio después del registro exitoso
                 this.$router.push('/');
@@ -119,7 +119,8 @@ export default {
             } catch (error) {
                 console.error('Error al registrar:', error);
             }
-        },
+        }
+
     },
 };
 </script>
