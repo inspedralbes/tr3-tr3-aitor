@@ -1,53 +1,75 @@
 <template>
-    <div>
-      <header>
-        <img src="../public/logo.jpg" alt="Can Casteller" class="header-img">
-        <p class="paragraph-header">El cine que todo el mundo quiere estar, está aquí</p>
-      </header>
-      <nav class="nav">
-        <ul>
-          <li id="home">
-            <nuxt-link to="/"><img src="../public/casa.png" alt="Home"></nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/peliculas">Peliculas</nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/sesiones">Sesiones</nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/novedades">Novedades</nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/trailers">Trailers</nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/contactanos">Contactanos</nuxt-link>
-          </li>
-          <!-- Mostrar opciones adicionales al pasar el mouse sobre "Login" -->
-          <li style="float:right" @mouseover="mostrarOpciones = true" @mouseleave="mostrarOpciones = false">
-            <nuxt-link to="/login">Login</nuxt-link>
-            <!-- Opciones adicionales -->
-            <div v-if="mostrarOpciones" class="opciones-adicionales">
-              <nuxt-link to="/registro">Registro</nuxt-link>
-            </div>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        mostrarOpciones: false // Variable para controlar la visualización de las opciones adicionales
-      };
+  <div>
+    <header>
+      <img src="../public/logo.jpg" alt="Can Casteller" class="header-img">
+      <p class="paragraph-header">El cine que todo el mundo quiere estar, está aquí</p>
+    </header>
+    <nav class="nav">
+      <ul>
+        <!-- Enlaces de navegación -->
+        <li id="home">
+          <nuxt-link to="/"><img src="../public/casa.png" alt="Home"></nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/peliculas">Peliculas</nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/sesiones">Sesiones</nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/novedades">Novedades</nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/trailers">Trailers</nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/contactanos">Contactanos</nuxt-link>
+        </li>
+
+        <!-- Mostrar el botón de Login si el usuario no está logeado -->
+        <li v-if="!user" style="float:right">
+          <nuxt-link to="/login">Login</nuxt-link>
+        </li>
+
+        <!-- Mostrar la foto de perfil y el nombre del usuario si está logeado -->
+        <li v-if="user" style="float:right">
+          <img :src="user.foto_perfil" alt="Foto de perfil">
+          <span>{{ user.user.nom }}</span>
+        </li>
+
+        <!-- Mostrar opciones adicionales si el usuario no está logeado -->
+        <li v-if="!user" style="float:right" @mouseover="mostrarOpciones = true" @mouseleave="mostrarOpciones = false">
+          <div v-if="mostrarOpciones" class="opciones-adicionales">
+            <nuxt-link to="/registro">Registro</nuxt-link>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</template>
+
+
+<script>
+import { useUserStore } from '../stores/store'; // Importa el store de usuario de Pinia
+
+export default {
+  data() {
+    return {
+      mostrarOpciones: false // Variable para controlar la visualización de las opciones adicionales
+    };
+  },
+  computed: {
+    user() {
+      return useUserStore().user; // Accede al estado del usuario desde el store de Pinia
     }
-  };
-  </script>
+  }
+};
+</script>
 
 <style scoped>
+span{
+  color: white
+}
 body{
     margin: 0;
 

@@ -19,6 +19,9 @@
 </template>
 
 <script>
+import { useUserStore } from '../stores/store'; // Importa el store de usuario de Pinia
+
+
 export default {
   data() {
     return {
@@ -45,8 +48,9 @@ export default {
           throw new Error(errorData.message || 'Error al iniciar sesión');
         }
 
-        // Si el inicio de sesión es exitoso, muestra un mensaje en la consola
-        console.log('Inicio de sesión exitoso');
+        // Si el inicio de sesión es exitoso, almacena la información del usuario en Pinia
+        const userData = await response.json();
+        useUserStore().setUser(userData);
 
         // Redirigir a la página de inicio después del inicio de sesión exitoso
         this.$router.push('/');
@@ -58,6 +62,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .page-container {
   display: flex;
