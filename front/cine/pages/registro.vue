@@ -111,7 +111,7 @@ export default {
                 const userData = await response.json();
 
                 // Almacenar la información del usuario en el localStorage
-                localStorage.setItem('userData', JSON.stringify(userData));
+                localStorage.setItem('user', JSON.stringify(userData));
 
                 // Redirigir a la página de inicio después del registro exitoso
                 this.$router.push('/');

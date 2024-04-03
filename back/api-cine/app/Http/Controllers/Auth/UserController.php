@@ -34,9 +34,8 @@ class UserController extends Controller
     
         // Retornar una respuesta con los detalles del usuario y el token de acceso
         return response()->json([
-            'message' => 'Usuario registrado exitosamente',
             'user' => $user,
-            'token' => $token
+            
         ], 201);
     }
     
