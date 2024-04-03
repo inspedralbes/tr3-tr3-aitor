@@ -58,6 +58,9 @@ export default {
         
         // Redirigir a la página de inicio después del inicio de sesión exitoso
         this.$router.push('/');
+        setTimeout(() => {
+        window.location.reload();
+      }, 5);
 
 
       } catch (error) {

@@ -115,6 +115,9 @@ export default {
 
                 // Redirigir a la página de inicio después del registro exitoso
                 this.$router.push('/');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 5);
 
             } catch (error) {
                 console.error('Error al registrar:', error);
