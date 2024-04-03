@@ -26,12 +26,11 @@
           <nuxt-link to="/contactanos">Contactanos</nuxt-link>
         </li>
 
-        <!-- Mostrar la foto de perfil y el nombre del usuario si está logeado -->
-        <li v-if="user" style="float:right">
-          <div @mouseover="mostrarOpciones = true" @mouseleave="mostrarOpciones = false">
+        <li v-if="user" class="parent-menu" style="float:right">
+          <div>
             <img :src="user.user.foto_perfil + '.png'" alt="Foto de perfil">
             <span>{{ user.user.nom }}</span>
-            <ul v-if="mostrarOpciones">
+            <ul class="sub-menu">
               <li>
                 <nuxt-link to="/perfil">Perfil</nuxt-link>
               </li>
@@ -44,6 +43,7 @@
             </ul>
           </div>
         </li>
+
 
         <!-- Mostrar el apartado de login si el usuario no está logeado -->
         <li v-else style="float:right">
@@ -175,9 +175,9 @@ header {
 }
 
 .nav li img {
-  width: 40px;
+  width: 50px;
   /* Ajusta el ancho de la imagen de perfil según sea necesario */
-  height: 40px;
+  height: 50px;
   /* Ajusta la altura de la imagen de perfil según sea necesario */
   margin-right: 5px;
   /* Ajusta el margen derecho para separar la imagen del nombre de usuario */
@@ -188,5 +188,28 @@ header {
   color: white;
   /* Color del texto */
   margin-right: 20px;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li:hover {
+  background-color: red;
+  /* Puedes cambiar esto a tu color deseado */
 }
 </style>
