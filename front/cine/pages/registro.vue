@@ -34,19 +34,19 @@
                     <h2>Seleccionar foto de perfil</h2>
                     <div class="opciones">
                         <div class="fila-imagenes">
-                            <img src="../public/icoshin.png" alt="Foto 1" @click="seleccionarFoto(1)">
-                            <img src="../public/icodoraemon.png" alt="Foto 2" @click="seleccionarFoto(2)">
-                            <img src="../public/icowalle.png" alt="Foto 3" @click="seleccionarFoto(3)">
+                            <img src="../public/1.png" alt="Foto 1" @click="seleccionarFoto(1)">
+                            <img src="../public/2.png" alt="Foto 2" @click="seleccionarFoto(2)">
+                            <img src="../public/3.png" alt="Foto 3" @click="seleccionarFoto(3)">
                         </div>
                         <div class="fila-imagenes">
-                            <img src="../public/icospiderman.png" alt="Foto 4" @click="seleccionarFoto(4)">
-                            <img src="../public/icoant.png" alt="Foto 5" @click="seleccionarFoto(5)">
-                            <img src="../public/icogroot.png" alt="Foto 6" @click="seleccionarFoto(6)">
+                            <img src="../public/4.png" alt="Foto 4" @click="seleccionarFoto(4)">
+                            <img src="../public/5.png" alt="Foto 5" @click="seleccionarFoto(5)">
+                            <img src="../public/6.png" alt="Foto 6" @click="seleccionarFoto(6)">
                         </div>
                         <div class="fila-imagenes">
-                            <img src="../public/icocars.png" alt="Foto 7" @click="seleccionarFoto(7)">
-                            <img src="../public/icohomer.png" alt="Foto 8" @click="seleccionarFoto(8)">
-                            <img src="../public/icominion.png" alt="Foto 9" @click="seleccionarFoto(9)">
+                            <img src="../public/7.png" alt="Foto 7" @click="seleccionarFoto(7)">
+                            <img src="../public/8.png" alt="Foto 8" @click="seleccionarFoto(8)">
+                            <img src="../public/9.png" alt="Foto 9" @click="seleccionarFoto(9)">
                         </div>
                     </div>
                 </div>
@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import { useUserStore } from '../stores/store'; // Importa el store de usuario de Pinia
+
 export default {
     data() {
         return {
@@ -68,7 +70,6 @@ export default {
         };
     },
     methods: {
-
         mostrarModal() {
             this.modalAbierto = true;
         },
@@ -106,8 +107,11 @@ export default {
                     throw new Error(errorData.message || 'Error al registrar el usuario');
                 }
 
-                // Si el registro es exitoso, muestra un mensaje en la consola
-                console.log('Registro exitoso');
+                // Obtener la información del usuario desde la respuesta del servidor
+                const userData = await response.json();
+
+                // Almacenar la información del usuario en el store de usuario
+                useUserStore().setUser(userData);
 
                 // Redirigir a la página de inicio después del registro exitoso
                 this.$router.push('/');
@@ -116,7 +120,7 @@ export default {
                 console.error('Error al registrar:', error);
             }
         },
-    }
+    },
 };
 </script>
 <style scoped>
