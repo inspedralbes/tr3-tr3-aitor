@@ -55,9 +55,10 @@ export default {
 
         // Guardar la información del usuario en localStorage
         localStorage.setItem('user', JSON.stringify(userData));
-
+        
         // Redirigir a la página de inicio después del inicio de sesión exitoso
         this.$router.push('/');
+
 
       } catch (error) {
         console.error('Error al iniciar sesión:', error);

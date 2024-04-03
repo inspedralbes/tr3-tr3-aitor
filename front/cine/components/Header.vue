@@ -26,21 +26,34 @@
           <nuxt-link to="/contactanos">Contactanos</nuxt-link>
         </li>
 
-        <!-- Mostrar el botón de Login si el usuario no está logeado -->
-        <li v-if="!user" style="float:right">
-          <nuxt-link to="/login">Login</nuxt-link>
-        </li>
-
         <!-- Mostrar la foto de perfil y el nombre del usuario si está logeado -->
         <li v-if="user" style="float:right">
-          <img :src="user.user.foto_perfil + '.png'" alt="Foto de perfil">
-          <span>{{ user.user.nom }}</span>
+          <div @mouseover="mostrarOpciones = true" @mouseleave="mostrarOpciones = false">
+            <img :src="user.user.foto_perfil + '.png'" alt="Foto de perfil">
+            <span>{{ user.user.nom }}</span>
+            <ul v-if="mostrarOpciones">
+              <li>
+                <nuxt-link to="/perfil">Perfil</nuxt-link>
+              </li>
+              <li>
+                <nuxt-link to="/entradas">Mis entradas</nuxt-link>
+              </li>
+              <li>
+                <button @click="logout">Cerrar sesión</button>
+              </li>
+            </ul>
+          </div>
         </li>
 
-        <!-- Mostrar opciones adicionales si el usuario no está logeado -->
-        <li v-if="!user" style="float:right" @mouseover="mostrarOpciones = true" @mouseleave="mostrarOpciones = false">
-          <div v-if="mostrarOpciones" class="opciones-adicionales">
-            <nuxt-link to="/registro">Registro</nuxt-link>
+        <!-- Mostrar el apartado de login si el usuario no está logeado -->
+        <li v-else style="float:right">
+          <div @mouseover="mostrarOpciones = true" @mouseleave="mostrarOpciones = false">
+            <nuxt-link to="/login">Login</nuxt-link>
+            <ul v-if="mostrarOpciones">
+              <li>
+                <nuxt-link to="/registro">Registro</nuxt-link>
+              </li>
+            </ul>
           </div>
         </li>
       </ul>
@@ -52,7 +65,7 @@
 export default {
   data() {
     return {
-      mostrarOpciones: false // Variable para controlar la visualización de las opciones adicionales
+      mostrarOpciones: false, // Variable para controlar la visualización de las opciones adicionales
     };
   },
   computed: {
@@ -61,13 +74,25 @@ export default {
       const userData = JSON.parse(localStorage.getItem('user'));
       return userData;
     }
+  },
+  methods: {
+
+    logout() {
+      // Redirigir al usuario a la página deseada
+      this.$router.push('/');
+
+      // Limpiar el localStorage y recargar la página actual en segundo plano
+      setTimeout(() => {
+        localStorage.removeItem('user');
+        window.location.reload();
+      }, 5);
+    }
   }
 };
 </script>
 
+
 <style scoped>
-
-
 body {
   margin: 0;
 
@@ -148,16 +173,20 @@ header {
 .opciones-adicionales a:hover {
   background-color: #f5f5f5;
 }
+
 .nav li img {
-  width: 40px; /* Ajusta el ancho de la imagen de perfil según sea necesario */
-  height: 40px; /* Ajusta la altura de la imagen de perfil según sea necesario */
-  margin-right: 5px; /* Ajusta el margen derecho para separar la imagen del nombre de usuario */
+  width: 40px;
+  /* Ajusta el ancho de la imagen de perfil según sea necesario */
+  height: 40px;
+  /* Ajusta la altura de la imagen de perfil según sea necesario */
+  margin-right: 5px;
+  /* Ajusta el margen derecho para separar la imagen del nombre de usuario */
 }
 
 /* Estilos para el nombre de usuario */
 .nav li span {
-  color: white; /* Color del texto */
+  color: white;
+  /* Color del texto */
   margin-right: 20px;
 }
-
 </style>
