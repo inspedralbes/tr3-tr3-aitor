@@ -338,6 +338,6 @@ alternarSeleccion(indiceFila, indiceAsiento) {
 }
 
 .boton-comprar:hover {
-  background-color: #0056b3;
+  background-color: #c00;
 }
 </style>
