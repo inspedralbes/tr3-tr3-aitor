@@ -2,6 +2,8 @@
   <div class="page-container">
     <div class="login-form">
       <h2 class="form-title">Iniciar sesión</h2>
+      <!-- Sección para mostrar mensajes de error -->
+      <div class="mensaje-error" v-if="errorInicioSesion">{{ errorInicioSesion }}</div>
       <form @submit.prevent="login">
         <div class="form-group">
           <label for="email">Email</label>
@@ -21,16 +23,15 @@
 <script>
 import { useUserStore } from '../stores/store'; // Importa el store de usuario de Pinia
 
-
 export default {
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      errorInicioSesion: '' // Variable para almacenar el mensaje de error
     };
   },
   methods: {
-    // Dentro del método login()
     async login() {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/login', {
@@ -49,25 +50,27 @@ export default {
           throw new Error(errorData.message || 'Error al iniciar sesión');
         }
 
+        // Limpiar mensaje de error en caso de éxito
+        this.errorInicioSesion = '';
+
         // Si el inicio de sesión es exitoso, almacena la información del usuario en Pinia
         const userData = await response.json();
         useUserStore().setUser(userData);
 
         // Guardar la información del usuario en localStorage
         localStorage.setItem('user', JSON.stringify(userData));
-        
+
         // Redirigir a la página de inicio después del inicio de sesión exitoso
         this.$router.push('/');
         setTimeout(() => {
-        window.location.reload();
-      }, 5);
-
-
+          window.location.reload();
+        }, 5);
       } catch (error) {
         console.error('Error al iniciar sesión:', error);
+        this.errorInicioSesion = error.message || 'Error al iniciar sesión';
       }
     }
-  },
+  }
 };
 </script>
 
@@ -147,5 +150,9 @@ a:-webkit-any-link {
   color: #f00;
   cursor: pointer;
   text-decoration: none;
+}
+.mensaje-error {
+  color: red;
+  margin-bottom: 10px;
 }
 </style>

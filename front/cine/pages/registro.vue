@@ -2,6 +2,8 @@
     <div class="page-container">
         <div class="registro">
             <h2 class="form-title">Registro</h2>
+            <!-- Sección para mostrar mensajes de error -->
+            <div class="mensaje-error" v-if="errorRegistro">{{ errorRegistro }}</div>
             <form @submit.prevent="submitRegistro">
                 <div class="campo">
                     <label for="nom">Nombre:</label>
@@ -66,7 +68,8 @@ export default {
             email: '',
             password: '',
             foto_perfil: null, // Usaremos null para indicar que aún no se ha seleccionado ninguna foto
-            modalAbierto: false
+            modalAbierto: false,
+            errorRegistro: '' // Variable para almacenar el mensaje de error
         };
     },
     methods: {
@@ -84,6 +87,7 @@ export default {
             try {
                 // Verificar si se ha seleccionado una foto de perfil
                 if (!this.foto_perfil) {
+                    this.errorRegistro = '¡Selecciona una foto de perfil!';
                     return;
                 }
 
@@ -107,6 +111,9 @@ export default {
                     throw new Error(errorData.message || 'Error al registrar el usuario');
                 }
 
+                // Limpiar mensaje de error en caso de éxito
+                this.errorRegistro = '';
+
                 // Obtener la información del usuario desde la respuesta del servidor
                 const userData = await response.json();
 
@@ -121,12 +128,13 @@ export default {
 
             } catch (error) {
                 console.error('Error al registrar:', error);
+                this.errorRegistro = error.message || 'Error al registrar el usuario';
             }
         }
-
-    },
+    }
 };
 </script>
+
 <style scoped>
 /* Estilos generales */
 .page-container {
@@ -264,4 +272,9 @@ a:-webkit-any-link {
     cursor: pointer;
     text-decoration: none;
 }
+.mensaje-error {
+    color: red;
+    margin-bottom: 10px;
+}
+
 </style>
