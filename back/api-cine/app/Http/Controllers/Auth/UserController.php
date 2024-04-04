@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -76,20 +77,66 @@ class UserController extends Controller
         ]);
     }
     public function mostrarUsuario($id)
-    {
-        $user = User::find($id);
-        return response()->json($user);
+{
+    // Buscar el usuario por su ID
+    $user = User::find($id);
+
+    // Verificar si se encontró el usuario
+    if (!$user) {
+        return response()->json(['message' => 'Usuario no encontrado'], 404);
     }
-    public function modificarUsuario(Request $request, $id)
-    {
-        $user = User::find($id);
+
+    // Eliminar el campo de la contraseña antes de devolver la respuesta
+    unset($user->password);
+
+    // Devolver la información del usuario como JSON
+    return response()->json($user);
+}
+public function modificarUsuario(Request $request, $id)
+{
+    $validator = Validator::make($request->all(), [
+        'nom' => 'sometimes',
+        'cognoms' => 'sometimes',
+        'email' => 'sometimes|string|email|unique:usuaris,email,' . $id,
+        'password' => 'sometimes',
+        'foto_perfil' => 'sometimes|in:1,2,3,4,5,6,7,8,9'
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'errors' => $validator->errors()
+        ], 422);
+    }
+
+    $user = User::find($id);
+    if (!$user) {
+        return response()->json([
+            'message' => 'Usuario no encontrado'
+        ], 404);
+    }
+
+    if ($request->has('nom')) {
         $user->nom = $request->nom;
-        $user->cognoms = $request->cognoms;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->foto_perfil = $request->foto_perfil;
-        $user->save();
-        return response()->json($user);
     }
+    if ($request->has('cognoms')) {
+        $user->cognoms = $request->cognoms;
+    }
+    if ($request->has('email')) {
+        $user->email = $request->email;
+    }
+    if ($request->has('password')) {
+        $user->password = Hash::make($request->password);
+    }
+    if ($request->has('foto_perfil')) {
+        $user->foto_perfil = $request->foto_perfil;
+    }
+
+    $user->save();
+
+    return response()->json([
+        'data' => $user
+    ], 200);
+}
+
 
 }
