@@ -134,7 +134,7 @@ public function modificarUsuario(Request $request, $id)
     $user->save();
 
     return response()->json([
-        'data' => $user
+        'user' => $user
     ], 200);
 }
 

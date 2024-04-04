@@ -109,12 +109,21 @@ export default {
                     },
                     body: JSON.stringify(this.userData)
                 });
+                const userData = await response.json();
 
+                localStorage.removeItem('user');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
                 console.log("Usuario actualizado correctamente");
+                
+                localStorage.setItem('user', JSON.stringify(userData));
+                this.$router.push('/');
+
+                setTimeout(() => {
+                window.location.reload();
+            }, 5);
 
                 // Actualizar el usuario en el localStorage
             } catch (error) {
@@ -143,10 +152,13 @@ export default {
             this.modalAbierto = false;
         },
         seleccionarFoto(numero) {
-            this.foto_perfil = `../public/${numero}.png`;
-            this.userData.foto_perfil = this.foto_perfil;
-            this.cerrarModal();
-        },
+    if (!this.foto_perfil) {
+        this.foto_perfil = `../public/${numero}.png`;
+        this.userData.foto_perfil = this.foto_perfil;
+    }
+    this.cerrarModal();
+},
+
     },
     computed: {
         user() {
