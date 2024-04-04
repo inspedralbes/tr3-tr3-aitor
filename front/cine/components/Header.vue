@@ -27,37 +27,45 @@
         </li>
 
         <li v-if="user" class="parent-menu" style="float:right">
-          <div>
-            <img :src="user.user.foto_perfil + '.png'" alt="Foto de perfil">
-            <span>{{ user.user.nom }}</span>
-            <ul class="sub-menu">
-              <li>
-                <nuxt-link to="/perfil">Perfil</nuxt-link>
-              </li>
-              <li>
-                <nuxt-link to="/entradas">Mis entradas</nuxt-link>
-              </li>
-              <li>
-                <button @click="logout">Cerrar sesión</button>
-              </li>
-            </ul>
-          </div>
+          <div class="grid">
+            <div>
+              <img :src="user.user.foto_perfil + '.png'" alt="Foto de perfil">
+              <span>{{ user.user.nom }}</span>
+            </div>
+            <div>
+        <li>
+          <nuxt-link to="/perfil">Perfil</nuxt-link>
         </li>
+  </div>
+  <div>
+    <li>
+      <nuxt-link to="/entradas">Mis entradas</nuxt-link>
+    </li>
+  </div>
+  <div>
+    <li>
+      <button @click="logout">Cerrar sesión</button>
+    </li>
+  </div>
 
 
-        <!-- Mostrar el apartado de login si el usuario no está logeado -->
-        <li v-else style="float:right">
-          <div @mouseover="mostrarOpciones = true" @mouseleave="mostrarOpciones = false">
-            <nuxt-link to="/login">Login</nuxt-link>
-            <ul v-if="mostrarOpciones">
-              <li>
-                <nuxt-link to="/registro">Registro</nuxt-link>
-              </li>
-            </ul>
-          </div>
+  </div>
+  </li>
+
+
+  <!-- Mostrar el apartado de login si el usuario no está logeado -->
+  <li v-else style="float:right">
+    <div @mouseover="mostrarOpciones = true" @mouseleave="mostrarOpciones = false">
+      <nuxt-link to="/login">Login</nuxt-link>
+      <ul v-if="mostrarOpciones">
+        <li>
+          <nuxt-link to="/registro">Registro</nuxt-link>
         </li>
       </ul>
-    </nav>
+    </div>
+  </li>
+  </ul>
+  </nav>
   </div>
 </template>
 
