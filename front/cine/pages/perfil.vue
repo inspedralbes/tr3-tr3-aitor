@@ -12,12 +12,12 @@
                 </div>
                 <div class="input-container">
                     <label for="email">Correo electrónico:</label>
-                    <input type="email" id="email" v-model="userData.email" :disabled="!editing" >
+                    <input type="email" id="email" v-model="userData.email" :disabled="!editing">
                 </div>
                 <div class="input-container">
                     <label for="password">Contraseña:</label>
                     <input type="password" id="password" :data-real-password="userData.password" v-model="fakePassword"
-                        :readonly="!editarContraseña"disabled>
+                        :readonly="!editarContraseña" disabled>
                 </div>
                 <div class="input-container">
                     <label for="foto">Foto de perfil:</label>
@@ -169,14 +169,14 @@ export default {
 </script>
 <style scoped>
 .user-profile {
-  margin: 20px;
+    margin: 20px;
 }
 
 .flex-container {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-gap: 20px;
-  
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 20px;
+
 }
 
 .user-info-container {
@@ -188,134 +188,200 @@ export default {
 }
 
 .input-container {
-  margin-bottom: 15px;
-  font-size: 20px;
+    margin-bottom: 15px;
+    font-size: 20px;
 }
 
 .input-container label {
-  font-weight: bold;
-  margin-bottom: 5px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .input-container input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
 .large-button {
     padding: 10px 20px;
-  background-color: red;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-  margin: 0 auto; /* Para centrar horizontalmente */
-  display: block; /* Hacer que el botón ocupe todo el ancho disponible */
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 auto;
+    /* Para centrar horizontalmente */
+    display: block;
+    /* Hacer que el botón ocupe todo el ancho disponible */
+}
+
+.user-actions {
+    width: 50%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    align-items: center;
+    text-align: center;
 }
 
 .user-actions ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.user-actions ul li {
-  margin-bottom: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .user-actions img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-right: 20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1); /* Sombra negra completamente opaca */
 }
 
+.user-actions h1 {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.user-actions li {
+    margin-bottom: 10px;
+}
+
+.user-actions a {
+    width: 200px;
+    padding: 10px 20px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 15px;
+}
+.user-actions button {
+    width: 240px;
+    padding: 10px 20px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}
+
+.user-actions a:hover,
+.user-actions button:hover {
+    background-color: #c00;
+}
+
+
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
-  display: none;
-  justify-content: center;
-  align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
 }
 
 .modal.abierto {
-  display: flex;
+    display: flex;
 }
 
 .modal .contenido {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  position: relative;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
 }
 
 .modal .contenido .cerrar {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  font-size: 20px;
-  color: #888;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #888;
 }
 
 .modal h2 {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .modal .opciones img {
-  width: 150px;
-  height: 150px;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+    width: 150px;
+    height: 150px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .modal .opciones img:last-child {
-  margin-right: 0;
+    margin-right: 0;
 }
 
 .modal .opciones img:hover {
-  border: 2px solid #007bff;
-  transform: scale(1.1);
+    border: 2px solid #007bff;
+    transform: scale(1.1);
 }
 
 .opciones .fila-imagenes {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
 }
+
 .input-container input:disabled {
-  background-color: #f0f0f0; /* Color de fondo gris claro */
-  color: #666; /* Color de texto gris */
-  cursor: not-allowed; /* Cambiar el cursor a no permitido */
+    background-color: #f0f0f0;
+    /* Color de fondo gris claro */
+    color: #666;
+    /* Color de texto gris */
+    cursor: not-allowed;
+    /* Cambiar el cursor a no permitido */
 
 }
+
 .input-container button {
-  padding: 10px 20px;
-  background-color: red;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-  margin: 0 auto; /* Para centrar horizontalmente */
-  display: block; /* Hacer que el botón ocupe todo el ancho disponible */
+    padding: 10px 20px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 auto;
+    /* Para centrar horizontalmente */
+    display: block;
+    /* Hacer que el botón ocupe todo el ancho disponible */
 }
+
 .input-container button:disabled {
-  background-color: #ccc; /* Color de fondo gris claro */
-  color: #666; /* Color de texto gris */
-  cursor: not-allowed; /* Cambiar el cursor a no permitido */
+    background-color: #ccc;
+    /* Color de fondo gris claro */
+    color: #666;
+    /* Color de texto gris */
+    cursor: not-allowed;
+    /* Cambiar el cursor a no permitido */
+}
+
+a:-webkit-any-link {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
 }
 </style>
