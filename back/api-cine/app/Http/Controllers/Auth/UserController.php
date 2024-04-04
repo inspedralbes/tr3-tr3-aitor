@@ -75,10 +75,21 @@ class UserController extends Controller
             'message' => 'Sesión cerrada exitosamente'
         ]);
     }
-    public function user(Request $request)
+    public function mostrarUsuario($id)
     {
-        // Retornar los datos del usuario autenticado
-        return $request->user();
+        $user = User::find($id);
+        return response()->json($user);
+    }
+    public function modificarUsuario(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->nom = $request->nom;
+        $user->cognoms = $request->cognoms;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->foto_perfil = $request->foto_perfil;
+        $user->save();
+        return response()->json($user);
     }
 
 }

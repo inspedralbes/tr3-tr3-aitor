@@ -5,19 +5,19 @@
                 <div class="user-info-container">
                     <div class="input-container">
                         <label>Nom:</label>
-                        <input type="text" name="nom" :value="users.name" :readonly="!editing">
+                        <input type="text" name="nom" v-model="userData.name" :readonly="!editing">
                     </div>
                     <div class="input-container">
                         <label>Cognoms:</label>
-                        <input type="text" name="cognoms" :value="users.surname" :readonly="!editing">
+                        <input type="text" name="cognoms" v-model="userData.surname" :readonly="!editing">
                     </div>
                     <div class="campo">
                         <label for="email">Correo electrónico:</label>
-                        <input type="email" id="email" :value="users.email" :readonly="!editing">
+                        <input type="email" id="email" v-model="userData.email" :readonly="!editing">
                     </div>
                     <div class="campo">
                         <label for="password">Contraseña:</label>
-                        <input type="password" id="password" :value="users.password" :readonly="!editing">
+                        <input type="password" id="password" v-model="userData.password" :readonly="!editing">
                     </div>
                     <div class="campo">
                         <label for="foto">Foto de perfil:</label>
@@ -54,9 +54,9 @@
         </div>
         <div class="user-actions">
             <ul>
-                <img :src="user.user.foto_perfil + '.png'" alt="Foto de perfil">
+                <img :src="userData.foto_perfil+ '.png'" alt="Foto de perfil">
 
-                <h1>{{ user.user.nom }} {{ user.user.cognoms }}</h1>
+                <h1>{{ userData.name }} {{ userData.surname }}</h1>
                 <li><nuxt-link to="/perfil">Mi Perfil</nuxt-link></li>
                 <li><nuxt-link to="/entradas">Mis Entradas</nuxt-link></li>
                 <li><button @click="logout">Cerrar sesión</button></li>
@@ -69,32 +69,48 @@
 export default {
     data() {
         return {
-            users: {
-                name: 'Aitor',
-                surname: 'Barreiro Escobar',
-                photo: '../public/1.png', // Ruta a la foto del usuario
-                email: 'aitor@example.com',
-                password: 'Usuario' // Rol del usuario
-            },
-            editing: false, // Variable para controlar el estado de edición del perfil
-            modalAbierto: false// Variable para controlar la apertura y cierre del modal
-
+            editing: false,
+            modalAbierto: false,
+            foto_perfil: null,
+            userData: {
+                name: '',
+                surname: '',
+                email: '',
+                password: 'xxxxxx',
+                foto_perfil: '' // Ruta por defecto para la foto de perfil
+            }
         };
     },
     methods: {
+        async fetchmostrarInformacion() {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/usuari/${this.user.user.id}`, {
+                    method: 'GET',
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                // Asignar la URL de la foto de perfil obtenida de la respuesta del servidor
+                this.userData.foto_perfil = data.foto_perfil;
+                this.userData.name = data.nom;
+                this.userData.surname = data.cognoms;
+                this.userData.email = data.email;
+                
+            } catch (error) {
+                console.error("Could not fetch sesiones: ", error);
+            }
+        },
         logout() {
             // Redirigir al usuario a la página deseada
             this.$router.push('/');
-
-            // Limpiar el localStorage
             localStorage.removeItem('user');
         },
         editProfile() {
-            // Implementar la lógica para habilitar la edición del perfil aquí
             this.editing = true;
         },
         guardarDatosUsuario() {
-            // Lógica para guardar los datos del usuario
+            // Aquí debes enviar los datos del usuario al servidor para ser guardados
             this.editing = false;
         },
         mostrarModal() {
@@ -104,16 +120,19 @@ export default {
             this.modalAbierto = false;
         },
         seleccionarFoto(numero) {
-            this.foto_perfil = numero;
-            this.cerrarModal(); // Cerrar el modal después de seleccionar una foto
+            this.foto_perfil = `../public/${numero}.png`;
+            this.userData.foto_perfil = this.foto_perfil;
+            this.cerrarModal();
         },
     },
     computed: {
         user() {
-            // Obtener la información del usuario almacenada en localStorage
             const userData = JSON.parse(localStorage.getItem('user'));
             return userData;
         }
+    },
+    mounted() {
+        this.fetchmostrarInformacion();
     }
 };
 </script>

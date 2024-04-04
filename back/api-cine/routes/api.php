@@ -44,3 +44,4 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/logout', [UserController::class, 'logout']);
 Route::get('/user', [UserController::class, 'user']);
+Route::get('/usuari/{id}', [UserController::class, 'mostrarUsuario']);
