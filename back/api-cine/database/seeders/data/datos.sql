@@ -31,3 +31,21 @@ INSERT INTO `novedades` (`id`, `title`, `sinopsis`, `estreno`, `poster`, `traile
 (10, 'Horror Park', 'La encargada de un parque de atracciones, Fiona (Wilma Lidén), debe cuidar de una pareja de antiguos amigos que han ganado un concurso de Halloween', '2024-05-23', 'horror.jpg', 'https://www.youtube.com/watch?v=dqxSrZDTDgo', 'dqxSrZDTDgo'),
 (11, 'Insidious', 'Josh  , su esposa Renai y sus tres hijos acaban de mudarse a una vieja casa. Pero, tras un desgraciado accidente, uno de los niños entra en coma.', '2024-06-10', 'insidious.jpg', 'https://www.youtube.com/watch?v=FRW3K0LlsD0', 'FRW3K0LlsD0'),
 (12, 'Verdad o Reto', 'Una inofensiva partida de Verdad o reto entre un grupo de amigos acaba convirtiéndose en un juego letal cuando alguien  empieza a castigar a los que mienten o no aceptan el reto.', '2024-04-13', 'reto.jpg', 'https://www.youtube.com/watch?v=YhSPDqqgO3Y', 'YhSPDqqgO3Y');
+
+INSERT INTO `sesions` (`id`, `fecha`, `diaEspectador`, `precio`) VALUES
+(1, '2024-03-21 12:47:57', 0, 5.50),
+(2, '2024-03-22 17:40:00', 0, 4.50),
+(3, '2024-03-24 16:00:00', 0, 4.50),
+(4, '2024-03-20 17:00:00', 0, 5.50),
+(5, '2024-03-20 09:50:57', 0, 5.50),
+(6, '2024-03-20 18:30:00', 0, 5.50),
+(7, '2024-03-20 12:00:00', 0, 4.50),
+(8, '2024-03-21 14:55:20', 0, 5.50),
+(9, '2024-03-21 15:00:56', 0, 5.50),
+(10, '2024-03-21 10:56:49', 0, 5.50),
+(11, '2024-03-22 12:55:49', 0, 4.50),
+(12, '2024-03-22 11:39:01', 0, 5.50),
+(13, '2024-03-22 11:39:01', 0, 4.50),
+(14, '2024-03-24 15:40:19', 0, 5.50),
+(15, '2024-03-24 20:41:19', 0, 4.50),
+(16, '2024-03-24 12:42:16', 0, 4.50);
