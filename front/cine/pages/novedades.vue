@@ -2,9 +2,13 @@
   <div class="centro">
     <h2 class="page-title">Novedades de Películas</h2>
   </div>
+  <div class="derecha">
+    <input type="text" v-model="filtroTitulo" placeholder="Buscar por título">
+  </div>
+  
   <div class="novedadess-container">
     <div class="novedadess-grid">
-      <div v-for="novedad in sortedNovedades" :key="novedad.id" class="novedades-card" @click="mostrarModal(novedad)">
+      <div v-for="novedad in novedadesFiltradas" :key="novedad.id" class="novedades-card" @click="mostrarModal(novedad)">
         <img :src="novedad.poster" :alt="`Cartel de ${novedad.title}`" class="novedades-cartel">
         <div class="novedades-info">
           <h2 class="novedades-titulo">{{ novedad.title }}</h2>
@@ -36,7 +40,8 @@ export default {
     return {
       novedades: [],
       modalAbierto: false,
-      novedadSeleccionada: null
+      novedadSeleccionada: null,
+      filtroTitulo: ''
     };
   },
   async mounted() {
@@ -69,19 +74,30 @@ export default {
     }
   },
   computed: {
-    sortedNovedades() {
-      return this.novedades.slice().sort((a, b) => {
-        const dateA = new Date(a.estreno);
-        const dateB = new Date(b.estreno);
-        return dateA - dateB; // Cambiar a dateA - dateB
-      });
+    novedadesFiltradas() {
+      return this.novedades.filter(novedad =>
+        novedad.title.toLowerCase().includes(this.filtroTitulo.toLowerCase())
+      );
     }
   }
 };
 </script>
 
 <style scoped>
-/* Estilos para el modal */
+/* Estilos para el campo de búsqueda */
+input[type="text"] {
+  width: 200px; /* Ancho del campo de búsqueda */
+  padding: 10px; 
+  border-radius: 5px; 
+  border: 1px solid #ccc; 
+  margin-right: 75px;
+}
+.derecha {
+  display: flex; /* Para usar flexbox */
+  justify-content: flex-end; /* Alineación a la derecha */
+  margin-bottom: 30px; /* Espacio inferior */
+}
+
 .modal {
     position: fixed;
     z-index: 1;
