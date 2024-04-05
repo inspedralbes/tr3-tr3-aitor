@@ -98,6 +98,7 @@ export default {
         },
         async guardarDatosUsuario() {
             try {
+                console.log(this.userData)
                 const response = await fetch(`http://127.0.0.1:8000/api/modificarUsuario/${this.user.user.id}`, {
                     method: 'PUT',
                     headers: {
@@ -148,12 +149,9 @@ export default {
             this.modalAbierto = false;
         },
         seleccionarFoto(numero) {
-            if (!this.foto_perfil) {
-                this.foto_perfil = `../public/${numero}.png`;
-                this.userData.foto_perfil = this.foto_perfil;
-            }
+            this.userData.foto_perfil = numero;
             this.cerrarModal();
-        },
+        }
 
     },
     computed: {
@@ -238,7 +236,8 @@ export default {
     height: 100px;
     border-radius: 50%;
     margin-right: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 1); /* Sombra negra completamente opaca */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    /* Sombra negra completamente opaca */
 }
 
 .user-actions h1 {
@@ -263,6 +262,7 @@ export default {
     display: block;
     margin-bottom: 15px;
 }
+
 .user-actions button {
     width: 240px;
     padding: 10px 20px;
