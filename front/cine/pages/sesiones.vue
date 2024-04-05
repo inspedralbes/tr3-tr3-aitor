@@ -6,23 +6,29 @@
     <input type="text" v-model="filtroTitulo" placeholder="Buscar por título">
   </div>
   <div class="peliculas-container">
-    <div class="peliculas-grid">
-      <div v-for="sesion in sesionesFiltradas" :key="sesion.id" class="pelicula-card">
-        <img :src="sesion.pelicula.cartel" :alt="`Cartel de ${sesion.pelicula.titulo}`" class="pelicula-cartel">
-        <div class="pelicula-info">
-          <h2 class="pelicula-titulo">{{ sesion.pelicula.titulo }}</h2>
-          <p class="pelicula-genero">{{ sesion.pelicula.genero }}</p>
-          <p class="pelicula-duracion">Duración: {{ convertirDuracion(sesion.pelicula.duracion) }}</p>
-          <p class="sesion-horario">Horario: {{ formatearFecha(sesion.fecha) }}</p>
-          <button class="button button-comprar" @click="redireccionarCompraEntradas(sesion)">Comprar entradas</button>
+    <div v-for="(sesionesDia, fecha) in sesionesAgrupadas" :key="fecha">
+      <div class="fecha">
+        <h3>{{ fecha }}</h3>
+      </div>
+      <div class="peliculas-grid">
+        <div v-for="sesion in sesionesDia" :key="sesion.id" class="pelicula-card">
+          <img :src="sesion.pelicula.cartel" :alt="`Cartel de ${sesion.pelicula.titulo}`" class="pelicula-cartel">
+          <div class="pelicula-info">
+            <h2 class="pelicula-titulo">{{ sesion.pelicula.titulo }}</h2>
+            <p class="pelicula-genero">{{ sesion.pelicula.genero }}</p>
+            <p class="pelicula-duracion">Duración: {{ convertirDuracion(sesion.pelicula.duracion) }}</p>
+            <p class="sesion-horario">Horario: {{ formatearFecha(sesion.fecha) }}</p>
+            <button class="button button-comprar" @click="redireccionarCompraEntradas(sesion)">Comprar entradas</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 
+
+
 <script>
-import { usePeliculasStore } from "../stores/store";
 export default {
   data() {
     return {
@@ -33,7 +39,6 @@ export default {
   async mounted() {
     await this.fetchSesiones();
   },
- 
   methods: {
     async fetchSesiones() {
       try {
@@ -53,27 +58,40 @@ export default {
       return `${horas}h ${minutosRestantes}min`;
     },
     formatearFecha(fecha) {
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       return new Date(fecha).toLocaleDateString('es-ES', options);
     },
     redireccionarCompraEntradas(sesion) {
-      const peliculasStore = usePeliculasStore();
-      peliculasStore.guardarPeliculaSeleccionada(sesion.pelicula);
       this.$router.push(`${sesion.id}`);
     },
   },
   computed: {
     sesionesOrdenadas() {
-      // Ordenar las sesiones por fecha y hora
+      // Ordenar las sesiones por fecha
       return this.sesiones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     },
     sesionesFiltradas() {
-    return this.sesiones.filter(sesion => 
-     sesion.pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase())
-    );
+      return this.sesiones.filter(sesion => 
+        sesion.pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase())
+      );
+    },
+    sesionesAgrupadas() {
+      // Agrupar las sesiones por día
+      const sesionesAgrupadas = {};
+      this.sesionesOrdenadas.forEach(sesion => {
+        const fecha = new Date(sesion.fecha).toLocaleDateString('es-ES', {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric'
+        });
+        if (!sesionesAgrupadas[fecha]) {
+          sesionesAgrupadas[fecha] = [];
+        }
+        sesionesAgrupadas[fecha].push(sesion);
+      });
+      return sesionesAgrupadas;
+    }
   }
-  },
-
 };
 </script>
 
@@ -93,6 +111,12 @@ input[type="text"] {
   /* Alineación a la derecha */
   margin-bottom: 30px;
   /* Espacio inferior */
+}
+.fecha{
+  margin-left: 40px;
+  margin-bottom: 20px;
+  font-size: 1.8rem
+
 }
 
 /* Estilos para la información de la película */
