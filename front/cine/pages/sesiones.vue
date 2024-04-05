@@ -2,9 +2,12 @@
   <div class="centro">
     <h2 class="page-title">Sesiones de Cine</h2>
   </div>
+  <div class="derecha">
+    <input type="text" v-model="filtroTitulo" placeholder="Buscar por título">
+  </div>
   <div class="peliculas-container">
     <div class="peliculas-grid">
-      <div v-for="sesion in sesionesOrdenadas" :key="sesion.id" class="pelicula-card">
+      <div v-for="sesion in sesionesFiltradas" :key="sesion.id" class="pelicula-card">
         <img :src="sesion.pelicula.cartel" :alt="`Cartel de ${sesion.pelicula.titulo}`" class="pelicula-cartel">
         <div class="pelicula-info">
           <h2 class="pelicula-titulo">{{ sesion.pelicula.titulo }}</h2>
@@ -19,22 +22,18 @@
 </template>
 
 <script>
-import { usePeliculasStore  } from "../stores/store";
+import { usePeliculasStore } from "../stores/store";
 export default {
   data() {
     return {
-      sesiones: []
+      sesiones: [],
+      filtroTitulo: '',
     };
   },
   async mounted() {
     await this.fetchSesiones();
   },
-  computed: {
-    sesionesOrdenadas() {
-      // Ordenar las sesiones por fecha y hora
-      return this.sesiones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
-    }
-  },
+ 
   methods: {
     async fetchSesiones() {
       try {
@@ -62,96 +61,134 @@ export default {
       peliculasStore.guardarPeliculaSeleccionada(sesion.pelicula);
       this.$router.push(`${sesion.id}`);
     },
+  },
+  computed: {
+    sesionesOrdenadas() {
+      // Ordenar las sesiones por fecha y hora
+      return this.sesiones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+    },
+    sesionesFiltradas() {
+    return this.sesiones.filter(sesion => 
+     sesion.pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase())
+    );
   }
+  },
+
 };
 </script>
-  
-  <style scoped>
-  /* Estilos para la información de la película */
-  .pelicula-info {
-    padding: 20px;
-    background-color: white; /* Color de fondo */
-    border-radius: 0 0 20px 20px; /* Ajuste del borde inferior */
-  }
-  
-  .pelicula-titulo {
-    font-size: 1.4rem; /* Tamaño del título más pequeño */
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .pelicula-genero,
-  .pelicula-duracion,
-  .sesion-horario {
-    font-size: 1rem; /* Tamaño de la fuente más pequeño */
-    color: #666;
-    margin-bottom: 5px;
-  }
-  
-  .button-comprar {
-    background-color: #FF4500; /* Color rojo */
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    display: block; /* Cambiar a bloque para ocupar todo el ancho disponible */
-    margin: 10px auto; /* Centrar horizontalmente y aplicar margen */
-    font-size: 14px; /* Tamaño del botón más pequeño */
-    cursor: pointer;
-    border-radius: 5px;
-    padding: 8px 16px; /* Ajuste del relleno del botón */
-    transition: background-color 0.3s;
-    margin-top: 25px;
-  }
-  
-  .button-comprar:hover {
-    background-color: red; /* Cambio de color al pasar el ratón */
-  }
-  
-  .button-comprar:focus {
-    outline: none;
-  }
-  
-  /* Estilos para las tarjetas de películas */
-  .page-title {
-    font-size: 2rem;
-    color: var(--color-primary);
-    text-align: center;
-    margin-bottom: 50px;
-  }
-  
-  .peliculas-container {
-    max-width: 1200px;
-    /* Hacer el contenedor más grande */
-  }
-  
-  .peliculas-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* Mostrar 4 películas por fila */
-    gap: 30px;
-  }
-  
-  .pelicula-card {
-    width: 300px;
-    /* Ajustar el ancho de las tarjetas de película */
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    margin-left: 40px;
-    margin-bottom: 20px;
-  }
-  
-  .pelicula-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .pelicula-cartel {
-    width: 100%;
-    height: auto;
-    border-radius: 20px 20px 0 0;
-  }
-  </style>
-  
+
+<style scoped>
+input[type="text"] {
+  width: 200px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 75px;
+}
+
+.derecha {
+  display: flex;
+  /* Para usar flexbox */
+  justify-content: flex-end;
+  /* Alineación a la derecha */
+  margin-bottom: 30px;
+  /* Espacio inferior */
+}
+
+/* Estilos para la información de la película */
+.pelicula-info {
+  padding: 20px;
+  background-color: white;
+  /* Color de fondo */
+  border-radius: 0 0 20px 20px;
+  /* Ajuste del borde inferior */
+}
+
+.pelicula-titulo {
+  font-size: 1.4rem;
+  /* Tamaño del título más pequeño */
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.pelicula-genero,
+.pelicula-duracion,
+.sesion-horario {
+  font-size: 1rem;
+  /* Tamaño de la fuente más pequeño */
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.button-comprar {
+  background-color: #FF4500;
+  /* Color rojo */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  /* Cambiar a bloque para ocupar todo el ancho disponible */
+  margin: 10px auto;
+  /* Centrar horizontalmente y aplicar margen */
+  font-size: 14px;
+  /* Tamaño del botón más pequeño */
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 8px 16px;
+  /* Ajuste del relleno del botón */
+  transition: background-color 0.3s;
+  margin-top: 25px;
+}
+
+.button-comprar:hover {
+  background-color: red;
+  /* Cambio de color al pasar el ratón */
+}
+
+.button-comprar:focus {
+  outline: none;
+}
+
+/* Estilos para las tarjetas de películas */
+.page-title {
+  font-size: 2rem;
+  color: var(--color-primary);
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.peliculas-container {
+  max-width: 1200px;
+  /* Hacer el contenedor más grande */
+}
+
+.peliculas-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* Mostrar 4 películas por fila */
+  gap: 30px;
+}
+
+.pelicula-card {
+  width: 300px;
+  /* Ajustar el ancho de las tarjetas de película */
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  margin-left: 40px;
+  margin-bottom: 20px;
+}
+
+.pelicula-card:hover {
+  transform: translateY(-5px);
+}
+
+.pelicula-cartel {
+  width: 100%;
+  height: auto;
+  border-radius: 20px 20px 0 0;
+}
+</style>
