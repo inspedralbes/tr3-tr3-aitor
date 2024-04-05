@@ -68,6 +68,10 @@ export default {
       const horas = Math.floor(this.pelicula.duracion / 60);
       const minutos = this.pelicula.duracion % 60;
       return `${horas}h ${minutos}min`;
+    },
+    user() {
+      const userData = JSON.parse(localStorage.getItem('user'));
+      return userData;
     }
   },
   methods: {
@@ -177,7 +181,7 @@ export default {
     async comprar() {
       try {
         // Obtener el id_usuario del localStorage
-        
+
 
         for (const asiento of this.asientosSeleccionados) {
           const filaSeleccionada = this.obtenerFila(asiento.etiqueta);
@@ -193,7 +197,7 @@ export default {
               fila: filaSeleccionada,
               columna: columnaSeleccionada,
               sesion_id: this.pelicula.sesion_id,
-              usuario_id:  // Usar el id_usuario del localStorage
+              usuario_id: this.user.user.id, // Usar el id_usuario del localStorage
             })
           });
 
