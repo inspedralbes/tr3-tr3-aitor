@@ -41,7 +41,7 @@ export default {
       novedades: [],
       modalAbierto: false,
       novedadSeleccionada: null,
-      filtroTitulo: ''
+      filtroTitulo: '',
     };
   },
   async mounted() {

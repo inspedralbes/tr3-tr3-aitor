@@ -2,6 +2,9 @@
   <div class="centro">
     <h2 class="page-title">Películas</h2>
   </div>
+  <div class="derecha">
+    <input type="text" v-model="filtroTitulo" placeholder="Buscar por título">
+  </div>
   <div class="peliculas-container">
     <div class="peliculas-grid">
       <div v-for="pelicula in peliculas" :key="pelicula.id" class="pelicula-card" @click="mostrarModal(pelicula)">
@@ -39,7 +42,8 @@ export default {
     return {
       peliculas: [],
       modalAbierto: false,
-      peliculaSeleccionada: null
+      peliculaSeleccionada: null,
+      filtroTitulo: '',
     };
   },
   async mounted() {
@@ -75,12 +79,30 @@ export default {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       return new Date(dateString).toLocaleDateString(undefined, options);
     }
+  },
+  computed: {
+    peliculasFiltradas() {
+      return this.peliculas.filter(pelicula => {
+         pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase());
+      });
+    }
   }
 };
 </script>
 
 <style scoped>
-/* Estilos para el modal */
+input[type="text"] {
+  width: 200px; /* Ancho del campo de búsqueda */
+  padding: 10px; 
+  border-radius: 5px; 
+  border: 1px solid #ccc; 
+  margin-right: 75px;
+}
+.derecha {
+  display: flex; /* Para usar flexbox */
+  justify-content: flex-end; /* Alineación a la derecha */
+  margin-bottom: 30px; /* Espacio inferior */
+}
 .modal {
     position: fixed;
     z-index: 1;

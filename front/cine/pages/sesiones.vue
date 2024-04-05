@@ -106,7 +106,7 @@ export default {
   }
   
   .button-comprar:hover {
-    background-color: #FF6347; /* Cambio de color al pasar el ratón */
+    background-color: red; /* Cambio de color al pasar el ratón */
   }
   
   .button-comprar:focus {
