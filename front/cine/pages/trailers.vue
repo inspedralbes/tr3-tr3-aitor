@@ -2,9 +2,12 @@
   <div class="centro">
     <h2 class="page-title">Trailers</h2>
   </div>
+  <div class="derecha">
+    <input type="text" v-model="filtroTitulo" placeholder="Buscar por título">
+  </div>
   <div class="peliculas-container">
     <div class="peliculas-grid">
-      <div v-for="pelicula in peliculas" :key="pelicula.id" class="pelicula-card" @click="mostrarVideo(pelicula.trailer)">
+      <div v-for="pelicula in peliculasFiltradas" :key="pelicula.id" class="pelicula-card" @click="mostrarVideo(pelicula.trailer)">
         <img :src="pelicula.cartel" :alt="`Cartel de ${pelicula.titulo}`" class="pelicula-cartel">
         <div class="pelicula-info">
           <h2 class="pelicula-titulo">{{ pelicula.titulo }}</h2>
@@ -13,7 +16,7 @@
     </div>
 
     <div class="peliculas-grid">
-      <div v-for="novedad in novedades" :key="novedad.id" class="pelicula-card" @click="mostrarVideo(novedad.trailer)">
+      <div v-for="novedad in novedadesFiltradas" :key="novedad.id" class="pelicula-card" @click="mostrarVideo(novedad.trailer)">
         <img :src="novedad.poster" :alt="`Cartel de ${novedad.title}`" class="pelicula-cartel">
         <div class="pelicula-info">
           <h2 class="pelicula-titulo">{{ novedad.title }}</h2>
@@ -37,12 +40,25 @@ export default {
       peliculas: [],
       novedades: [],
       mostrarModal: false,
-      videoUrl: ''
+      videoUrl: '',
+      filtroTitulo: '',
     };
   },
   async mounted() {
     await this.fetchPeliculas();
     await this.fetchNovedades();
+  },
+  computed: {
+    peliculasFiltradas() {
+      return this.peliculas.filter(pelicula =>
+        pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase())
+      );
+    },
+    novedadesFiltradas() {
+      return this.novedades.filter(novedad =>
+        novedad.title.toLowerCase().includes(this.filtroTitulo.toLowerCase())
+      );
+    }
   },
   methods: {
     async fetchPeliculas() {
@@ -86,9 +102,26 @@ export default {
   }
 };
 </script>
-
 <style scoped>
-/* Estilos para el modal */
+/* Estilos para el campo de búsqueda */
+input[type="text"] {
+  width: 200px;
+  /* Ancho del campo de búsqueda */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 75px;
+}
+
+.derecha {
+  display: flex;
+  /* Para usar flexbox */
+  justify-content: flex-end;
+  /* Alineación a la derecha */
+  margin-bottom: 30px;
+  /* Espacio inferior */
+}
+
 .modal {
   display: flex;
   position: fixed;
@@ -97,7 +130,7 @@ export default {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
 }
