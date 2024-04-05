@@ -7,7 +7,7 @@
   </div>
   <div class="peliculas-container">
     <div class="peliculas-grid">
-      <div v-for="pelicula in peliculas" :key="pelicula.id" class="pelicula-card" @click="mostrarModal(pelicula)">
+      <div v-for="pelicula in peliculasFiltradas" :key="pelicula.id" class="pelicula-card" @click="mostrarModal(pelicula)">
         <img :src="pelicula.cartel" :alt="`Cartel de ${pelicula.titulo}`" class="pelicula-cartel">
         <div class="pelicula-info">
           <h2 class="pelicula-titulo">{{ pelicula.titulo }}</h2>
@@ -82,11 +82,12 @@ export default {
   },
   computed: {
     peliculasFiltradas() {
-      return this.peliculas.filter(pelicula => {
-         pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase());
-      });
+      return this.peliculas.filter(pelicula => 
+        pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase())
+      );
     }
   }
+
 };
 </script>
 
