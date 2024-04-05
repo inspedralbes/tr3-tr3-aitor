@@ -127,4 +127,29 @@ class EntradaController extends Controller
             ], 500);
         }
     }
+    public function listarEntradasPorUsuario($idUsuario)
+    {
+        try {
+            // Verifica si el usuario existe
+            $usuario = User::find($idUsuario);
+            if (!$usuario) {
+                return response()->json([
+                    'message' => 'El usuario no existe'
+                ], 404);
+            }
+
+            // Busca las entradas asociadas al usuario
+            $entradas = Entrada::where('usuario_id', $idUsuario)->get();
+
+            return response()->json([
+                'message' => 'Entradas del usuario obtenidas con éxito',
+                'data' => $entradas
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error al obtener las entradas del usuario: ' . $e->getMessage());
+            return response()->json([
+                'error' => 'Error al obtener las entradas del usuario: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

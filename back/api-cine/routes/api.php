@@ -29,6 +29,7 @@ Route::get('/listarEntradas', [EntradaController::class, 'listarEntradas']);
 Route::put('/modificarEntrada/{id}', [EntradaController::class, 'modificarEntrada']);
 Route::delete('/eliminarEntrada/{id}', [EntradaController::class, 'eliminarEntrada']);
 Route::get('/listarEntradasPorSesion/{idSesion}', [EntradaController::class, 'listarEntradasPorSesion']);
+Route::get('/listarEntradasPorUsuario/{idUsuario}', [EntradaController::class, 'listarEntradasPorUsuario']);
 Route::post('/crearSesion', [SesionController::class, 'crearSesion']);
 Route::get('/listarSesiones', [SesionController::class, 'listarSesiones']);
 Route::get('/obtenerSesion/{id}', [SesionController::class, 'obtenerSesion']);
