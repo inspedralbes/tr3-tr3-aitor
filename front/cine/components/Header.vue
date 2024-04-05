@@ -26,54 +26,44 @@
           <nuxt-link to="/contactanos">Contactanos</nuxt-link>
         </li>
 
-        <li v-if="user" class="parent-menu" style="float:right">
-          <div class="grid">
-            <div>
+        <li v-if="user" style="float:right">
+          <div class="grid-container" @mouseenter="showOptions = true" @mouseleave="showOptions = false">
+            <div class="grid-item">
               <img :src="user.user.foto_perfil + '.png'" alt="Foto de perfil">
               <span>{{ user.user.nom }}</span>
             </div>
-            <div>
-        <li>
-          <nuxt-link to="/perfil">Perfil</nuxt-link>
+            <div class="grid-item" v-show="showOptions">
+              <nuxt-link to="/perfil">Perfil</nuxt-link>
+            </div>
+            <div class="grid-item" v-show="showOptions">
+              <nuxt-link to="/entradas">Mis entradas</nuxt-link>
+            </div>
+            <div class="grid-item" v-show="showOptions">
+              <button @click.stop="logout" class="logout-button">Cerrar sesión</button>
+            </div>
+          </div>
         </li>
-  </div>
-  <div>
-    <li>
-      <nuxt-link to="/entradas">Mis entradas</nuxt-link>
-    </li>
-  </div>
-  <div>
-    <li>
-      <button @click="logout">Cerrar sesión</button>
-    </li>
-  </div>
-
-
-  </div>
-  </li>
-
-
-  <!-- Mostrar el apartado de login si el usuario no está logeado -->
-  <li v-else style="float:right">
-    <div @mouseover="mostrarOpciones = true" @mouseleave="mostrarOpciones = false">
-      <nuxt-link to="/login">Login</nuxt-link>
-      <ul v-if="mostrarOpciones">
-        <li>
-          <nuxt-link to="/registro">Registro</nuxt-link>
+        <!-- Mostrar el apartado de login si el usuario no está logeado -->
+        <li v-else style="float:right">
+          <div @mouseover="mostrarOpciones = true" @mouseleave="mostrarOpciones = false">
+            <nuxt-link to="/login">Login</nuxt-link>
+            <ul v-if="mostrarOpciones">
+              <li>
+                <nuxt-link to="/registro">Registro</nuxt-link>
+              </li>
+            </ul>
+          </div>
         </li>
       </ul>
-    </div>
-  </li>
-  </ul>
-  </nav>
+    </nav>
   </div>
 </template>
-
 <script>
 export default {
   data() {
     return {
-      mostrarOpciones: false, // Variable para controlar la visualización de las opciones adicionales
+      mostrarOpciones: false,
+      showOptions: false
     };
   },
   computed: {
@@ -198,26 +188,31 @@ header {
   margin-right: 20px;
 }
 
-.dropdown {
-  position: relative;
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: 10px;
 }
 
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 8px;
+.grid-item {
+  padding: 5px;
+  text-align: center;
 }
 
-.dropdown:hover .dropdown-menu {
+.logout-button {
+  padding: 10px 20px;
+  background-color: red;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  margin: 0 auto;
   display: block;
 }
 
-.dropdown-menu li:hover {
-  background-color: red;
-  /* Puedes cambiar esto a tu color deseado */
+.logout-button:hover {
+  background-color: #c00;
 }
 </style>
