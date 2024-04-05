@@ -6,6 +6,8 @@
     <input type="text" v-model="filtroTitulo" placeholder="Buscar por título">
   </div>
   <div class="peliculas-container">
+
+    <!-- Segundo v-for para mostrar sesiones agrupadas -->
     <div v-for="(sesionesDia, fecha) in sesionesAgrupadas" :key="fecha">
       <div class="fecha">
         <h3>{{ fecha }}</h3>
@@ -27,6 +29,7 @@
 </template>
 
 <script>
+import { usePeliculasStore } from "../stores/store";
 export default {
   data() {
     return {
@@ -61,12 +64,14 @@ export default {
     },
 
     redireccionarCompraEntradas(sesion) {
+      const peliculasStore = usePeliculasStore();
+      peliculasStore.guardarPeliculaSeleccionada(sesion.pelicula);
       this.$router.push(`${sesion.id}`);
     },
   },
   computed: {
     sesionesOrdenadas() {
-      // Ordenar las sesiones por fecha
+      // Ordenar las sesiones por fecha y hora
       return this.sesiones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     },
     sesionesFiltradas() {
