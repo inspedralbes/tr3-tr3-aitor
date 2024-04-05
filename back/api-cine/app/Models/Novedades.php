@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Novedades extends Model
 {
     protected $table = 'novedades';
-    protected $fillable = ['title', 'sinopsis', 'estreno', 'poster', 'trailer, id_youtube'];
+    protected $fillable = ['title','genero', 'sinopsis', 'estreno', 'poster', 'trailer, id_youtube'];
 
     public $timestamps = false;
 }

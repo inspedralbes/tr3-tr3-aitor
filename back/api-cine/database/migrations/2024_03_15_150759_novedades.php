@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('novedades', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('genero');
             $table->string('sinopsis');
             $table->date('estreno');
             $table->string('poster');

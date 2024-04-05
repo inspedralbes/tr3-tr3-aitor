@@ -13,6 +13,7 @@ class NovedadesControlador extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
+            'genero' => 'required|string', 
             'sinopsis' => 'required|string',
             'estreno' => 'required|date_format:Y-m-d',
             'poster' => 'required|string|max:255',
@@ -26,6 +27,7 @@ class NovedadesControlador extends Controller
         }
         $novedades = new Novedades();
         $novedades->title = $request->title;
+        $novedades->genero = $request->genero;
         $novedades->sinopsis = $request->sinopsis;
         $novedades->estreno = $request->estreno;
         $novedades->poster = $request->poster;
@@ -48,6 +50,7 @@ class NovedadesControlador extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'sometimes|string|max:255',
+            'genero' => 'sometimes|string',
             'sinopsis' => 'sometimes|string',
             'estreno' => 'sometimes|date_format:Y-m-d',
             'poster' => 'sometimes|string|max:255',
@@ -66,6 +69,9 @@ class NovedadesControlador extends Controller
         }
         if($request->has('title')) {
             $novedades->title = $request->title;
+        }
+        if($request->has('genero')) {
+            $novedades->genero = $request->genero;
         }
         if($request->has('sinopsis')) {
             $novedades->sinopsis = $request->sinopsis;

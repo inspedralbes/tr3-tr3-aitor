@@ -18,19 +18,19 @@ INSERT INTO `peliculas` (`id`, `titulo`, `duracion`, `genero`, `sinopsis`, `cart
 
 
 
-INSERT INTO `novedades` (`id`, `title`, `sinopsis`, `estreno`, `poster`, `trailer`, `id_youtube`) VALUES
-(1, 'Teen Wolf La Pelicula', 'Scott Howard juega al baloncesto. No es ni el mejor jugador ni el más alto, pero no por ello desiste de su sueño.', '2024-03-26', 'wolf.jpg', 'https://www.youtube.com/watch?v=e2z8zO7rLSg', 'e2z8zO7rLSg'),
-(2, 'Sinister', 'Ellison, es un periodista especializado en escribir artículos y novelas sobre casos de crímenes célebres.', '2024-10-31', 'sinister.jpg', 'https://www.youtube.com/watch?v=_kbQAJR9YWQ', '_kbQAJR9YWQ'),
-(3, 'The Flash', 'Los mundos chocan en \"Flash\" cuando Barry utiliza sus superpoderes para viajar en el tiempo y cambiar los acontecimientos del pasado.', '2024-06-16', 'flash.jpg', 'https://www.youtube.com/watch?v=hebWYacbdvc', 'hebWYacbdvc'),
-(4, 'Indiginous', 'inco amigos se encuentran en Panamá para una vacaciones. En una fiesta escuchan las historias acerca de una bonita cascada.', '2024-04-20', 'indiginous.jpg', 'https://www.youtube.com/watch?v=vDm-hItTkIE', 'vDm-hItTkIE'),
-(5, 'Inazuma Eleven La Pelicula', 'El colegio Raimon ha llegado a las semifinales de Fútbol Frontier y deben enfrentarse al Equipo Ogro del colegio Rey Colmillo.', '2024-12-23', 'inazuma.jpg', 'https://www.youtube.com/watch?v=XpqXe3GAjrQ', 'XpqXe3GAjrQ'),
-(6, 'Five Nights at Freddy s', 'Un hombre comienza un trabajo como guardia de seguridad nocturno en el restaurante Freddy Fazbear s Pizza. ', '2024-10-27', 'five.jpg', 'https://www.youtube.com/watch?v=0VH9WCFV6XQ', '0VH9WCFV6XQ'),
-(7, 'Capitan America Civil War', 'Después de que otro incidente internacional involucre a Los Vengadores, causando varios daños colaterales.', '2024-04-29', 'capi.jpg', 'https://www.youtube.com/watch?v=dKrVegVI0Us', 'dKrVegVI0Us'),
-(8, 'Imaginary', 'Cuando Jessica vuelve con su familia a la casa de su infancia, Alice, su hijastra más pequeña, comienza a desarrollar un extraño apego hacia Chauncey.', '2024-03-15', 'imaginary.jpg', 'https://www.youtube.com/watch?v=8XoNfrgrAGM', '8XoNfrgrAGM'),
-(9, 'Escape Room', 'Seis personas quedan atrapadas en un escape room cuyo creador ha diseñado una trampa mortal en cada habitación.', '2024-04-04', 'escape.jpg', 'https://www.youtube.com/watch?v=T5z2EwJTr9I', 'T5z2EwJTr9I'),
-(10, 'Horror Park', 'La encargada de un parque de atracciones, Fiona (Wilma Lidén), debe cuidar de una pareja de antiguos amigos que han ganado un concurso de Halloween', '2024-05-23', 'horror.jpg', 'https://www.youtube.com/watch?v=dqxSrZDTDgo', 'dqxSrZDTDgo'),
-(11, 'Insidious', 'Josh  , su esposa Renai y sus tres hijos acaban de mudarse a una vieja casa. Pero, tras un desgraciado accidente, uno de los niños entra en coma.', '2024-06-10', 'insidious.jpg', 'https://www.youtube.com/watch?v=FRW3K0LlsD0', 'FRW3K0LlsD0'),
-(12, 'Verdad o Reto', 'Una inofensiva partida de Verdad o reto entre un grupo de amigos acaba convirtiéndose en un juego letal cuando alguien  empieza a castigar a los que mienten o no aceptan el reto.', '2024-04-13', 'reto.jpg', 'https://www.youtube.com/watch?v=YhSPDqqgO3Y', 'YhSPDqqgO3Y');
+INSERT INTO `novedades` (`id`, `title`,`genero`, `sinopsis`, `estreno`, `poster`, `trailer`, `id_youtube`) VALUES
+(1, 'Teen Wolf La Pelicula','Accion/Thriller' 'Scott Howard juega al baloncesto. No es ni el mejor jugador ni el más alto, pero no por ello desiste de su sueño.', '2024-03-26', 'wolf.jpg', 'https://www.youtube.com/watch?v=e2z8zO7rLSg', 'e2z8zO7rLSg'),
+(2, 'Sinister','Terror', 'Ellison, es un periodista especializado en escribir artículos y novelas sobre casos de crímenes célebres.', '2024-10-31', 'sinister.jpg', 'https://www.youtube.com/watch?v=_kbQAJR9YWQ', '_kbQAJR9YWQ'),
+(3, 'The Flash', 'Accion/Fantasia','Los mundos chocan en \"Flash\" cuando Barry utiliza sus superpoderes para viajar en el tiempo y cambiar los acontecimientos del pasado.', '2024-06-16', 'flash.jpg', 'https://www.youtube.com/watch?v=hebWYacbdvc', 'hebWYacbdvc'),
+(4, 'Indiginous', 'Terror','Cinco amigos se encuentran en Panamá para una vacaciones. En una fiesta escuchan las historias acerca de una bonita cascada.', '2024-04-20', 'indiginous.jpg', 'https://www.youtube.com/watch?v=vDm-hItTkIE', 'vDm-hItTkIE'),
+(5, 'Inazuma Eleven La Pelicula','Deporte/Animacion', 'El colegio Raimon ha llegado a las semifinales de Fútbol Frontier y deben enfrentarse al Equipo Ogro del colegio Rey Colmillo.', '2024-12-23', 'inazuma.jpg', 'https://www.youtube.com/watch?v=XpqXe3GAjrQ', 'XpqXe3GAjrQ'),
+(6, 'Five Nights at Freddy s','Terror/Misterio', 'Un hombre comienza un trabajo como guardia de seguridad nocturno en el restaurante Freddy Fazbear s Pizza. ', '2024-10-27', 'five.jpg', 'https://www.youtube.com/watch?v=0VH9WCFV6XQ', '0VH9WCFV6XQ'),
+(7, 'Capitan America Civil War','Accion/Aventuras', 'Después de que otro incidente internacional involucre a Los Vengadores, causando varios daños colaterales.', '2024-04-29', 'capi.jpg', 'https://www.youtube.com/watch?v=dKrVegVI0Us', 'dKrVegVI0Us'),
+(8, 'Imaginary','Terror/Misterio', 'Cuando Jessica vuelve con su familia a la casa de su infancia, Alice, su hijastra más pequeña, comienza a desarrollar un extraño apego hacia Chauncey.', '2024-03-15', 'imaginary.jpg', 'https://www.youtube.com/watch?v=8XoNfrgrAGM', '8XoNfrgrAGM'),
+(9, 'Escape Room', 'Terror/Thriller','Seis personas quedan atrapadas en un escape room cuyo creador ha diseñado una trampa mortal en cada habitación.', '2024-04-04', 'escape.jpg', 'https://www.youtube.com/watch?v=T5z2EwJTr9I', 'T5z2EwJTr9I'),
+(10, 'Horror Park', 'Terror','La encargada de un parque de atracciones, Fiona (Wilma Lidén), debe cuidar de una pareja de antiguos amigos que han ganado un concurso de Halloween', '2024-05-23', 'horror.jpg', 'https://www.youtube.com/watch?v=dqxSrZDTDgo', 'dqxSrZDTDgo'),
+(11, 'Insidious','Terror/Misterio', 'Josh  , su esposa Renai y sus tres hijos acaban de mudarse a una vieja casa. Pero, tras un desgraciado accidente, uno de los niños entra en coma.', '2024-06-10', 'insidious.jpg', 'https://www.youtube.com/watch?v=FRW3K0LlsD0', 'FRW3K0LlsD0'),
+(12, 'Verdad o Reto','Terror/Policiaco', 'Una inofensiva partida de Verdad o reto entre un grupo de amigos acaba convirtiéndose en un juego letal cuando alguien  empieza a castigar a los que mienten o no aceptan el reto.', '2024-04-13', 'reto.jpg', 'https://www.youtube.com/watch?v=YhSPDqqgO3Y', 'YhSPDqqgO3Y');
 
 INSERT INTO `sesions` (`id`, `fecha`, `diaEspectador`, `precio`) VALUES
 (1, '2024-03-21 12:47:57', 0, 5.50),

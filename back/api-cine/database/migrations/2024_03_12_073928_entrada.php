@@ -14,10 +14,12 @@ return new class extends Migration
     Schema::create('entradas', function (Blueprint $table) {
         $table->id();
         $table->unsignedBigInteger('sesion_id');
+        $table->unsignedBigInteger('usuario_id');
         $table->integer('fila');
         $table->integer('columna');
         $table->integer('cantidad');
         $table->foreign('sesion_id')->references('id')->on('sesions')->onDelete('cascade');
+        $table->foreign('usuario_id')->references('id')->on('usuaris')->onDelete('cascade');
     });
 }
 

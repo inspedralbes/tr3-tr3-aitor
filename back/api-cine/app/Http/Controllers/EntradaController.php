@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Entrada;
 use App\Models\Sesion; 
+use App\Models\Usuer;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,8 @@ class EntradaController extends Controller
             'cantidad' => 'required|integer',
             'fila' => 'required|integer',
             'columna' => 'required|integer',
-            'sesion_id' => 'required|exists:sesions,id'
+            'sesion_id' => 'required|exists:sesions,id',
+            'usuario_id' => 'required|exists:usuarios,id',
         ]);
 
         if ($validator->fails()) {
@@ -33,6 +35,7 @@ class EntradaController extends Controller
         $entrada->fila = $request->fila;
         $entrada->columna = $request->columna;
         $entrada->sesion_id = $request->sesion_id;
+        $entrada->usuario_id = $request->usuario_id;
         $entrada->save();
 
         return response()->json([
@@ -58,7 +61,8 @@ class EntradaController extends Controller
             'cantidad'=>'sometimes|integer',
             'fila'=>'sometimes|integer',
             'columna'=>'sometimes|integer',
-            'sesion_id'=>'sometimes|exists:sesions,id'
+            'sesion_id'=>'sometimes|exists:sesions,id',
+            'usuario_id'=>'sometimes|exists:usuarios,id',
         ]);
         if($validator->fails()){
             return response()->json([
@@ -76,6 +80,9 @@ class EntradaController extends Controller
         }
         if($request->has('sesion_id')){
             $entrada->sesion_id=$request->sesion_id;
+        }
+        if($request->has('usuario_id')){
+            $entrada->usuario_id=$request->usuario_id;
         }
         $entrada->save();
         return response()->json([
