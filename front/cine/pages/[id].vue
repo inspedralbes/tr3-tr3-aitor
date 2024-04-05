@@ -94,79 +94,79 @@ export default {
     },
 
     async obtenerEntradasOcupadas(sesionId) {
-  try {
-    const response = await fetch(`http://127.0.0.1:8000/api/listarEntradasPorSesion/${this.pelicula.sesion_id}`, {
-      method: 'GET',
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    // Obtener las etiquetas de las butacas ocupadas
-    const etiquetasOcupadas = data.data.map(entrada =>'F'+ entrada.fila + 'A' + entrada.columna);
-    console.log('Entradas ocupadas:', etiquetasOcupadas); // Mostrar las entradas ocupadas en un console log
-    return etiquetasOcupadas;
-  } catch (error) {
-    console.error("Could not fetch occupied seats: ", error);
-    return [];
-  }
-},
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/listarEntradasPorSesion/${this.pelicula.sesion_id}`, {
+          method: 'GET',
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        // Obtener las etiquetas de las butacas ocupadas
+        const etiquetasOcupadas = data.data.map(entrada => 'F' + entrada.fila + 'A' + entrada.columna);
+        // console.log('Entradas ocupadas:', etiquetasOcupadas); // Mostrar las entradas ocupadas en un console log
+        return etiquetasOcupadas;
+      } catch (error) {
+        console.error("Could not fetch occupied seats: ", error);
+        return [];
+      }
+    },
 
 
-generarPlanAsientos(filas, asientosPorFila, precio, entradasOcupadas) {
-  const planAsientos = [];
-  for (let i = 1; i <= filas; i++) {
-    const fila = [];
-    for (let j = 1; j <= asientosPorFila; j++) {
-      const etiqueta = `F${i}A${j}`;
-      const seleccionado = this.asientosSeleccionados.some(asiento => asiento.etiqueta === etiqueta);
-      const ocupado = entradasOcupadas.includes(etiqueta);
-      const imagen = ocupado ? './butaca_ocupada.png' : (seleccionado ? './butaca_roja.png' : './butaca.png');
-      fila.push({
-        etiqueta: etiqueta,
-        precio: precio,
-        cantidad: 1,
-        seleccionado: seleccionado,
-        ocupado: ocupado,
-        imagen: imagen,
-      });
-    }
-    planAsientos.push(fila);
-  }
-  return planAsientos;
-},
+    generarPlanAsientos(filas, asientosPorFila, precio, entradasOcupadas) {
+      const planAsientos = [];
+      for (let i = 1; i <= filas; i++) {
+        const fila = [];
+        for (let j = 1; j <= asientosPorFila; j++) {
+          const etiqueta = `F${i}A${j}`;
+          const seleccionado = this.asientosSeleccionados.some(asiento => asiento.etiqueta === etiqueta);
+          const ocupado = entradasOcupadas.includes(etiqueta);
+          const imagen = ocupado ? './butaca_ocupada.png' : (seleccionado ? './butaca_roja.png' : './butaca.png');
+          fila.push({
+            etiqueta: etiqueta,
+            precio: precio,
+            cantidad: 1,
+            seleccionado: seleccionado,
+            ocupado: ocupado,
+            imagen: imagen,
+          });
+        }
+        planAsientos.push(fila);
+      }
+      return planAsientos;
+    },
 
-alternarSeleccion(indiceFila, indiceAsiento) {
-  const asiento = this.planAsientos[indiceFila][indiceAsiento];
+    alternarSeleccion(indiceFila, indiceAsiento) {
+      const asiento = this.planAsientos[indiceFila][indiceAsiento];
 
-  // Verificar si el asiento está ocupado
-  if (asiento.ocupado) {
-    // Si está ocupado, mostrar un mensaje al usuario y salir de la función
-    alert('Esta butaca ya está ocupada. Por favor, seleccione otra.');
-    return;
-  }
+      // Verificar si el asiento está ocupado
+      if (asiento.ocupado) {
+        // Si está ocupado, mostrar un mensaje al usuario y salir de la función
+        alert('Esta butaca ya está ocupada. Por favor, seleccione otra.');
+        return;
+      }
 
-  // Verificar si se ha alcanzado el máximo de asientos seleccionados
-  if (this.totalAsientosSeleccionados >= this.maxAsientosSeleccionados && !asiento.seleccionado) {
-    alert('Solo puedes seleccionar un máximo de 10 asientos.');
-    return;
-  }
+      // Verificar si se ha alcanzado el máximo de asientos seleccionados
+      if (this.totalAsientosSeleccionados >= this.maxAsientosSeleccionados && !asiento.seleccionado) {
+        alert('Solo puedes seleccionar un máximo de 10 asientos.');
+        return;
+      }
 
-  // Alternar la selección del asiento
-  asiento.seleccionado = !asiento.seleccionado;
+      // Alternar la selección del asiento
+      asiento.seleccionado = !asiento.seleccionado;
 
-  // Actualizar la lista de asientos seleccionados
-  if (asiento.seleccionado) {
-    this.asientosSeleccionados.push(asiento);
-    asiento.imagen = './butaca_roja.png';
-  } else {
-    const indice = this.asientosSeleccionados.findIndex(asientoSeleccionado => asientoSeleccionado.etiqueta === asiento.etiqueta);
-    if (indice !== -1) {
-      this.asientosSeleccionados.splice(indice, 1);
-      asiento.imagen = './butaca.png';
-    }
-  }
-},
+      // Actualizar la lista de asientos seleccionados
+      if (asiento.seleccionado) {
+        this.asientosSeleccionados.push(asiento);
+        asiento.imagen = './butaca_roja.png';
+      } else {
+        const indice = this.asientosSeleccionados.findIndex(asientoSeleccionado => asientoSeleccionado.etiqueta === asiento.etiqueta);
+        if (indice !== -1) {
+          this.asientosSeleccionados.splice(indice, 1);
+          asiento.imagen = './butaca.png';
+        }
+      }
+    },
 
     obtenerFila(etiqueta) {
       return etiqueta.split('A')[0].replace('F', '');
@@ -176,10 +176,12 @@ alternarSeleccion(indiceFila, indiceAsiento) {
     },
     async comprar() {
       try {
+        // Obtener el id_usuario del localStorage
+        
+
         for (const asiento of this.asientosSeleccionados) {
           const filaSeleccionada = this.obtenerFila(asiento.etiqueta);
           const columnaSeleccionada = this.obtenerColumna(asiento.etiqueta);
-          
 
           const response = await fetch('http://127.0.0.1:8000/api/crearEntrada', {
             method: 'POST',
@@ -190,7 +192,8 @@ alternarSeleccion(indiceFila, indiceAsiento) {
               cantidad: 1,
               fila: filaSeleccionada,
               columna: columnaSeleccionada,
-              sesion_id: this.pelicula.sesion_id // ID de la sesión
+              sesion_id: this.pelicula.sesion_id,
+              usuario_id:  // Usar el id_usuario del localStorage
             })
           });
 
@@ -200,8 +203,8 @@ alternarSeleccion(indiceFila, indiceAsiento) {
           }
 
           const responseData = await response.json();
-
         }
+
         this.asientosSeleccionados = [];
 
         // Redirigir a la página de inicio después de la compra

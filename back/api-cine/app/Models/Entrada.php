@@ -13,9 +13,9 @@ class Entrada extends Model
     {
         return $this->belongsTo(Sesion::class, 'sesion_id');
     }
-    public function usuario()
+    public function user()
     {
-        return $this->belongsTo(Usuario::class, 'usuario_id');
+        return $this->belongsTo(User::class, 'usuario_id');
     }
     public $timestamps = false;
 }

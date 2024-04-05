@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Entrada;
 use App\Models\Sesion; 
-use App\Models\Usuer;
+use App\Models\User;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +21,7 @@ class EntradaController extends Controller
             'fila' => 'required|integer',
             'columna' => 'required|integer',
             'sesion_id' => 'required|exists:sesions,id',
-            'usuario_id' => 'required|exists:usuarios,id',
+            'usuario_id' => 'required|exists:usuaris,id',
         ]);
 
         if ($validator->fails()) {
