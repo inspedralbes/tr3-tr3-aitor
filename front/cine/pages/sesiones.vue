@@ -26,8 +26,6 @@
   </div>
 </template>
 
-
-
 <script>
 export default {
   data() {
@@ -58,9 +56,10 @@ export default {
       return `${horas}h ${minutosRestantes}min`;
     },
     formatearFecha(fecha) {
-      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(fecha).toLocaleDateString('es-ES', options);
+      const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+      return new Date(fecha).toLocaleTimeString('es-ES', options);
     },
+
     redireccionarCompraEntradas(sesion) {
       this.$router.push(`${sesion.id}`);
     },
@@ -71,7 +70,7 @@ export default {
       return this.sesiones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     },
     sesionesFiltradas() {
-      return this.sesiones.filter(sesion => 
+      return this.sesiones.filter(sesion =>
         sesion.pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase())
       );
     },
@@ -112,11 +111,11 @@ input[type="text"] {
   margin-bottom: 30px;
   /* Espacio inferior */
 }
-.fecha{
+
+.fecha {
   margin-left: 40px;
   margin-bottom: 20px;
   font-size: 1.8rem
-
 }
 
 /* Estilos para la información de la película */
