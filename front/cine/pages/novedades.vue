@@ -12,6 +12,7 @@
         <img :src="novedad.poster" :alt="`Cartel de ${novedad.title}`" class="novedades-cartel">
         <div class="novedades-info">
           <h2 class="novedades-titulo">{{ novedad.title }}</h2>
+          <p class="novedades-genero">{{ novedad.genero }}</p>
           <p class="novedades-duracion">Fecha de lanzamiento: {{ formatDate(novedad.estreno) }}</p>
         </div>
       </div>
@@ -26,7 +27,8 @@
         <img :src="novedadSeleccionada.poster" :alt="`Cartel de ${novedadSeleccionada.title}`" class="cartel-novedad">
         <div class="novedades-info">
           <h2 class="titulo-novedad">{{ novedadSeleccionada.title }}</h2>
-          <p class="sinopsis-novedad">{{ novedadSeleccionada.sinopsis }}</p>
+          <p class="duracion-genero">{{ novedadSeleccionada.genero }}</p>
+          <p class="novedades-genero">{{ novedadSeleccionada.sinopsis }}</p>
           <p class="duracion-novedad">Fecha de lanzamiento: {{ formatDate(novedadSeleccionada.estreno) }}</p>
         </div>
       </div>
@@ -220,5 +222,10 @@ input[type="text"] {
   font-size: 1.2rem;
   color: #666;
   margin-bottom: 5px;
+}
+.duracion-genero {
+    font-size: 1rem;
+    color: black; /* Cambiar el color del texto de la duración si es necesario */
+    margin-bottom: 5px;
 }
 </style>
