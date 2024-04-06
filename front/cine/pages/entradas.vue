@@ -45,7 +45,7 @@ export default {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-
+                console.log(data);
                 // Asignar los datos a la variable entradas
                 this.entradas = data.data;
 
@@ -58,35 +58,35 @@ export default {
             }
         },
         async fetchInformacionSesion(sesionId) {
-            try {
-                const response = await fetch(`http://127.0.0.1:8000/api/listarSesionesPorId/${sesionId}`, {
-                    method: 'GET',
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/api/listarSesionesPorId/${sesionId}`, {
+            method: 'GET',
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
 
-                // Buscar la entrada correspondiente y asignar la fecha y el precio
-                const entrada = this.entradas.find(entrada => entrada.sesion_id === sesionId);
-                if (entrada) {
-                    // Formatear la fecha y hora
-                    const fechaHora = new Date(data.data.fecha);
-                    const fechaFormateada = fechaHora.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                    const horaFormateada = fechaHora.toLocaleTimeString('es-ES', { hour: 'numeric', minute: 'numeric', hour12: true });
+        // Buscar todas las entradas correspondientes a la sesión
+        const entradasDeSesion = this.entradas.filter(entrada => entrada.sesion_id === sesionId);
+        
+        // Asignar detalles de sesión a cada entrada correspondiente
+        entradasDeSesion.forEach(entrada => {
+            // Formatear la fecha y hora
+            const fechaHora = new Date(data.data.fecha);
+            const fechaFormateada = fechaHora.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const horaFormateada = fechaHora.toLocaleTimeString('es-ES', { hour: 'numeric', minute: 'numeric', hour12: true });
 
-                    // Asignar la fecha y la hora formateadas
-                    entrada.fecha_hora = `${fechaFormateada} ${horaFormateada}`;
-                    entrada.precio = data.data.precio;
-                    // Agregar los detalles de la película a la entrada
-                    entrada.pelicula = data.data.pelicula;
-                } else {
-                    console.error("No se encontró la entrada correspondiente para la sesión con ID:", sesionId);
-                }
-            } catch (error) {
-                console.error("Could not fetch session information: ", error);
-            }
-        },
+            // Asignar la fecha y la hora formateadas
+            entrada.fecha_hora = `${fechaFormateada} ${horaFormateada}`;
+            entrada.precio = data.data.precio;
+            // Agregar los detalles de la película a la entrada
+            entrada.pelicula = data.data.pelicula;
+        });
+    } catch (error) {
+        console.error("Could not fetch session information: ", error);
+    }
+},
 
         logout() {
             // Redirigir al usuario a la página deseada
