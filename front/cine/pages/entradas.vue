@@ -6,22 +6,24 @@
             <img :src="entrada.pelicula.cartel" :alt="`Cartel de ${entrada.pelicula.titulo}`" class="cartel">
             <div class="info">
               <h1>{{ entrada.pelicula.titulo }}</h1>
-              <p>Filera {{ entrada.fila }} - Columna {{ entrada.columna }}</p>
+              <p>Entrada: Filera {{ entrada.fila }} - Columna {{ entrada.columna }}</p>
               <p>{{ entrada.fecha_hora }}</p>
-              <p>{{ entrada.precio }}€</p>
+              <p>Precio: {{ entrada.precio }}€</p>
             </div>
           </div>
         </div>
       </div>
       <div class="perfil">
-        <img :src="user.user.foto_perfil + '.png'" alt="Foto de perfil" class="foto-perfil">
-        <div class="info-perfil">
-          <h1>{{ user.user.nom }} {{ user.user.cognoms }}</h1>
-          <ul>
-            <li><nuxt-link to="/perfil">Mi Perfil</nuxt-link></li>
-            <li><nuxt-link to="/entradas">Mis Entradas</nuxt-link></li>
-          </ul>
-          <button @click="logout" class="boton-logout">Cerrar sesión</button>
+        <div class="perfil-info">
+          <img :src="user.user.foto_perfil + '.png'" alt="Foto de perfil" class="foto-perfil">
+          <div class="nombre-info">
+            <h1>{{ user.user.nom }} {{ user.user.cognoms }}</h1>
+            <ul>
+              <li><nuxt-link to="/perfil">Mi Perfil</nuxt-link></li>
+              <li><nuxt-link to="/entradas">Mis Entradas</nuxt-link></li>
+            </ul>
+            <button @click="logout" class="boton-logout">Cerrar sesión</button>
+          </div>
         </div>
       </div>
     </div>
@@ -58,35 +60,35 @@ export default {
             }
         },
         async fetchInformacionSesion(sesionId) {
-    try {
-        const response = await fetch(`http://127.0.0.1:8000/api/listarSesionesPorId/${sesionId}`, {
-            method: 'GET',
-        });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/listarSesionesPorId/${sesionId}`, {
+                    method: 'GET',
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
 
-        // Buscar todas las entradas correspondientes a la sesión
-        const entradasDeSesion = this.entradas.filter(entrada => entrada.sesion_id === sesionId);
-        
-        // Asignar detalles de sesión a cada entrada correspondiente
-        entradasDeSesion.forEach(entrada => {
-            // Formatear la fecha y hora
-            const fechaHora = new Date(data.data.fecha);
-            const fechaFormateada = fechaHora.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            const horaFormateada = fechaHora.toLocaleTimeString('es-ES', { hour: 'numeric', minute: 'numeric', hour12: true });
+                // Buscar todas las entradas correspondientes a la sesión
+                const entradasDeSesion = this.entradas.filter(entrada => entrada.sesion_id === sesionId);
 
-            // Asignar la fecha y la hora formateadas
-            entrada.fecha_hora = `${fechaFormateada} ${horaFormateada}`;
-            entrada.precio = data.data.precio;
-            // Agregar los detalles de la película a la entrada
-            entrada.pelicula = data.data.pelicula;
-        });
-    } catch (error) {
-        console.error("Could not fetch session information: ", error);
-    }
-},
+                // Asignar detalles de sesión a cada entrada correspondiente
+                entradasDeSesion.forEach(entrada => {
+                    // Formatear la fecha y hora
+                    const fechaHora = new Date(data.data.fecha);
+                    const fechaFormateada = fechaHora.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                    const horaFormateada = fechaHora.toLocaleTimeString('es-ES', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+                    // Asignar la fecha y la hora formateadas
+                    entrada.fecha_hora = `${fechaFormateada} ${horaFormateada}`;
+                    entrada.precio = data.data.precio;
+                    // Agregar los detalles de la película a la entrada
+                    entrada.pelicula = data.data.pelicula;
+                });
+            } catch (error) {
+                console.error("Could not fetch session information: ", error);
+            }
+        },
 
         logout() {
             // Redirigir al usuario a la página deseada
@@ -112,63 +114,137 @@ export default {
 </script>
 <style>
 .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
 .entradas {
-  flex: 1;
+    flex: 1;
 }
 
 .entrada {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .entrada-info {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+    margin-top: 25px;
 }
 
 .cartel {
-  width: 100px; /* Ajusta el tamaño según sea necesario */
-  margin-right: 20px;
+    width: 100px;
+    /* Ajusta el tamaño según sea necesario */
+    margin-right: 20px;
 }
 
 .info {
-  flex: 1;
+    flex: 1;
 }
 
 .perfil {
-  width: 200px; /* Ajusta el ancho según sea necesario */
-  background-color: #f0f0f0;
-  padding: 20px;
+    width: 15%;
+    
+    background-color: #fff;
+    /* Fondo blanco */
+    border: 1px solid #ccc;
+    /* Borde gris */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    padding: 20px;
+    /* Espaciado interior */
+    display: flex;
+    /* Mostrar elementos en línea */
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-right: 250px;
+    margin-top: 80px;
 }
 
 .foto-perfil {
-  width: 100px; /* Ajusta el tamaño según sea necesario */
-  border-radius: 50%;
+    width: 100px;
+    /* Tamaño de la foto de perfil */
+    height: 100px;
+    /* Altura de la foto de perfil */
+    border-radius: 50%;
+    /* Borde redondeado */
+    margin-left: 60px;
+    /* Margen a la derecha para separar del texto */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    /* Sombra ligera */
+}
+
+.info-perfil {
+    flex: 1;
+    /* Ocupar el espacio restante */
 }
 
 .info-perfil h1 {
-  margin-bottom: 10px;
+    margin: 0 0 10px;
+    /* Margen inferior para separar del resto del contenido */
 }
 
 .info-perfil ul {
-  list-style: none;
-  padding: 0;
+    padding: 0;
+    /* Eliminar el relleno de la lista */
+    margin: 0;
+    /* Eliminar el margen de la lista */
 }
 
 .info-perfil ul li {
-  margin-bottom: 5px;
+    list-style: none;
+    /* Eliminar los puntos de la lista */
+}
+.nombre-info h1 {
+    font-size: 20px;
+}
+.nombre-info ul li {
+    width: 200px;
+    padding: 10px 20px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 15px;
+}
+.nombre-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
+.nombre-info ul li:hover {
+    background-color: #c00;
+}
 .boton-logout {
-  background-color: #ff6347;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
+    width:240px;
+    background-color: red;
+    /* Color de fondo rojo */
+    color: #fff;
+    /* Color de texto blanco */
+    border: none;
+    /* Sin borde */
+    padding: 10px 20px;
+    /* Espaciado interno */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    cursor: pointer;
+    
+}
+
+.boton-logout:hover {
+    background-color: #c00;
+    /* Color de fondo rojo más oscuro al pasar el ratón */
+}
+a:-webkit-any-link {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
 }
 </style>
