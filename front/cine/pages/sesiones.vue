@@ -5,8 +5,13 @@
   <div class="derecha">
     <input type="text" v-model="filtroTitulo" placeholder="Buscar por título">
   </div>
+  <div class="derecha">
+    <select v-model="filtroGenero" @change="filtrarPorGenero">
+      <option value="">Todos los géneros</option>
+      <option v-for="genero in generosDisponibles" :key="genero">{{ genero }}</option>
+    </select>
+  </div>
   <div class="peliculas-container">
-
     <!-- Segundo v-for para mostrar sesiones agrupadas -->
     <div v-for="(sesionesDia, fecha) in sesionesAgrupadas" :key="fecha">
       <div class="fecha">
@@ -35,6 +40,7 @@ export default {
     return {
       sesiones: [],
       filtroTitulo: '',
+      filtroGenero: '',
     };
   },
   async mounted() {
@@ -68,6 +74,10 @@ export default {
       peliculasStore.guardarPeliculaSeleccionada(sesion.pelicula);
       this.$router.push(`${sesion.id}`);
     },
+    filtrarPorGenero() {
+      // Al cambiar el género, reinicia el filtro por título
+      this.filtroTitulo = '';
+    }
   },
   computed: {
     sesionesOrdenadas() {
@@ -75,14 +85,15 @@ export default {
       return this.sesiones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     },
     sesionesFiltradas() {
-      return this.sesiones.filter(sesion =>
-        sesion.pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase())
+      return this.sesionesOrdenadas.filter(sesion =>
+      (sesion.pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase()) &&
+        (this.filtroGenero === '' || sesion.pelicula.genero === this.filtroGenero))
       );
     },
     sesionesAgrupadas() {
       // Agrupar las sesiones por día
       const sesionesAgrupadas = {};
-      this.sesionesOrdenadas.forEach(sesion => {
+      this.sesionesFiltradas.forEach(sesion => {
         const fecha = new Date(sesion.fecha).toLocaleDateString('es-ES', {
           year: 'numeric',
           month: 'numeric',
@@ -94,11 +105,14 @@ export default {
         sesionesAgrupadas[fecha].push(sesion);
       });
       return sesionesAgrupadas;
+    },
+    generosDisponibles() {
+      // Obtener la lista de géneros disponibles
+      return [...new Set(this.sesiones.map(sesion => sesion.pelicula.genero))];
     }
   }
 };
 </script>
-
 <style scoped>
 input[type="text"] {
   width: 200px;
@@ -115,6 +129,14 @@ input[type="text"] {
   /* Alineación a la derecha */
   margin-bottom: 30px;
   /* Espacio inferior */
+}
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 10px; 
+  margin-right: 75px;
 }
 
 .fecha {
@@ -150,7 +172,7 @@ input[type="text"] {
 }
 
 .button-comprar {
-  background-color: #FF4500;
+  background-color: red;
   /* Color rojo */
   border: none;
   color: white;
@@ -171,7 +193,7 @@ input[type="text"] {
 }
 
 .button-comprar:hover {
-  background-color: red;
+  background-color: #c00;
   /* Cambio de color al pasar el ratón */
 }
 
