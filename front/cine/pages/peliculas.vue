@@ -4,7 +4,15 @@
   </div>
   <div class="derecha">
     <input type="text" v-model="filtroTitulo" placeholder="Buscar por título">
+    
   </div>
+  <div class="derecha">
+    <select v-model="filtroGenero" @change="filtrarPorGenero">
+      <option value="">Todos los géneros</option>
+      <option v-for="genero in generosDisponibles" :key="genero">{{ genero }}</option>
+    </select>
+  </div>
+  
   <div class="peliculas-container">
     <div class="peliculas-grid">
       <div v-for="pelicula in peliculasFiltradas" :key="pelicula.id" class="pelicula-card" @click="mostrarModal(pelicula)">
@@ -44,6 +52,7 @@ export default {
       modalAbierto: false,
       peliculaSeleccionada: null,
       filtroTitulo: '',
+      filtroGenero: '',
     };
   },
   async mounted() {
@@ -78,16 +87,22 @@ export default {
     formatDate(dateString) {
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       return new Date(dateString).toLocaleDateString(undefined, options);
+    },
+    filtrarPorGenero() {
+      this.filtroTitulo = ''; // Reinicia el filtro de título cuando cambia el género
     }
   },
   computed: {
     peliculasFiltradas() {
       return this.peliculas.filter(pelicula => 
-        pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase())
+        (pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase()) &&
+         (this.filtroGenero === '' || pelicula.genero === this.filtroGenero))
       );
+    },
+    generosDisponibles() {
+      return [...new Set(this.peliculas.map(pelicula => pelicula.genero))];
     }
   }
-
 };
 </script>
 
@@ -103,6 +118,14 @@ input[type="text"] {
   display: flex; /* Para usar flexbox */
   justify-content: flex-end; /* Alineación a la derecha */
   margin-bottom: 30px; /* Espacio inferior */
+}
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 10px; 
+  margin-right: 75px;
 }
 .modal {
     position: fixed;
