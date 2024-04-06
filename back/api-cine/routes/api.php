@@ -35,6 +35,7 @@ Route::get('/listarSesiones', [SesionController::class, 'listarSesiones']);
 Route::get('/obtenerSesion/{id}', [SesionController::class, 'obtenerSesion']);
 Route::put('/modificarSesion/{id}', [SesionController::class, 'modificarSesion']);
 Route::delete('/eliminarSesion/{id}', [SesionController::class, 'eliminarSesion']);
+Route::get('/listarSesionesPorId/{id}', [SesionController::class, 'listarSesionesPorId']);
 Route::post('/crearNovedades', [NovedadesControlador::class, 'crearNovedades']);
 Route::get('/listarNovedades', [NovedadesControlador::class, 'listarNovedades']);
 Route::put('/modificarNovedades/{id}', [NovedadesControlador::class, 'modificarNovedades']);

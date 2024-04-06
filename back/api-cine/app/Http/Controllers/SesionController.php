@@ -93,4 +93,20 @@ class SesionController extends Controller
             'message'=>'Sesion eliminada con éxito'
         ]);
     }
+    public function listarSesionesPorId($id) {
+        // Buscar la sesión por ID
+        $sesion = Sesion::with('pelicula')->find($id);
+    
+        // Verificar si la sesión fue encontrada
+        if (!$sesion) {
+            return response()->json([
+                'error' => 'Sesión no encontrada'
+            ], 404);
+        }
+    
+        // Devolver la respuesta JSON con la sesión encontrada
+        return response()->json([
+            'data' => $sesion
+        ]);
+    }
 }

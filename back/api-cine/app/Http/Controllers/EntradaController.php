@@ -142,7 +142,6 @@ class EntradaController extends Controller
             $entradas = Entrada::where('usuario_id', $idUsuario)->get();
 
             return response()->json([
-                'message' => 'Entradas del usuario obtenidas con éxito',
                 'data' => $entradas
             ]);
         } catch (\Exception $e) {
