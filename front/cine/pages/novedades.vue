@@ -5,6 +5,12 @@
   <div class="derecha">
     <input type="text" v-model="filtroTitulo" placeholder="Buscar por título">
   </div>
+  <div class="derecha">
+    <select v-model="filtroGenero" @change="filtrarPorGenero">
+      <option value="">Todos los géneros</option>
+      <option v-for="genero in generosDisponibles" :key="genero">{{ genero }}</option>
+    </select>
+  </div>
   
   <div class="novedadess-container">
     <div class="novedadess-grid">
@@ -44,6 +50,7 @@ export default {
       modalAbierto: false,
       novedadSeleccionada: null,
       filtroTitulo: '',
+      filtroGenero: '', // Nuevo filtro de género
     };
   },
   async mounted() {
@@ -73,13 +80,20 @@ export default {
     cerrarModal() {
       this.modalAbierto = false;
       this.novedadSeleccionada = null;
+    },
+    filtrarPorGenero() {
+      // Método para aplicar el filtro por género
     }
   },
   computed: {
     novedadesFiltradas() {
       return this.novedades.filter(novedad =>
-        novedad.title.toLowerCase().includes(this.filtroTitulo.toLowerCase())
+        (novedad.title.toLowerCase().includes(this.filtroTitulo.toLowerCase()) &&
+         (this.filtroGenero === '' || novedad.genero === this.filtroGenero))
       );
+    },
+    generosDisponibles() {
+      return [...new Set(this.novedades.map(novedad => novedad.genero))];
     }
   }
 };
@@ -99,7 +113,14 @@ input[type="text"] {
   justify-content: flex-end; /* Alineación a la derecha */
   margin-bottom: 30px; /* Espacio inferior */
 }
-
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 10px; 
+  margin-right: 75px;
+}
 .modal {
     position: fixed;
     z-index: 1;
