@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Entrada;
 use App\Models\Sesion; 
 use App\Models\User;
+use App\Mail\EnviarCorreo;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -14,41 +15,48 @@ use Illuminate\Support\Facades\DB;
 class EntradaController extends Controller
 {
     public function crearEntrada(Request $request)
-{
-    try {
-        $validator = Validator::make($request->all(), [
-            'cantidad' => 'required|integer',
-            'fila' => 'required|integer',
-            'columna' => 'required|integer',
-            'sesion_id' => 'required|exists:sesions,id',
-            'usuario_id' => 'required|exists:usuaris,id',
-        ]);
-
-        if ($validator->fails()) {
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'cantidad' => 'required|integer',
+                'fila' => 'required|integer',
+                'columna' => 'required|integer',
+                'sesion_id' => 'required|exists:sesions,id',
+                'usuario_id' => 'required|exists:usuaris,id',
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json([
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+    
+            // Crear la entrada
+            $entrada = new Entrada();
+            $entrada->cantidad = $request->cantidad;
+            $entrada->fila = $request->fila;
+            $entrada->columna = $request->columna;
+            $entrada->sesion_id = $request->sesion_id;
+            $entrada->usuario_id = $request->usuario_id;
+            $entrada->save();
+    
+            // Obtener el usuario que compró la entrada
+            $usuario = User::findOrFail($request->usuario_id);
+    
+            // Enviar un correo electrónico al usuario
+            \Mail::to($usuario->email)->send(new EnviarCorreo($entrada));
+    
             return response()->json([
-                'errors' => $validator->errors()
-            ], 422);
+                'message' => 'Entrada creada con éxito',
+                'data' => $entrada
+            ], 201);
+        } catch (\Exception $e) {
+            \Log::error('Error al comprar entrada: ' . $e->getMessage());
+            return response()->json([
+                'error' => 'Error al comprar entrada: ' . $e->getMessage()
+            ], 500);
         }
-
-        $entrada = new Entrada();
-        $entrada->cantidad = $request->cantidad;
-        $entrada->fila = $request->fila;
-        $entrada->columna = $request->columna;
-        $entrada->sesion_id = $request->sesion_id;
-        $entrada->usuario_id = $request->usuario_id;
-        $entrada->save();
-
-        return response()->json([
-            'message' => 'Entrada creada con éxito',
-            'data' => $entrada
-        ], 201);
-    } catch (\Exception $e) {
-        \Log::error('Error al comprar entrada: ' . $e->getMessage());
-        return response()->json([
-            'error' => 'Error al comprar entrada: ' . $e->getMessage()
-        ], 500);
     }
-}
 
     public function listarEntradas(){
         $entradas=Entrada::all();
