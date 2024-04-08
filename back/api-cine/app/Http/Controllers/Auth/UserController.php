@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use App\Mail\RegistroCorreo;
+
 
 class UserController extends Controller
 {
@@ -29,9 +31,10 @@ class UserController extends Controller
         $user->password = Hash::make($request->password); // Encriptar la contraseña
         $user->foto_perfil = $request->foto_perfil;
         $user->save();
-    
-        // Obtener el token de acceso para el usuario
-        $token = $user->createToken('auth_token')->plainTextToken;
+
+        // Enviar un correo electrónico de bienvenida al usuario
+        \Mail::to($user->email)->send(new RegistroCorreo($user));
+        
     
         // Retornar una respuesta con los detalles del usuario y el token de acceso
         return response()->json([
