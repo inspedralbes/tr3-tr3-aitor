@@ -17,10 +17,13 @@
                     <label for="email">Correo electrónico:</label>
                     <input type="email" id="email" v-model="email" required>
                 </div>
-                <div class="campo">
+                <div class="campo2">
                     <label for="password">Contraseña:</label>
-                    <input type="password" id="password" v-model="password" required>
+                    <input :type="showPassword ? 'text' : 'password'" id="password" v-model="password" required>
+                    <button class="toggle-password" @click="togglePasswordVisibility">{{ showPassword ? 'Ocultar' :
+                        'Mostrar' }}</button>
                 </div>
+
                 <div class="campo">
                     <label for="foto">Foto de perfil:</label>
                     <button @click="mostrarModal">Seleccionar foto</button>
@@ -69,7 +72,8 @@ export default {
             password: '',
             foto_perfil: null, // Usaremos null para indicar que aún no se ha seleccionado ninguna foto
             modalAbierto: false,
-            errorRegistro: '' // Variable para almacenar el mensaje de error
+            errorRegistro: '',// Variable para almacenar el mensaje de 
+            showPassword: false,
         };
     },
     methods: {
@@ -82,6 +86,9 @@ export default {
         seleccionarFoto(numero) {
             this.foto_perfil = numero;
             this.cerrarModal(); // Cerrar el modal después de seleccionar una foto
+        },
+        togglePasswordVisibility() {
+            this.showPassword = !this.showPassword;
         },
         async submitRegistro() {
             try {
@@ -160,6 +167,26 @@ export default {
 
 .campo {
     margin-bottom: 15px;
+}
+.campo2 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Estilo para el botón de alternar contraseña */
+.toggle-password {
+    margin-left: 10px; /* Espacio entre el campo de contraseña y el botón */
+    padding: 10px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: red;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toggle-password:hover {
+    background-color: #c00;
 }
 
 label {
@@ -272,9 +299,9 @@ a:-webkit-any-link {
     cursor: pointer;
     text-decoration: none;
 }
+
 .mensaje-error {
     color: red;
     margin-bottom: 10px;
 }
-
 </style>
