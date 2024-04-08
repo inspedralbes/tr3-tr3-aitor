@@ -17,7 +17,7 @@
         <div class="contact-section">
           <h2>Mapa</h2>
           <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11919.470972015977!2d2.040544751024507!3d41.34523737595645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a49b89a3a64b19%3A0x106c3dccd643c87b!2sCinemes%20Can%20Castellet!5e0!3m2!1sen!2ses!4v1649372129989!5m2!1sen!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11919.470972015977!2d2.040544751024507!3d41.34523737595645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a49b89a3a64b19%3A0x106c3dccd643c87b!2sCinemes%20Can%20Castellet!5e0!3m2!1sen!2ses!4v1649372129989!5m2!1sen!2ses" width="600" height="450" style="border:0;" loading="lazy"></iframe>
           </div>
         </div>
         <div class="contact-section">
