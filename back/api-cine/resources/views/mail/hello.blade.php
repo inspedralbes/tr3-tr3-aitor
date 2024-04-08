@@ -46,6 +46,7 @@
         <p><strong>Fila:</strong> {{ $entrada->fila }}</p>
         <p><strong>Columna:</strong> {{ $entrada->columna }}</p>
         <p><strong>Fecha de la Sesión:</strong> {{ $sesion->fecha }}</p>
+        <p><strong>Precio:</strong> {{ $sesion->precio }}€</p>
         
         <p>¡Disfruta de la película!</p>
         <p>Saludos cordiales,</p>
