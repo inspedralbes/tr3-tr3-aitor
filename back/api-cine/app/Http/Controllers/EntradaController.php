@@ -42,9 +42,12 @@ class EntradaController extends Controller
     
             // Obtener el usuario que compró la entrada
             $usuario = User::findOrFail($request->usuario_id);
+            $sesion = Sesion::findOrFail($entrada->sesion_id);
+            $pelicula = $sesion->pelicula; // Esto recuperará todo el objeto de película
+
     
             // Enviar un correo electrónico al usuario
-            \Mail::to($usuario->email)->send(new EnviarCorreo($entrada));
+            \Mail::to($usuario->email)->send(new EnviarCorreo($entrada,$sesion, $usuario, $pelicula));
     
             return response()->json([
                 'message' => 'Entrada creada con éxito',

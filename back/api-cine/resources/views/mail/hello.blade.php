@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmación de Compra</title>
+    <title>Detalles de tu Entrada</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,54 +9,50 @@
             margin: 0;
             padding: 0;
         }
-
         .container {
             max-width: 600px;
-            margin: 0 auto;
+            margin: auto;
             padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
+            background-color: #fff;
+            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
-        h1, h2 {
-            color: #333333;
+        h1, h2, p {
+            margin: 0 0 20px;
         }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 20px auto;
-            border-radius: 8px;
-        }
-
-        p {
-            color: #666666;
-        }
-
         .footer {
             margin-top: 20px;
-            text-align: center;
-            color: #999999;
-            font-size: 12px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Hola, buenas,</h1>
-        <p>Aquí tienes las entradas que has comprado, Señor/a Aitor Barreiro Escobar:</p>
-        <p><strong>Sesión:</strong> 4</p>
-        <h2>Película: Fast and Furious 9</h2>
-        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.sensacine.com%2Fpeliculas%2Fpelicula-224392%2F&psig=AOvVaw2Xl5ysCJ6WK3-9VFh_olIV&ust=1712663925338000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCNCnw7jIsoUDFQAAAAAdAAAAABAE" alt="Fast and Furious 9">
-        <p><strong>Fecha:</strong> 2021-06-01</p>
-        <p><strong>Fila:</strong> 1</p>
-        <p><strong>Columna:</strong> 2</p>
-        <p><strong>Precio:</strong> $10.00</p> <!-- Aquí se muestra el precio -->
+        <h1>Hola {{ $usuario->nom }},</h1>
+        <p>Tengo el placer de informarte que has adquirido una entrada para la película <strong>{{ $pelicula->titulo }}</strong>.</p>
+        <p>A continuación, encontrarás los detalles de tu entrada:</p>
+
+        <h1>Detalles de tu Entrada</h1>
+        
+        <!-- Información del usuario -->
+        <h2>Información del Usuario</h2>
+        <p><strong>Nombre:</strong> {{ $usuario->nom }}</p>
+        <p><strong>Apellidos:</strong> {{ $usuario->cognoms }}</p>
+        
+        <!-- Información de la película -->
+        <h2>Detalles de la Sesión</h2>
+        <p><strong>Película:</strong> {{ $pelicula->titulo }}</p>
+        <p><strong>Fila:</strong> {{ $entrada->fila }}</p>
+        <p><strong>Columna:</strong> {{ $entrada->columna }}</p>
+        <p><strong>Fecha de la Sesión:</strong> {{ $sesion->fecha }}</p>
+        
+        <p>¡Disfruta de la película!</p>
+        <p>Saludos cordiales,</p>
+        <p>El equipo de Can Casteller</p>
     </div>
     <div class="footer">
-        <p>Este correo es generado automáticamente. Por favor, no responda a este mensaje.</p>
+        <p>Este mensaje se ha enviado automáticamente. Por favor, no respondas a este mensaje.</p>
     </div>
 </body>
 </html>

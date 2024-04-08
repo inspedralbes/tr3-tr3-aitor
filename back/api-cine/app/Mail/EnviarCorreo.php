@@ -11,17 +11,29 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EnviarCorreo;
+use App\Entrada; // Asegúrate de importar el modelo Entrada si no lo has hecho
+use App\Sesion; // Asegúrate de importar el modelo Sesion si no lo has hecho
+use App\User; // Asegúrate de importar el modelo User si no lo has hecho
+use App\Pelicula; // Asegúrate de importar el modelo Pelicula si no lo has hecho
 
 class EnviarCorreo extends Mailable
 {
     use Queueable, SerializesModels;
+    public $entrada;
+    public $sesion;
+    public $usuario;
+    public $pelicula;
+
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($entrada, $sesion, $usuario, $pelicula)
     {
-        //
+        $this->entrada = $entrada;
+        $this->sesion = $sesion;
+        $this->usuario = $usuario;
+        $this->pelicula = $pelicula;
     }
 
     /**
@@ -30,7 +42,7 @@ class EnviarCorreo extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Enviar Correo',
+            subject: 'Entrada de Cine',
         );
     }
 
