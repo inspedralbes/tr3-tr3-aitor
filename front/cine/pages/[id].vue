@@ -36,16 +36,32 @@
         </div>
       </div>
     </div>
-    <!-- Modal -->
-    <div class="modal" :class="{ 'is-active': showModal }">
-      <div class="modal-background" @click="closeModal"></div>
+    <!-- Modal para butacas ocupadas -->
+    <div class="modal" :class="{ 'is-active': showOccupiedModal }">
+      <div class="modal-background" @click="closeOccupiedModal"></div>
       <div class="modal-content">
         <div class="box">
-          <p>{{ modalMessage }}</p>
-          <button @click="closeModal" class="button is-primary">Cerrar</button>
+          <p>{{ occupiedModalMessage }}</p>
+          <button @click="closeOccupiedModal" class="button is-primary">Cerrar</button>
         </div>
       </div>
-      <button class="modal-close is-large" aria-label="close" @click="closeModal"></button>
+      <button class="modal-close is-large" aria-label="close" @click="closeOccupiedModal"></button>
+    </div>
+
+    <!-- Modal para usuario no logueado -->
+    <div class="modal" :class="{ 'is-active': showLoginModal }">
+      <div class="modal-background" @click="closeLoginModal"></div>
+      <div class="modal-content">
+        <div class="box">
+          <p>{{ loginModalMessage }}</p>
+          <!-- Enlaces para registrar y loguear -->
+          <div>
+            <button><router-link to="/registro" class="button is-primary">Registrarse</router-link></button>
+            <button><router-link to="/login" class="button is-primary">Iniciar sesión</router-link></button>
+          </div>
+        </div>
+      </div>
+      <button class="modal-close is-large" aria-label="close" @click="closeLoginModal"></button>
     </div>
   </div>
 </template>
@@ -58,8 +74,10 @@ export default {
       asientosSeleccionados: [],
       maxAsientosSeleccionados: 10,
       sesiones: null,
-      showModal: false,
-      modalMessage: '',
+      showOccupiedModal: false,
+      occupiedModalMessage: '',
+      showLoginModal: false,
+      loginModalMessage: ''
     };
   },
   computed: {
@@ -153,14 +171,14 @@ export default {
       const asiento = this.planAsientos[indiceFila][indiceAsiento];
 
       if (asiento.ocupado) {
-        this.modalMessage = 'Esta butaca ya está ocupada. Por favor, seleccione otra.';
-        this.showModal = true;
+        this.occupiedModalMessage = 'Esta butaca ya está ocupada. Por favor, seleccione otra.';
+        this.showOccupiedModal = true;
         return;
       }
 
       if (this.totalAsientosSeleccionados >= this.maxAsientosSeleccionados && !asiento.seleccionado) {
-        this.modalMessage = 'Solo puedes seleccionar un máximo de 10 asientos.';
-        this.showModal = true;
+        this.occupiedModalMessage = 'Solo puedes seleccionar un máximo de 10 asientos.';
+        this.showOccupiedModal = true;
         return;
       }
 
@@ -182,6 +200,14 @@ export default {
       this.showModal = false;
     },
 
+    closeOccupiedModal() {
+      this.showOccupiedModal = false;
+    },
+
+    closeLoginModal() {
+      this.showLoginModal = false;
+    },
+
     obtenerFila(etiqueta) {
       return etiqueta.split('A')[0].replace('F', '');
     },
@@ -191,7 +217,11 @@ export default {
     async comprar() {
       try {
         // Obtener el id_usuario del localStorage
-
+        if (!this.user) {
+          this.loginModalMessage = 'Debes iniciar sesión o registrarte antes de comprar.';
+          this.showLoginModal = true;
+          return;
+        }
 
         for (const asiento of this.asientosSeleccionados) {
           const filaSeleccionada = this.obtenerFila(asiento.etiqueta);
@@ -358,7 +388,7 @@ export default {
   background-color: #c00;
 }
 
-/* Estilos para el modal */
+/* Estilos para los modales */
 .modal {
   display: none;
   position: fixed;
@@ -406,9 +436,16 @@ export default {
   cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
   font-size: 16px; /* Cambia el tamaño de fuente del botón */
   transition: background-color 0.3s ease; /* Agrega una transición suave al cambiar el color de fondo */
+  margin-right: 40px;
+
 }
 
 .modal-content button:hover {
   background-color: #c00; /* Cambia el color de fondo del botón al pasar sobre él */
+}
+.button:-webkit-any-link {
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
 }
 </style>
