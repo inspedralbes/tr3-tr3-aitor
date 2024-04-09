@@ -29,7 +29,6 @@
           <div class="ticket-summary">
             <p>Total Asientos: {{ totalAsientosSeleccionados }}</p>
             <p>Total a Pagar: {{ precioTotal }}€</p>
-
           </div>
         </div>
         <div class="ticket-footer">
@@ -37,19 +36,30 @@
         </div>
       </div>
     </div>
+    <!-- Modal -->
+    <div class="modal" :class="{ 'is-active': showModal }">
+      <div class="modal-background" @click="closeModal"></div>
+      <div class="modal-content">
+        <div class="box">
+          <p>{{ modalMessage }}</p>
+          <button @click="closeModal" class="button is-primary">Cerrar</button>
+        </div>
+      </div>
+      <button class="modal-close is-large" aria-label="close" @click="closeModal"></button>
+    </div>
   </div>
 </template>
 
 <script>
-import { usePeliculasStore } from "../stores/store";
-
 export default {
   data() {
     return {
       planAsientos: [],
       asientosSeleccionados: [],
       maxAsientosSeleccionados: 10,
-      sesiones: null
+      sesiones: null,
+      showModal: false,
+      modalMessage: '',
     };
   },
   computed: {
@@ -116,7 +126,6 @@ export default {
       }
     },
 
-
     generarPlanAsientos(filas, asientosPorFila, precio, entradasOcupadas) {
       const planAsientos = [];
       for (let i = 1; i <= filas; i++) {
@@ -143,23 +152,20 @@ export default {
     alternarSeleccion(indiceFila, indiceAsiento) {
       const asiento = this.planAsientos[indiceFila][indiceAsiento];
 
-      // Verificar si el asiento está ocupado
       if (asiento.ocupado) {
-        // Si está ocupado, mostrar un mensaje al usuario y salir de la función
-        alert('Esta butaca ya está ocupada. Por favor, seleccione otra.');
+        this.modalMessage = 'Esta butaca ya está ocupada. Por favor, seleccione otra.';
+        this.showModal = true;
         return;
       }
 
-      // Verificar si se ha alcanzado el máximo de asientos seleccionados
       if (this.totalAsientosSeleccionados >= this.maxAsientosSeleccionados && !asiento.seleccionado) {
-        alert('Solo puedes seleccionar un máximo de 10 asientos.');
+        this.modalMessage = 'Solo puedes seleccionar un máximo de 10 asientos.';
+        this.showModal = true;
         return;
       }
 
-      // Alternar la selección del asiento
       asiento.seleccionado = !asiento.seleccionado;
 
-      // Actualizar la lista de asientos seleccionados
       if (asiento.seleccionado) {
         this.asientosSeleccionados.push(asiento);
         asiento.imagen = './butaca_roja.png';
@@ -170,6 +176,10 @@ export default {
           asiento.imagen = './butaca.png';
         }
       }
+    },
+
+    closeModal() {
+      this.showModal = false;
     },
 
     obtenerFila(etiqueta) {
@@ -346,5 +356,59 @@ export default {
 
 .boton-comprar:hover {
   background-color: #c00;
+}
+
+/* Estilos para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.modal.is-active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-background {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: relative;
+  background-color: white;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+.modal-content button {
+  margin-top: 10px; /* Ajusta el margen superior del botón */
+  background-color: red; /* Cambia el color de fondo del botón */
+  color: white; /* Cambia el color del texto del botón */
+  border: none; /* Elimina el borde del botón */
+  padding: 10px 20px; /* Ajusta el padding del botón */
+  border-radius: 5px; /* Agrega esquinas redondeadas al botón */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  font-size: 16px; /* Cambia el tamaño de fuente del botón */
+  transition: background-color 0.3s ease; /* Agrega una transición suave al cambiar el color de fondo */
+}
+
+.modal-content button:hover {
+  background-color: #c00; /* Cambia el color de fondo del botón al pasar sobre él */
 }
 </style>
