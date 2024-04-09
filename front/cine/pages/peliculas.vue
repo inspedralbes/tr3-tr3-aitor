@@ -37,7 +37,6 @@
           <p class="genero-pelicula">{{ peliculaSeleccionada.genero }}</p>
           <p class="sinopsis-pelicula">{{ peliculaSeleccionada.sinopsis }}</p>
           <p class="duracion-pelicula">Duración: {{ convertirDuracion(peliculaSeleccionada.duracion) }}</p>
-          <p class="fecha-pelicula">Fecha de lanzamiento: {{ formatDate(peliculaSeleccionada.fechaEstreno) }}</p>
         </div>
       </div>
     </div>
