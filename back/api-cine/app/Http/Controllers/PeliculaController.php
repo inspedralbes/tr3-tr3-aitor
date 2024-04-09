@@ -39,6 +39,7 @@ class PeliculaController extends Controller
         $pelicula->sinopsis = $request->sinopsis;
         $pelicula->cartel = $request->cartel;
         $pelicula->trailer = $request->trailer;
+        $pelicula->id_youtube = $request->id_youtube;
         $pelicula->fechaEstreno = $request->fechaEstreno;
         $pelicula->sesion_id = $request->sesion_id;
 

@@ -35,6 +35,9 @@
             <div class="grid-item" v-show="showOptions">
               <nuxt-link to="/perfil">Perfil</nuxt-link>
             </div>
+            <div v-if="user && user.user.id === 1" class="grid-item"v-show="showOptions">
+              <nuxt-link to="/admin">Admin</nuxt-link>
+            </div>
             <div class="grid-item" v-show="showOptions">
               <nuxt-link to="/entradas">Mis entradas</nuxt-link>
             </div>
@@ -54,10 +57,14 @@
             </ul>
           </div>
         </li>
+
+        <!-- Mostrar apartado "Admin" si el id_usuario es 1 -->
+
       </ul>
     </nav>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -74,7 +81,6 @@ export default {
     }
   },
   methods: {
-
     logout() {
       // Redirigir al usuario a la página deseada
       this.$router.push('/');
