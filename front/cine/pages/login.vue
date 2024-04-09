@@ -9,9 +9,11 @@
           <label for="email">Email</label>
           <input type="email" id="email" v-model="email" required>
         </div>
-        <div class="form-group">
+        <div class="form-group2">
           <label for="password">Contraseña</label>
-          <input type="password" id="password" v-model="password" required>
+          <input :type="showPassword ? 'text' : 'password'" id="password" v-model="password" required>
+          <button class="toggle-password" @click="togglePasswordVisibility">{{ showPassword ? 'Ocultar' :
+            'Mostrar' }}</button>
         </div>
         <button type="submit" class="boton">Iniciar sesión</button>
       </form>
@@ -28,10 +30,15 @@ export default {
     return {
       email: '',
       password: '',
-      errorInicioSesion: '' // Variable para almacenar el mensaje de error
+      errorInicioSesion: '', // Variable para almacenar el mensaje de error
+      showPassword: false,
+
     };
   },
   methods: {
+    togglePasswordVisibility() {
+      this.showPassword = !this.showPassword;
+    },
     async login() {
       try {
         const response = await fetch('http://127.0.0.1:8000/api/login', {
@@ -99,6 +106,12 @@ export default {
   margin-bottom: 20px;
 }
 
+.form-group2 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 label {
   display: block;
   margin-bottom: 5px;
@@ -151,6 +164,7 @@ a:-webkit-any-link {
   cursor: pointer;
   text-decoration: none;
 }
+
 .mensaje-error {
   color: red;
   margin-bottom: 10px;

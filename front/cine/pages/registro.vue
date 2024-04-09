@@ -61,7 +61,6 @@
 </template>
 
 <script>
-import { useUserStore } from '../stores/store'; // Importa el store de usuario de Pinia
 
 export default {
     data() {
