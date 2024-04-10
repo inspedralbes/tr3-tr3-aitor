@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div class="boton-derecha">
-                    <button class="option-button2" @click="createItem">Crear</button>
+                    <button class="option-button2" @click="openCreateSessionModal">Crear</button>
                 </div>
             </transition-group>
         </div>
@@ -142,7 +142,26 @@
                 </form>
             </div>
         </div>
-
+        <div class="modal" v-if="showCreateSessionModal">
+            <div class="modal-content">
+                <span class="close" @click="closeCreateSessionModal">&times;</span>
+                <h2>Crear Nueva Sesión</h2>
+                <form @submit.prevent="submitNewSesion">
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" id="fecha" v-model="newSesion.fecha" required>
+                    <label>Día Espectador:</label>
+                    <div class="radio-buttons">
+                        <input type="radio" id="opcion1" value="0" v-model="newSesion.diaEspectador" required>
+                        <label for="opcion1">NO</label>
+                        <input type="radio" id="opcion2" value="1" v-model="newSesion.diaEspectador">
+                        <label for="opcion2">SI</label>
+                    </div>
+                    <label for="precio">Precio:</label>
+                    <input type="decimal" id="precio" v-model="newSesion.precio" required>
+                    <button type="submit">Crear Sesión</button>
+                </form>
+            </div>
+        </div>
         <div class="modal" v-if="showDeleteConfirmation">
             <div class="modal-content">
                 <h2>¿Estás seguro de que quieres eliminar estos datos?</h2>
@@ -169,6 +188,7 @@ export default {
             showDeleteConfirmation: false,
             selectedMovie: null,
             showEditMovieModal: false,
+            showCreateSessionModal: false,
             newMovie: {
                 titulo: '',
                 duracion: 0,
@@ -179,7 +199,12 @@ export default {
                 id_youtube: '',
                 fechaEstreno: '',
                 sesion_id: '',
-            }
+            },
+            newSesion: {
+                fecha: '',
+                diaEspectador: '',
+                precio: 0,
+            },
         };
     },
     created() {
@@ -219,8 +244,12 @@ export default {
             this.selectedMovie = null;
             this.showEditMovieModal = false;
         },
-
-
+        openCreateSessionModal() {
+            this.showCreateSessionModal = true; // Mostrar el modal de creación de sesiones al hacer clic en el botón "Crear" de sesiones
+        },
+        closeCreateSessionModal() {
+            this.showCreateSessionModal = false; // Cerrar el modal de creación de sesiones
+        },
         async fetchMovies() {
             try {
                 const response = await fetch('http://127.0.0.1:8000/api/listarPeliculas');
@@ -288,6 +317,30 @@ export default {
                 console.error(error);
             }
         },
+        async submitNewSesion() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/crearSesion', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(this.newSesion),
+                });
+                const responseData = await response.json();
+                console.log('Respuesta del servidor:', responseData);
+
+                if (response.ok) {
+                    // Limpiar los campos después de la inserción exitosa
+                    this.clearFields();
+                    // Cerrar el modal
+                    this.closeCreateSessionModal();
+                } else {
+                    throw new Error('Error al crear la sesion');
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        },
         async submitEditMovie() {
             console.log('Datos a enviar al servidor:', this.selectedMovie);
 
@@ -323,6 +376,11 @@ export default {
                 id_youtube: '',
                 fechaEstreno: '',
                 sesion_id: '',
+            };
+            this.newSesion = {
+                fecha: '',
+                diaEspectador: '',
+                precio: 0,
             };
         },
         formatDuration(duration) {
@@ -580,6 +638,7 @@ h2 {
 .modal-content input[type="text"],
 .modal-content input[type="number"],
 .modal-content input[type="date"],
+.modal-content input[type="decimal"], 
 .modal-content textarea {
     width: calc(100% - 20px);
     padding: 10px;
@@ -587,6 +646,28 @@ h2 {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
+}
+
+.radio-buttons {
+    display: flex;
+}
+
+.radio-buttons input[type="radio"] {
+    display: none;
+}
+
+.radio-buttons input[type="radio"]+label {
+    padding: 8px 16px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.radio-buttons input[type="radio"]:checked+label {
+    background-color: red;
+    color: white;
 }
 
 .modal-content button[type="submit"] {
