@@ -78,7 +78,7 @@
                     <div class="grid-item">{{ formatEstreno(novedad.estreno) }}</div>
                     <div class="grid-item">{{ novedad.sinopsis }}</div>
                     <div class="grid-item">
-                        <button @click="modifyItem" class="option-button">Modificar</button><br>
+                        <button @click="openEditNovedadModal(novedad)" class="option-button">Modificar</button><br>
                         <button @click="delete (novedad.id)" class="option-button">Eliminar</button>
                     </div>
                 </div>
@@ -227,6 +227,30 @@
             </form>
         </div>
     </div>
+    <div class="modal" v-if="showEditNovedadModal">
+        <div class="modal-content">
+            <span class="close" @click="closeEditNovedadModal">&times;</span>
+            <h2>Modificar Novedad</h2>
+            <form @submit.prevent="submitEditNovedad">
+                <!-- Campos de edición de la novedad -->
+                <label for="title">Título:</label>
+                <input type="text" id="title" v-model="selectedNovedad.title">
+                <label for="genero">Género:</label>
+                <input type="text" id="genero" v-model="selectedNovedad.genero" >
+                <label for="sinopsis">Sinopsis:</label>
+                <textarea id="sinopsis" v-model="selectedNovedad.sinopsis" ></textarea>
+                <label for="estreno">Estreno:</label>
+                <input type="date" id="estreno" v-model="selectedNovedad.estreno" >
+                <label for="poster">Poster:</label>
+                <input type="text" id="poster" v-model="selectedNovedad.poster" >
+                <label for="trailer">Trailer:</label>
+                <input type="text" id="trailer" v-model="selectedNovedad.trailer" >
+                <label for="id_youtube">ID Youtube:</label>
+                <input type="text" id="id_youtube" v-model="selectedNovedad.id_youtube" >
+                <button type="submit">Modificar Novedad</button>
+            </form>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -249,6 +273,8 @@ export default {
             selectedSession: null,
             sessionToDeleteId: null,
             showCreateNovedadModal: false,
+            showEditNovedadModal: false,
+            selectedNovedad: null,
             newMovie: {
                 titulo: '',
                 duracion: 0,
@@ -273,7 +299,7 @@ export default {
                 poster: '',
                 trailer: '',
                 id_youtube: '',
-                
+
             },
         };
     },
@@ -609,6 +635,36 @@ export default {
                 id_youtube: '',
             };
         },
+        openEditNovedadModal(novedad) {
+        this.selectedNovedad = novedad;
+        this.showEditNovedadModal = true;
+    },
+
+    closeEditNovedadModal() {
+        this.selectedNovedad = null;
+        this.showEditNovedadModal = false;
+    },
+
+    async submitEditNovedad() {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/modificarNovedades/${this.selectedNovedad.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(this.selectedNovedad),
+            });
+            if (!response.ok) {
+                throw new Error('Error al modificar la novedad');
+            }
+            // Actualizar la lista de novedades después de la modificación exitosa
+            await this.fetchNovedades();
+            // Cerrar el modal de edición de novedades
+            this.closeEditNovedadModal();
+        } catch (error) {
+            console.error(error);
+        }
+    },
     },
 };
 </script>
