@@ -79,7 +79,7 @@
                     <div class="grid-item">{{ novedad.sinopsis }}</div>
                     <div class="grid-item">
                         <button @click="openEditNovedadModal(novedad)" class="option-button">Modificar</button><br>
-                        <button @click="delete (novedad.id)" class="option-button">Eliminar</button>
+                        <button @click="deleteNovedad (novedad.id)" class="option-button">Eliminar</button>
                     </div>
                 </div>
                 <div class="boton-derecha">
@@ -251,6 +251,15 @@
             </form>
         </div>
     </div>
+    <div class="modal" v-if="showDeleteNovedadConfirmation">
+        <div class="modal-content">
+            <h2>¿Estás seguro de que quieres eliminar esta novedad?</h2>
+            <div class="modal-buttons">
+                <button @click="deleteNovedadConfirmed">Sí, eliminar</button>
+                <button @click="cancelDeleteNovedad">Cancelar</button>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -269,9 +278,11 @@ export default {
             showEditMovieModal: false,
             showCreateSessionModal: false,
             showDeleteSessionConfirmation: false,
+            showDeleteNovedadConfirmation: false,
             showEditSessionModal: false,
             selectedSession: null,
             sessionToDeleteId: null,
+            movieToDeleteId: null,
             showCreateNovedadModal: false,
             showEditNovedadModal: false,
             selectedNovedad: null,
@@ -540,6 +551,12 @@ export default {
             // Guarda el ID de la sesión que se va a eliminar para usarlo en el método deleteSessionConfirmed
             this.sessionToDeleteId = id;
         },
+        deleteNovedad(id) {
+            // Muestra el modal de confirmación antes de eliminar
+            this.showDeleteNovedadConfirmation = true;
+            // Guarda el ID de la sesión que se va a eliminar para usarlo en el método deleteSessionConfirmed
+            this.novedadToDeleteId = id;
+        },
 
         async deleteSessionConfirmed() {
             try {
@@ -558,10 +575,31 @@ export default {
                 this.showDeleteSessionConfirmation = false;
             }
         },
+        async deleteNovedadConfirmed() {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/eliminarNovedades/${this.novedadToDeleteId}`, {
+                    method: 'DELETE'
+                });
+                if (!response.ok) {
+                    throw new Error('Error al eliminar la novedad');
+                }
+                // Actualiza la lista después de la eliminación exitosa
+                await this.fetchNovedades();
+            } catch (error) {
+                console.error(error);
+            } finally {
+                // Oculta el modal de confirmación
+                this.showDeleteNovedadConfirmation = false;
+            }
+        },
 
         cancelDeleteSession() {
             // Oculta el modal de confirmación sin eliminar la sesión
             this.showDeleteSessionConfirmation = false;
+        },
+        cancelDeleteNovedad() {
+            // Oculta el modal de confirmación sin eliminar la sesión
+            this.showDeleteNovedadConfirmation = false;
         },
         openEditSessionModal(session) {
             this.selectedSession = session;
