@@ -52,7 +52,7 @@
                     <div class="grid-item">{{ session.precio }}€</div>
                     <div class="grid-item">
                         <button @click="modifyItem" class="option-button">Modificar</button><br>
-                        <button @click="deleteItem" class="option-button">Eliminar</button>
+                        <button @click="deleteSesion(session.id)" class="option-button">Eliminar</button>
                     </div>
                 </div>
                 <div class="boton-derecha">
@@ -79,7 +79,7 @@
                     <div class="grid-item">{{ novedad.sinopsis }}</div>
                     <div class="grid-item">
                         <button @click="modifyItem" class="option-button">Modificar</button><br>
-                        <button @click="deleteNovedades(novedad.id)" class="option-button">Eliminar</button>
+                        <button @click="delete (novedad.id)" class="option-button">Eliminar</button>
                     </div>
                 </div>
                 <div class="boton-derecha">
@@ -164,10 +164,19 @@
         </div>
         <div class="modal" v-if="showDeleteConfirmation">
             <div class="modal-content">
-                <h2>¿Estás seguro de que quieres eliminar estos datos?</h2>
+                <h2>¿Estás seguro de que quieres eliminar esta pelicula?</h2>
                 <div class="modal-buttons">
                     <button @click="deleteConfirmed">Sí, eliminar</button>
                     <button @click="cancelDelete">Cancelar</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal" v-if="showDeleteSessionConfirmation">
+            <div class="modal-content">
+                <h2>¿Estás seguro de que quieres eliminar esta sesión, tambien eliminaras la pelicula?</h2>
+                <div class="modal-buttons">
+                    <button @click="deleteSessionConfirmed">Sí, eliminar</button>
+                    <button @click="cancelDeleteSession">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -189,6 +198,8 @@ export default {
             selectedMovie: null,
             showEditMovieModal: false,
             showCreateSessionModal: false,
+            showDeleteSessionConfirmation: false,
+        sessionToDeleteId: null,
             newMovie: {
                 titulo: '',
                 duracion: 0,
@@ -396,7 +407,7 @@ export default {
             const [year, month, day] = estreno.split('-');
             return `${day}/${month}/${year}`;
         },
-        async deleteMovie(id) {
+        async deleteCampo(id) {
             // Muestra el modal de confirmación antes de eliminar
             this.showDeleteConfirmation = true;
             // Guarda el ID de la película que se va a eliminar para usarlo en el método deleteConfirmed
@@ -438,6 +449,35 @@ export default {
                 console.error(error);
             }
         },
+        deleteSesion(id) {
+        // Muestra el modal de confirmación antes de eliminar
+        this.showDeleteSessionConfirmation = true;
+        // Guarda el ID de la sesión que se va a eliminar para usarlo en el método deleteSessionConfirmed
+        this.sessionToDeleteId = id;
+    },
+
+    async deleteSessionConfirmed() {
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/api/eliminarSesion/${this.sessionToDeleteId}`, {
+                method: 'DELETE'
+            });
+            if (!response.ok) {
+                throw new Error('Error al eliminar la sesión');
+            }
+            // Actualiza la lista después de la eliminación exitosa
+            await this.fetchSessions();
+        } catch (error) {
+            console.error(error);
+        } finally {
+            // Oculta el modal de confirmación
+            this.showDeleteSessionConfirmation = false;
+        }
+    },
+
+    cancelDeleteSession() {
+        // Oculta el modal de confirmación sin eliminar la sesión
+        this.showDeleteSessionConfirmation = false;
+    }
 
     }
 };
@@ -638,7 +678,7 @@ h2 {
 .modal-content input[type="text"],
 .modal-content input[type="number"],
 .modal-content input[type="date"],
-.modal-content input[type="decimal"], 
+.modal-content input[type="decimal"],
 .modal-content textarea {
     width: calc(100% - 20px);
     padding: 10px;
