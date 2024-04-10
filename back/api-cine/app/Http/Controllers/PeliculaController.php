@@ -20,7 +20,7 @@ class PeliculaController extends Controller
             'cartel' => 'required|string|max:255',
             'trailer' => 'required|string|max:255',
             'id_youtube' => 'required|string|max:255', 
-            'fechaEstreno' => 'required|date_format:Y-m-d H:i:s',
+            'fechaEstreno' => 'required|date_format:Y-m-d',
             'sesion_id' => 'nullable|exists:sesions,id',
         ]);
 
@@ -72,7 +72,7 @@ class PeliculaController extends Controller
             'sinopsis' => 'sometimes|string',
             'cartel' => 'sometimes|string|max:255',
             'trailer' => 'sometimes|string|max:255',
-            'fechaEstreno' => 'sometimes|date_format:Y-m-d H:i:s',
+            'fechaEstreno' => 'sometimes|date_format:Y-m-d',
             'sesion_id' => 'nullable|exists:sesions,id',
         ]);        
 

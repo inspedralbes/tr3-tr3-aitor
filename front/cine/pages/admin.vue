@@ -51,7 +51,7 @@
                     <div class="grid-item">{{ session.hora }}</div>
                     <div class="grid-item">{{ session.precio }}€</div>
                     <div class="grid-item">
-                        <button @click="modifyItem" class="option-button">Modificar</button><br>
+                        <button @click="openEditSessionModal(session)" class="option-button">Modificar</button><br>
                         <button @click="deleteSesion(session.id)" class="option-button">Eliminar</button>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <div class="boton-derecha">
-                    <button class="option-button2" @click="createItem">Crear</button>
+                    <button class="option-button2" @click="openCreateNovedadModal">Crear</button>
                 </div>
             </transition-group>
         </div>
@@ -142,43 +142,89 @@
                 </form>
             </div>
         </div>
-        <div class="modal" v-if="showCreateSessionModal">
-            <div class="modal-content">
-                <span class="close" @click="closeCreateSessionModal">&times;</span>
-                <h2>Crear Nueva Sesión</h2>
-                <form @submit.prevent="submitNewSesion">
-                    <label for="fecha">Fecha:</label>
-                    <input type="date" id="fecha" v-model="newSesion.fecha" required>
-                    <label>Día Espectador:</label>
-                    <div class="radio-buttons">
-                        <input type="radio" id="opcion1" value="0" v-model="newSesion.diaEspectador" required>
-                        <label for="opcion1">NO</label>
-                        <input type="radio" id="opcion2" value="1" v-model="newSesion.diaEspectador">
-                        <label for="opcion2">SI</label>
-                    </div>
-                    <label for="precio">Precio:</label>
-                    <input type="decimal" id="precio" v-model="newSesion.precio" required>
-                    <button type="submit">Crear Sesión</button>
-                </form>
+
+    </div>
+    <div class="modal" v-if="showDeleteConfirmation">
+        <div class="modal-content">
+            <h2>¿Estás seguro de que quieres eliminar esta pelicula?</h2>
+            <div class="modal-buttons">
+                <button @click="deleteConfirmed">Sí, eliminar</button>
+                <button @click="cancelDelete">Cancelar</button>
             </div>
         </div>
-        <div class="modal" v-if="showDeleteConfirmation">
-            <div class="modal-content">
-                <h2>¿Estás seguro de que quieres eliminar esta pelicula?</h2>
-                <div class="modal-buttons">
-                    <button @click="deleteConfirmed">Sí, eliminar</button>
-                    <button @click="cancelDelete">Cancelar</button>
+    </div>
+    <div class="modal" v-if="showCreateSessionModal">
+        <div class="modal-content">
+            <span class="close" @click="closeCreateSessionModal">&times;</span>
+            <h2>Crear Nueva Sesión</h2>
+            <form @submit.prevent="submitNewSesion">
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" v-model="newSesion.fecha" required>
+                <label>Día Espectador:</label>
+                <div class="radio-buttons">
+                    <input type="radio" id="opcion1" value="0" v-model="newSesion.diaEspectador" required>
+                    <label for="opcion1">NO</label>
+                    <input type="radio" id="opcion2" value="1" v-model="newSesion.diaEspectador">
+                    <label for="opcion2">SI</label>
                 </div>
+                <label for="precio">Precio:</label>
+                <input type="decimal" id="precio" v-model="newSesion.precio" required>
+                <button type="submit">Crear Sesión</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal" v-if="showEditSessionModal">
+        <div class="modal-content">
+            <span class="close" @click="closeEditSessionModal">&times;</span>
+            <h2>Modificar Sesión</h2>
+            <form @submit.prevent="submitEditSession">
+                <!-- Campos de edición de la sesión -->
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" v-model="selectedSession.fecha" required>
+                <label>Día Espectador:</label>
+                <div class="radio-buttons">
+                    <input type="radio" id="opcion1" value="0" v-model="selectedSession.diaEspectador" required>
+                    <label for="opcion1">NO</label>
+                    <input type="radio" id="opcion2" value="1" v-model="selectedSession.diaEspectador">
+                    <label for="opcion2">SI</label>
+                </div>
+                <label for="precio">Precio:</label>
+                <input type="decimal" id="precio" v-model="selectedSession.precio" required>
+                <button type="submit">Modificar Sesión</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal" v-if="showDeleteSessionConfirmation">
+        <div class="modal-content">
+            <h2>¿Estás seguro de que quieres eliminar esta sesión, tambien eliminaras la pelicula?</h2>
+            <div class="modal-buttons">
+                <button @click="deleteSessionConfirmed">Sí, eliminar</button>
+                <button @click="cancelDeleteSession">Cancelar</button>
             </div>
         </div>
-        <div class="modal" v-if="showDeleteSessionConfirmation">
-            <div class="modal-content">
-                <h2>¿Estás seguro de que quieres eliminar esta sesión, tambien eliminaras la pelicula?</h2>
-                <div class="modal-buttons">
-                    <button @click="deleteSessionConfirmed">Sí, eliminar</button>
-                    <button @click="cancelDeleteSession">Cancelar</button>
-                </div>
-            </div>
+    </div>
+    <div class="modal" v-if="showCreateNovedadModal">
+        <div class="modal-content">
+            <span class="close" @click="closeCreateNovedadModal">&times;</span>
+            <h2>Crear Nueva Novedad</h2>
+            <form @submit.prevent="submitNewNovedad">
+                <!-- Campos de creación de la novedad -->
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" v-model="newNovedad.title" required>
+                <label for="genero">Género:</label>
+                <input type="text" id="genero" v-model="newNovedad.genero" required>
+                <label for="sinopsis">Sinopsis:</label>
+                <textarea id="sinopsis" v-model="newNovedad.sinopsis" required></textarea>
+                <label for="estreno">Estreno:</label>
+                <input type="date" id="estreno" v-model="newNovedad.estreno" required>
+                <label for="poster">Poster:</label>
+                <input type="text" id="poster" v-model="newNovedad.poster" required>
+                <label for="trailer">Trailer:</label>
+                <input type="text" id="trailer" v-model="newNovedad.trailer" required>
+                <label for="id_youtube">ID Youtube:</label>
+                <input type="text" id="id_youtube" v-model="newNovedad.id_youtube" required>
+                <button type="submit">Crear Novedad</button>
+            </form>
         </div>
     </div>
 </template>
@@ -199,7 +245,10 @@ export default {
             showEditMovieModal: false,
             showCreateSessionModal: false,
             showDeleteSessionConfirmation: false,
-        sessionToDeleteId: null,
+            showEditSessionModal: false,
+            selectedSession: null,
+            sessionToDeleteId: null,
+            showCreateNovedadModal: false,
             newMovie: {
                 titulo: '',
                 duracion: 0,
@@ -215,6 +264,16 @@ export default {
                 fecha: '',
                 diaEspectador: '',
                 precio: 0,
+            },
+            newNovedad: {
+                title: '',
+                genero: '',
+                sinopsis: '',
+                estreno: '',
+                poster: '',
+                trailer: '',
+                id_youtube: '',
+                
             },
         };
     },
@@ -450,36 +509,107 @@ export default {
             }
         },
         deleteSesion(id) {
-        // Muestra el modal de confirmación antes de eliminar
-        this.showDeleteSessionConfirmation = true;
-        // Guarda el ID de la sesión que se va a eliminar para usarlo en el método deleteSessionConfirmed
-        this.sessionToDeleteId = id;
-    },
+            // Muestra el modal de confirmación antes de eliminar
+            this.showDeleteSessionConfirmation = true;
+            // Guarda el ID de la sesión que se va a eliminar para usarlo en el método deleteSessionConfirmed
+            this.sessionToDeleteId = id;
+        },
 
-    async deleteSessionConfirmed() {
-        try {
-            const response = await fetch(`http://127.0.0.1:8000/api/eliminarSesion/${this.sessionToDeleteId}`, {
-                method: 'DELETE'
-            });
-            if (!response.ok) {
-                throw new Error('Error al eliminar la sesión');
+        async deleteSessionConfirmed() {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/eliminarSesion/${this.sessionToDeleteId}`, {
+                    method: 'DELETE'
+                });
+                if (!response.ok) {
+                    throw new Error('Error al eliminar la sesión');
+                }
+                // Actualiza la lista después de la eliminación exitosa
+                await this.fetchSessions();
+            } catch (error) {
+                console.error(error);
+            } finally {
+                // Oculta el modal de confirmación
+                this.showDeleteSessionConfirmation = false;
             }
-            // Actualiza la lista después de la eliminación exitosa
-            await this.fetchSessions();
-        } catch (error) {
-            console.error(error);
-        } finally {
-            // Oculta el modal de confirmación
+        },
+
+        cancelDeleteSession() {
+            // Oculta el modal de confirmación sin eliminar la sesión
             this.showDeleteSessionConfirmation = false;
-        }
+        },
+        openEditSessionModal(session) {
+            this.selectedSession = session;
+            this.showEditSessionModal = true;
+        },
+        // Método para cerrar el modal de edición de sesiones
+        closeEditSessionModal() {
+            this.selectedSession = null;
+            this.showEditSessionModal = false;
+        },
+        // Método para enviar la solicitud de modificación de la sesión al servidor
+        async submitEditSession() {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/api/modificarSesion/${this.selectedSession.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(this.selectedSession),
+                });
+                if (!response.ok) {
+                    throw new Error('Error al modificar la sesión');
+                }
+                // Actualizar la lista de sesiones después de la modificación exitosa
+                await this.fetchSessions();
+                // Cerrar el modal de edición de sesiones
+                this.closeEditSessionModal();
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        openCreateNovedadModal() {
+            this.showCreateNovedadModal = true;
+        },
+        // Método para cerrar el modal de creación de novedades
+        closeCreateNovedadModal() {
+            this.showCreateNovedadModal = false;
+        },
+        // Método para enviar la solicitud de creación de la novedad al servidor
+        async submitNewNovedad() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/crearNovedades', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(this.newNovedad),
+                });
+                if (!response.ok) {
+                    throw new Error('Error al crear la novedad');
+                }
+                // Limpiar los campos después de la creación exitosa
+                this.clearFields();
+                // Cerrar el modal de creación de novedades
+                this.closeCreateNovedadModal();
+                // Actualizar la lista de novedades
+                await this.fetchNovedades();
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        // Método para limpiar los campos del formulario después de la creación exitosa
+        clearFields() {
+            this.newNovedad = {
+                title: '',
+                genero: '',
+                estreno: '',
+                sinopsis: '',
+                poster: '',
+                trailer: '',
+                id_youtube: '',
+            };
+        },
     },
-
-    cancelDeleteSession() {
-        // Oculta el modal de confirmación sin eliminar la sesión
-        this.showDeleteSessionConfirmation = false;
-    }
-
-    }
 };
 </script>
 
