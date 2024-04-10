@@ -20,7 +20,7 @@ class PeliculaController extends Controller
             'cartel' => 'required|string|max:255',
             'trailer' => 'required|string|max:255',
             'id_youtube' => 'required|string|max:255', 
-            'fechaEstreno' => 'required|date_format:Y-m-d',
+            'fechaEstreno' => 'required|date_format:Y-m-d H:i:s',
             'sesion_id' => 'nullable|exists:sesions,id',
         ]);
 
