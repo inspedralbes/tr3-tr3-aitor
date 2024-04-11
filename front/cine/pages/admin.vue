@@ -516,7 +516,7 @@ export default {
             const [year, month, day] = estreno.split('-');
             return `${day}/${month}/${year}`;
         },
-        async deleteCampo(id) {
+        async deleteMovie(id) {
             // Muestra el modal de confirmación antes de eliminar
             this.showDeleteConfirmation = true;
             // Guarda el ID de la película que se va a eliminar para usarlo en el método deleteConfirmed
