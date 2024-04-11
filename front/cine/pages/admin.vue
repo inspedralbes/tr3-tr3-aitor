@@ -583,7 +583,6 @@ export default {
                 if (!response.ok) {
                     throw new Error('Error al eliminar la novedad');
                 }
-                // Actualiza la lista después de la eliminación exitosa
                 await this.fetchNovedades();
             } catch (error) {
                 console.error(error);
