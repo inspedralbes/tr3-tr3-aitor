@@ -414,7 +414,7 @@ export default {
                     body: JSON.stringify(this.newMovie),
                 });
                 const responseData = await response.json();
-                console.log('Respuesta del servidor:', responseData);
+                // console.log('Respuesta del servidor:', responseData);
 
                 if (response.ok) {
                     // Limpiar los campos después de la inserción exitosa
@@ -438,7 +438,7 @@ export default {
                     body: JSON.stringify(this.newSesion),
                 });
                 const responseData = await response.json();
-                console.log('Respuesta del servidor:', responseData);
+                // console.log('Respuesta del servidor:', responseData);
 
                 if (response.ok) {
                     // Limpiar los campos después de la inserción exitosa
@@ -453,7 +453,7 @@ export default {
             }
         },
         async submitEditMovie() {
-            console.log('Datos a enviar al servidor:', this.selectedMovie);
+            // console.log('Datos a enviar al servidor:', this.selectedMovie);
 
             try {
                 const response = await fetch(`http://127.0.0.1:8000/api/modificarPelicula/${this.selectedMovie.id}`, {

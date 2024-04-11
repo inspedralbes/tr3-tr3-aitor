@@ -5,12 +5,12 @@
   <div class="derecha">
     <input type="text" v-model="filtroTitulo" placeholder="Buscar por título">
   </div>
-  <div class="derecha">
+  <!-- <div class="derecha">
     <select v-model="filtroGenero" @change="filtrarPorGenero">
       <option value="">Todos los géneros</option>
       <option v-for="genero in generosDisponibles" :key="genero">{{ genero }}</option>
     </select>
-  </div>
+  </div> -->
   <div class="peliculas-container">
     <!-- Segundo v-for para mostrar sesiones agrupadas -->
     <div v-for="(sesionesDia, fecha) in sesionesAgrupadas" :key="fecha">
@@ -107,9 +107,14 @@ export default {
       return sesionesAgrupadas;
     },
     generosDisponibles() {
-      // Obtener la lista de géneros disponibles
-      return [...new Set(this.sesiones.map(sesion => sesion.pelicula.genero))];
+      // Filtrar los géneros nulos o vacíos
+      const generos = this.sesiones
+        .map(sesion => sesion.pelicula.genero)
+        .filter(genero => genero); // Filtrar los géneros nulos o vacíos
+      // Retornar solo los géneros únicos
+      return [...new Set(generos)];
     }
+
   }
 };
 </script>
@@ -130,12 +135,13 @@ input[type="text"] {
   margin-bottom: 30px;
   /* Espacio inferior */
 }
+
 select {
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-top: 10px; 
+  margin-top: 10px;
   margin-right: 75px;
 }
 

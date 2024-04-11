@@ -47,7 +47,7 @@ export default {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                console.log(data);
+                // console.log(data);
                 // Asignar los datos a la variable entradas
                 this.entradas = data.data;
 

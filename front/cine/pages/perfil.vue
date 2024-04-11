@@ -98,7 +98,7 @@ export default {
         },
         async guardarDatosUsuario() {
             try {
-                console.log(this.userData)
+                // console.log(this.userData)
                 const response = await fetch(`http://127.0.0.1:8000/api/modificarUsuario/${this.user.user.id}`, {
                     method: 'PUT',
                     headers: {
@@ -113,7 +113,7 @@ export default {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                console.log("Usuario actualizado correctamente");
+                // console.log("Usuario actualizado correctamente");
 
                 localStorage.setItem('user', JSON.stringify(userData));
                 this.$router.push('/');
