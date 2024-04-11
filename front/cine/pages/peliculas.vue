@@ -112,11 +112,15 @@ input[type="text"] {
   border-radius: 5px; 
   border: 1px solid #ccc; 
   margin-right: 75px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
 }
 .derecha {
   display: flex; /* Para usar flexbox */
   justify-content: flex-end; /* Alineación a la derecha */
   margin-bottom: 30px; /* Espacio inferior */
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
 }
 select {
   padding: 10px;
@@ -125,6 +129,8 @@ select {
   border-radius: 4px;
   margin-top: 10px; 
   margin-right: 75px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 .modal {
     position: fixed;
@@ -137,6 +143,8 @@ select {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .modal-contenido {
@@ -204,10 +212,14 @@ select {
   color: var(--color-primary);
   text-align: center;
   margin-bottom: 50px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
 }
 
 .peliculas-container {
   max-width: 1200px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
   /* Hacer el contenedor más grande */
 }
 
@@ -227,6 +239,7 @@ select {
   transition: transform 0.3s ease;
   margin-left: 40px;
   margin-bottom: 20px;
+  
 }
 
 .pelicula-card:hover {

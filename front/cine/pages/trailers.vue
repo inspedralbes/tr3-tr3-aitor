@@ -111,6 +111,8 @@ input[type="text"] {
   border-radius: 5px;
   border: 1px solid #ccc;
   margin-right: 75px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .derecha {
@@ -161,10 +163,14 @@ input[type="text"] {
   color: var(--color-primary);
   text-align: center;
   margin-bottom: 50px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .peliculas-container {
   max-width: 1200px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .peliculas-grid {

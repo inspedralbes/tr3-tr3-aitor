@@ -57,6 +57,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  
 }
 
 .box {
@@ -98,6 +99,8 @@
   display: flex;
   justify-content: space-between; /* Cambiado de center a space-between */
   align-items: center; /* Centra verticalmente */
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
 }
 
 

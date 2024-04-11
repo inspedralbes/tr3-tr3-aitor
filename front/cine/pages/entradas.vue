@@ -115,6 +115,7 @@ export default {
 <style>
 .container {
     display: flex;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     justify-content: space-between;
     align-items: flex-start;
 }
@@ -223,6 +224,8 @@ export default {
     background-color: #c00;
 }
 .boton-logout {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
     width:240px;
     background-color: red;
     /* Color de fondo rojo */

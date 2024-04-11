@@ -168,6 +168,8 @@ export default {
 <style scoped>
 .user-profile {
     margin: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .flex-container {
@@ -192,6 +194,8 @@ export default {
 
 .input-container label {
     font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
     margin-bottom: 5px;
 }
 
@@ -211,6 +215,8 @@ export default {
     cursor: pointer;
     text-align: center;
     margin: 0 auto;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
     /* Para centrar horizontalmente */
     display: block;
     /* Hacer que el botón ocupe todo el ancho disponible */
@@ -274,6 +280,8 @@ export default {
     text-align: center;
     margin: 0 auto;
     display: block;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .user-actions a:hover,

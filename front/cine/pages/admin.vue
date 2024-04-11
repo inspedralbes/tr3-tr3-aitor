@@ -715,6 +715,8 @@ export default {
     max-width: 1200px;
     margin: 0 auto;
     margin-top: 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .options-container {
@@ -727,6 +729,8 @@ export default {
 .sessions-button,
 .novedades-button,
 .entrades-button {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
     padding: 10px 20px;
     font-size: 16px;
     background-color: red;
@@ -800,6 +804,8 @@ h2 {
 
 .option-button {
     padding: 10px 15px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
     font-size: 16px;
     background-color: red;
     color: white;
@@ -821,6 +827,7 @@ h2 {
 
 .option-button2 {
     padding: 10px 15px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 16px;
     background-color: red;
     color: white;
@@ -876,6 +883,7 @@ h2 {
 }
 
 .modal-buttons {
+    
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
@@ -883,6 +891,7 @@ h2 {
 
 .modal-buttons button {
     padding: 10px 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 16px;
     background-color: red;
     color: white;

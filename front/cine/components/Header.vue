@@ -107,6 +107,7 @@ header {
   background-color: black;
   padding: 10px;
   margin: 0;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .header-img {
@@ -125,6 +126,7 @@ header {
   padding: 0;
   overflow: hidden;
   background-color: black;
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
 .nav li {
@@ -190,7 +192,7 @@ header {
 /* Estilos para el nombre de usuario */
 .nav li span {
   color: white;
-  /* Color del texto */
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   margin-right: 20px;
 }
 

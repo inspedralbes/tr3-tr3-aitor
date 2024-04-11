@@ -49,6 +49,8 @@
   <style scoped>
   .contact {
     text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
   }
   
   .contact-container {

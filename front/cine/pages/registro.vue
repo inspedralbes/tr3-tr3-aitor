@@ -149,6 +149,8 @@ export default {
     align-items: center;
     height: 80vh;
     background-color: #000;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .registro {

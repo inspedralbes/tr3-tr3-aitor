@@ -88,6 +88,8 @@ export default {
   align-items: center;
   height: 70vh;
   background-color: #000;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .login-form {

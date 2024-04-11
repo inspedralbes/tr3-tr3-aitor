@@ -56,6 +56,7 @@
     background-color: black;
     color: #fff;
     padding: 50px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .container {

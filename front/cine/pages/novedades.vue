@@ -107,8 +107,11 @@ input[type="text"] {
   border-radius: 5px; 
   border: 1px solid #ccc; 
   margin-right: 75px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 .derecha {
+  
   display: flex; /* Para usar flexbox */
   justify-content: flex-end; /* Alineación a la derecha */
   margin-bottom: 30px; /* Espacio inferior */
@@ -120,6 +123,8 @@ select {
   border-radius: 4px;
   margin-top: 10px; 
   margin-right: 75px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 .modal {
     position: fixed;
@@ -132,9 +137,11 @@ select {
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
 .modal-contenido {
+  
     background-color: #fefefe;
     padding: 20px;
     border-radius: 10px;
@@ -165,10 +172,13 @@ select {
     height: auto;
     border-radius: 10px;
     margin-right: 20px; /* Espacio entre la imagen y la información */
+    
 }
 
 .novedades-info {
     flex-grow: 1; /* Permite que el contenido ocupe todo el espacio disponible */
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .titulo-novedad {
@@ -196,10 +206,14 @@ select {
   color: var(--color-primary);
   text-align: center;
   margin-bottom: 50px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .novedadess-container {
   max-width: 1200px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .novedadess-grid {

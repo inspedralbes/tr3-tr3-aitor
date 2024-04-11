@@ -2,9 +2,6 @@
   <div class="centro">
     <h2 class="page-title">Sesiones de Cine</h2>
   </div>
-  <div class="derecha">
-    <input type="text" v-model="filtroTitulo" placeholder="Buscar por título">
-  </div>
   <div class="peliculas-container">
     <div v-for="(sesionesDia, fecha) in sesionesAgrupadas" :key="fecha">
       <div class="fecha">
@@ -96,23 +93,6 @@ export default {
 };
 </script>
 <style scoped>
-input[type="text"] {
-  width: 200px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin-right: 75px;
-}
-
-.derecha {
-  display: flex;
-  /* Para usar flexbox */
-  justify-content: flex-end;
-  /* Alineación a la derecha */
-  margin-bottom: 30px;
-  /* Espacio inferior */
-}
-
 select {
   padding: 10px;
   font-size: 16px;
@@ -125,7 +105,9 @@ select {
 .fecha {
   margin-left: 40px;
   margin-bottom: 20px;
-  font-size: 1.8rem
+  font-size: 1.8rem;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 /* Estilos para la información de la película */
@@ -143,19 +125,23 @@ select {
   font-weight: bold;
   color: #333;
   margin-bottom: 10px;
+
 }
 
 .pelicula-genero,
 .pelicula-duracion,
 .sesion-horario {
   font-size: 1rem;
-  /* Tamaño de la fuente más pequeño */
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
   color: #666;
   margin-bottom: 5px;
 }
 
 .button-comprar {
   background-color: red;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
   /* Color rojo */
   border: none;
   color: white;
@@ -190,6 +176,8 @@ select {
   color: var(--color-primary);
   text-align: center;
   margin-bottom: 50px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
 }
 
 .peliculas-container {

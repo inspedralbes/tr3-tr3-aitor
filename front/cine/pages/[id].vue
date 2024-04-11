@@ -267,7 +267,9 @@ export default {
 <style scoped>
 .container {
   display: flex;
-  margin-top: 20px
+  margin-top: 20px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .pelicula-info {
