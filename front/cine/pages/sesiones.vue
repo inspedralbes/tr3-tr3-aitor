@@ -5,14 +5,7 @@
   <div class="derecha">
     <input type="text" v-model="filtroTitulo" placeholder="Buscar por título">
   </div>
-  <!-- <div class="derecha">
-    <select v-model="filtroGenero" @change="filtrarPorGenero">
-      <option value="">Todos los géneros</option>
-      <option v-for="genero in generosDisponibles" :key="genero">{{ genero }}</option>
-    </select>
-  </div> -->
   <div class="peliculas-container">
-    <!-- Segundo v-for para mostrar sesiones agrupadas -->
     <div v-for="(sesionesDia, fecha) in sesionesAgrupadas" :key="fecha">
       <div class="fecha">
         <h3>{{ fecha }}</h3>
@@ -35,16 +28,17 @@
 
 <script>
 import { usePeliculasStore } from "../stores/store";
+
 export default {
   data() {
     return {
       sesiones: [],
       filtroTitulo: '',
-      filtroGenero: '',
     };
   },
   async mounted() {
     await this.fetchSesiones();
+    this.filtrarSesionesSinPelicula();
   },
   methods: {
     async fetchSesiones() {
@@ -68,32 +62,24 @@ export default {
       const options = { hour: 'numeric', minute: 'numeric', hour12: true };
       return new Date(fecha).toLocaleTimeString('es-ES', options);
     },
-
     redireccionarCompraEntradas(sesion) {
-      const peliculasStore = usePeliculasStore();
-      peliculasStore.guardarPeliculaSeleccionada(sesion.pelicula);
-      this.$router.push(`${sesion.id}`);
+      if (sesion && sesion.pelicula) {
+        const peliculasStore = usePeliculasStore();
+        peliculasStore.guardarPeliculaSeleccionada(sesion.pelicula);
+        this.$router.push(`${sesion.id}`);
+      }
     },
-    filtrarPorGenero() {
-      // Al cambiar el género, reinicia el filtro por título
-      this.filtroTitulo = '';
+    filtrarSesionesSinPelicula() {
+      this.sesiones = this.sesiones.filter(sesion => sesion.pelicula);
     }
   },
   computed: {
     sesionesOrdenadas() {
-      // Ordenar las sesiones por fecha y hora
       return this.sesiones.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
     },
-    sesionesFiltradas() {
-      return this.sesionesOrdenadas.filter(sesion =>
-      (sesion.pelicula.titulo.toLowerCase().includes(this.filtroTitulo.toLowerCase()) &&
-        (this.filtroGenero === '' || sesion.pelicula.genero === this.filtroGenero))
-      );
-    },
     sesionesAgrupadas() {
-      // Agrupar las sesiones por día
       const sesionesAgrupadas = {};
-      this.sesionesFiltradas.forEach(sesion => {
+      this.sesionesOrdenadas.forEach(sesion => {
         const fecha = new Date(sesion.fecha).toLocaleDateString('es-ES', {
           year: 'numeric',
           month: 'numeric',
@@ -105,16 +91,7 @@ export default {
         sesionesAgrupadas[fecha].push(sesion);
       });
       return sesionesAgrupadas;
-    },
-    generosDisponibles() {
-      // Filtrar los géneros nulos o vacíos
-      const generos = this.sesiones
-        .map(sesion => sesion.pelicula.genero)
-        .filter(genero => genero); // Filtrar los géneros nulos o vacíos
-      // Retornar solo los géneros únicos
-      return [...new Set(generos)];
     }
-
   }
 };
 </script>
