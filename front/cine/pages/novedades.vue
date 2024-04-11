@@ -59,7 +59,7 @@ export default {
   methods: {
     async fetchNovedades() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/listarNovedades');
+        const response = await fetch('http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/listarNovedades');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

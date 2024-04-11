@@ -98,7 +98,7 @@ export default {
                 }
 
                 // Enviar el formulario
-                const response = await fetch('http://127.0.0.1:8000/api/register', {
+                const response = await fetch('http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

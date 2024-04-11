@@ -105,7 +105,7 @@ export default {
   methods: {
     async fetchSesiones() {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/obtenerSesion/${this.pelicula.sesion_id}`, {
+        const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/obtenerSesion/${this.pelicula.sesion_id}`, {
           method: 'GET',
         });
         if (!response.ok) {
@@ -127,7 +127,7 @@ export default {
 
     async obtenerEntradasOcupadas(sesionId) {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/listarEntradasPorSesion/${this.pelicula.sesion_id}`, {
+        const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/listarEntradasPorSesion/${this.pelicula.sesion_id}`, {
           method: 'GET',
         });
         if (!response.ok) {
@@ -227,7 +227,7 @@ export default {
           const filaSeleccionada = this.obtenerFila(asiento.etiqueta);
           const columnaSeleccionada = this.obtenerColumna(asiento.etiqueta);
 
-          const response = await fetch('http://127.0.0.1:8000/api/crearEntrada', {
+          const response = await fetch('http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/crearEntrada', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

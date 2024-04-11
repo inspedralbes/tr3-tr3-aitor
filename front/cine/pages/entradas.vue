@@ -40,7 +40,7 @@ export default {
     methods: {
         async fetchmostrarEntradas() {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/listarEntradasPorUsuario/${this.user.user.id}`, {
+                const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/listarEntradasPorUsuario/${this.user.user.id}`, {
                     method: 'GET',
                 });
                 if (!response.ok) {
@@ -61,7 +61,7 @@ export default {
         },
         async fetchInformacionSesion(sesionId) {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/listarSesionesPorId/${sesionId}`, {
+                const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/listarSesionesPorId/${sesionId}`, {
                     method: 'GET',
                 });
                 if (!response.ok) {

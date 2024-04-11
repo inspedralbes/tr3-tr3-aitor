@@ -363,7 +363,7 @@ export default {
         },
         async fetchMovies() {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/listarPeliculas');
+                const response = await fetch('http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/listarPeliculas');
                 if (!response.ok) {
                     throw new Error('Error al obtener las películas');
                 }
@@ -375,7 +375,7 @@ export default {
         },
         async fetchSessions() {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/listarSesiones');
+                const response = await fetch('http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/listarSesiones');
                 if (!response.ok) {
                     throw new Error('Error al obtener las sesiones');
                 }
@@ -394,7 +394,7 @@ export default {
         },
         async fetchNovedades() {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/listarNovedades');
+                const response = await fetch('http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/listarNovedades');
                 if (!response.ok) {
                     throw new Error('Error al obtener las novedades');
                 }
@@ -406,7 +406,7 @@ export default {
         },
         async submitNewMovie() {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/crearPelicula', {
+                const response = await fetch('http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/crearPelicula', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -430,7 +430,7 @@ export default {
         },
         async submitNewSesion() {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/crearSesion', {
+                const response = await fetch('http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/crearSesion', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -456,7 +456,7 @@ export default {
             // console.log('Datos a enviar al servidor:', this.selectedMovie);
 
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/modificarPelicula/${this.selectedMovie.id}`, {
+                const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/modificarPelicula/${this.selectedMovie.id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -516,7 +516,7 @@ export default {
         // Método para confirmar la eliminación
         async deleteConfirmed() {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/eliminarPelicula/${this.movieToDeleteId}`, {
+                const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/eliminarPelicula/${this.movieToDeleteId}`, {
                     method: 'DELETE'
                 });
                 if (!response.ok) {
@@ -537,7 +537,7 @@ export default {
         },
         async deleteNovedades(id) {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/eliminarNovedades/${id}`, {
+                const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/eliminarNovedades/${id}`, {
                     method: 'DELETE'
                 });
                 if (!response.ok) {
@@ -564,7 +564,7 @@ export default {
 
         async deleteSessionConfirmed() {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/eliminarSesion/${this.sessionToDeleteId}`, {
+                const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/eliminarSesion/${this.sessionToDeleteId}`, {
                     method: 'DELETE'
                 });
                 if (!response.ok) {
@@ -581,7 +581,7 @@ export default {
         },
         async deleteNovedadConfirmed() {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/eliminarNovedades/${this.novedadToDeleteId}`, {
+                const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/eliminarNovedades/${this.novedadToDeleteId}`, {
                     method: 'DELETE'
                 });
                 if (!response.ok) {
@@ -616,7 +616,7 @@ export default {
         // Método para enviar la solicitud de modificación de la sesión al servidor
         async submitEditSession() {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/modificarSesion/${this.selectedSession.id}`, {
+                const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/modificarSesion/${this.selectedSession.id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -644,7 +644,7 @@ export default {
         // Método para enviar la solicitud de creación de la novedad al servidor
         async submitNewNovedad() {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/crearNovedades', {
+                const response = await fetch('http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/crearNovedades', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -688,7 +688,7 @@ export default {
 
         async submitEditNovedad() {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/modificarNovedades/${this.selectedNovedad.id}`, {
+                const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/modificarNovedades/${this.selectedNovedad.id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

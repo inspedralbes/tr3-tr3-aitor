@@ -84,7 +84,7 @@ export default {
     methods: {
         async fetchmostrarInformacion() {
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/usuari/${this.user.user.id}`, {
+                const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/usuari/${this.user.user.id}`, {
                     method: 'GET',
                 });
                 if (!response.ok) {
@@ -99,7 +99,7 @@ export default {
         async guardarDatosUsuario() {
             try {
                 // console.log(this.userData)
-                const response = await fetch(`http://127.0.0.1:8000/api/modificarUsuario/${this.user.user.id}`, {
+                const response = await fetch(`http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/modificarUsuario/${this.user.user.id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'

@@ -60,7 +60,7 @@ export default {
   methods: {
     async fetchPeliculas() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/listarPeliculas');
+        const response = await fetch('http://tr3.a20aitbaresc.daw.inspedralbes.cat/back/api-cine/public/api/listarPeliculas');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
