@@ -493,6 +493,15 @@ export default {
                 diaEspectador: '',
                 precio: 0,
             };
+            this.newNovedad = {
+                title: '',
+                genero: '',
+                estreno: '',
+                sinopsis: '',
+                poster: '',
+                trailer: '',
+                id_youtube: '',
+            };
         },
         formatDuration(duration) {
             const hours = Math.floor(duration / 60);
@@ -664,18 +673,7 @@ export default {
                 console.error(error);
             }
         },
-        // Método para limpiar los campos del formulario después de la creación exitosa
-        clearFields() {
-            this.newNovedad = {
-                title: '',
-                genero: '',
-                estreno: '',
-                sinopsis: '',
-                poster: '',
-                trailer: '',
-                id_youtube: '',
-            };
-        },
+        
         openEditNovedadModal(novedad) {
             this.selectedNovedad = novedad;
             this.showEditNovedadModal = true;
