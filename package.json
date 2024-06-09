@@ -1,0 +1,26 @@
+{
+  "name": "tr3-tr3-aitor",
+  "version": "1.0.0",
+  "description": "Les carpeta back trobarem totes les carpetes de Laravel i trobarem el archius creats per mi amb noms coherents i facil d'entendre per algun altre desenvolupador web, el mateix també amb el l'apartat de front on trobarem les pagines web de nuxt.",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inspedralbes/tr3-tr3-aitor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inspedralbes/tr3-tr3-aitor/issues"
+  },
+  "homepage": "https://github.com/inspedralbes/tr3-tr3-aitor#readme",
+  "devDependencies": {
+    "eslint": "^9.4.0"
+  }
+}
